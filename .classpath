@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME"/>
+	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME" sourcepath="/MAGIC_DRAW_HOME"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/lib/patch.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/lib/activation.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/lib/annotation.jar"/>
@@ -157,9 +157,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.intercax.paramagic/lib/poi-ooxml-3.7-20101029.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.intercax.paramagic/lib/soap.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.intercax.paramagic/lib/xmlbeans-2.3.0.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.andromdaintegrator/andromdaintegrator.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.andromdaintegrator/andromdaintegrator_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.andromdaintegrator/maven_plugin/com/nomagic/magicdraw/emfxmi/1.0/emfxmi-1.0.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.automaton/automaton.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.automaton/automaton_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.automaton/engines/beanshell/bsh-2.1.7.jar"/>
@@ -239,13 +236,8 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.automaton/resources/text_ru.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.automaton/resources/text_th.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.boundElementNameSupport/boundElementNameSupport_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.codeengineering/codeengineering.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.codeengineering/codeengineering_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.codeengineering/lib/antlr_2.7.6.1.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.contentdiagram/contentdiagram.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.contentdiagram/contentdiagram_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.corbaidl/corbaidl.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.corbaidl/corbaidl_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.coreintegrator/coreintegrator.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.coreintegrator/coreintegrator_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.coreintegrator/lib/coreintegrator_util.jar"/>
@@ -268,20 +260,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ea/text_fr.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ea/text_ru.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ea/text_th.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/com.nomagic.magicdraw.jdt/md_eclipse_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/com.nomagic.magicdraw.rcp/md_eclipse_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/lpg.runtime.java_2.0.17.v201004271640.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.common_2.7.0.v20110513-1719.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.ecore.change_2.7.0.v20110408-2116.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.7.0.v20110411-2239.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.ecore_2.7.0.v20110513-1719.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.edit_2.7.0.v20110606-0949.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.transaction_1.4.0.v20100331-1738.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.emf.validation_1.7.0.201306111341.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.ocl.ecore_3.0.1.R30x_v201008251030.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.ocl_3.0.1.R30x_v201008251030.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipse/plugins/org.eclipse.uml2.common_1.5.0.v200905041045.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.eclipseintegrator/eclipseintegrator_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ecore/ecore.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ecore/ecore_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.emfuml2xmi_v1/emfuml2xmi_common.jar"/>
@@ -391,7 +369,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.modeltransformations/modeltransformations_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.mof/mof.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.mof/mof_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.oawintegrator/oawintegrator_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ocl2gen/lib/dresden-ocl2-lib.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ocl2gen/lib/jgraph.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.ocl2gen/lib/jgraphaddons.jar"/>
@@ -453,10 +430,7 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.reportwizard/resources/text_ja.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.reportwizard/resources/text_ru.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.reportwizard/resources/text_th.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.reversefromcp/reversefromcp_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.robustnessdiagram/robustnessdiagram_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sequencereverse/sequencereverse.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sequencereverse/sequencereverse_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation/lib/jcommon-1.0.16.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation/lib/jfreechart-1.0.13.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation/simulation.jar"/>
@@ -494,7 +468,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation.scxml/text_fr.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation.scxml/text_ru.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.simulation.scxml/text_th.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sysml/help.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sysml/lib/antlr-runtime-3.5.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sysml/sysml.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sysml/sysml_api.jar"/>
@@ -506,14 +479,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.sysml/text_th.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.uimodeling/uimodeling.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.uimodeling/uimodeling_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text_de.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text_fr.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text_ja.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text_ru.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/resources/text_th.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/upsell.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.upsell/upsell_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.usagesdependencies/usagesdependencies.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.usagesdependencies/usagesdependencies_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.usecasedescriptor/usecasedescriptor.jar"/>
@@ -522,8 +487,6 @@
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.webreport/webreport_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.websoftwareportal/websoftwareportal_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.webuml/webuml_api.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.wsdl/wsdl.jar"/>
-	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.magicdraw.wsdl/wsdl_api.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.requirements/help.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.requirements/requirements.jar"/>
 	<classpathentry exported="true" kind="var" path="MAGIC_DRAW_HOME/plugins/com.nomagic.requirements/requirements_api.jar"/>
