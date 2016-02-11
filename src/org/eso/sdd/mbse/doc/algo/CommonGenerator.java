@@ -889,7 +889,7 @@ public class CommonGenerator implements RunnableWithProgress {
 		if (!layoutlist.isEmpty())  {
 			EnumerationLiteral Enuml = layoutlist.get(0);
 			String layoutvalue = Enuml.getName();
-			layout = " role = \""+ layoutvalue + "\"";
+			layout = " role =\""+ layoutvalue + "\"";
 		}
 		//end of customisation
 		
@@ -944,10 +944,22 @@ public class CommonGenerator implements RunnableWithProgress {
 	}
 	
 	private void processPreface(Element el, StringBuffer prefix, StringBuffer postfix, StringBuffer content, List navigateDown) { 
+		//Gerhard le Roux customisation to indicate whether chapter should be landscaped
+		List<EnumerationLiteral> layoutlist = StereotypesHelper.getStereotypePropertyValue(el,theUtilities.getTheChapterStereotype(),"layout");
+		String layout = "";
+		if (!layoutlist.isEmpty())  {
+			EnumerationLiteral Enuml = layoutlist.get(0);
+			String layoutvalue = Enuml.getName();
+			layout = " role =\""+ layoutvalue + "\"";
+		}
+		//end of customisation
+		
 		prefix.insert(0,"<preface"
 				+ " xml:id=\""
 				+ Utilities.uniqueID(el)
-				+ "\">"
+				+ "\""
+				+ layout //customisation Gerhard le Roux
+				+ ">"
 				+ lE
 				+ "<title>"
 				+ Utilities.replaceBracketCharacters(((NamedElement) el)
@@ -969,11 +981,23 @@ public class CommonGenerator implements RunnableWithProgress {
 	}
 
 	private void processSection(Element el, StringBuffer prefix, StringBuffer postfix, StringBuffer content, List navigateDown) { 
+		//Gerhard le Roux customisation to indicate whether chapter should be landscaped
+		List<EnumerationLiteral> layoutlist = StereotypesHelper.getStereotypePropertyValue(el,theUtilities.getTheChapterStereotype(),"layout");
+		String layout = "";
+		if (!layoutlist.isEmpty())  {
+			EnumerationLiteral Enuml = layoutlist.get(0);
+			String layoutvalue = Enuml.getName();
+			layout = " role =\""+ layoutvalue + "\"";
+		}
+		//end of customisation
+		
 		prefix.insert(0,"<sect"
 				+ new Integer(sectionDepth).toString()
 				+ " xml:id=\""
 				+ Utilities.uniqueID(el)
-				+ "\">"
+				+ "\""
+				+ layout //customisation Gerhard le Roux
+				+">"
 				+ lE
 				+ "<title>"
 				+ Utilities.replaceBracketCharacters(((NamedElement) el)
