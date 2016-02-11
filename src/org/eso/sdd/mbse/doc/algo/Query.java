@@ -224,7 +224,7 @@ public class Query {
 	
 	
 	
-	private String processConstraintProperties(NamedElement namedRefEl) {
+	protected String processConstraintProperties(NamedElement namedRefEl) {
 		String tablePrefix= "";
 		String cpContent = "";
 		boolean cpFound = false;
@@ -284,7 +284,7 @@ public class Query {
 		return content;
 	}
 
-	private String processConstraints(NamedElement namedRefEl) {
+	protected String processConstraints(NamedElement namedRefEl) {
 		String tablePrefix= "";
 		String csContent = "";
 		boolean csFound = false;
@@ -345,7 +345,7 @@ public class Query {
 
 
 	
-	private String processOperations(NamedElement namedRefEl) { 
+	protected String processOperations(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String opContent = "";
 		boolean opFound = false;
@@ -396,7 +396,7 @@ public class Query {
 	}
 	
 	
-	private String processPorts(NamedElement namedRefEl) throws NullPointerException { 
+	protected String processPorts(NamedElement namedRefEl) throws NullPointerException { 
 		String tablePrefix= "";
 		String cpContent = "",poContent = "";
 		boolean cpFound = false ,poFound = false;
@@ -515,7 +515,7 @@ public class Query {
 	}
 	
 	
-	private String processProperties(NamedElement namedRefEl) { 
+	protected String processProperties(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String opContent = "";
 		boolean opFound = false;
@@ -714,10 +714,12 @@ public class Query {
 		return content;
 	}
 	
-	private String processRequirement(NamedElement namedRefEl) { 
+	protected String processRequirement(NamedElement namedRefEl) { 
 		String reqName, reqId,  reqText = null;
 		String content = "";
 		reqText = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Text"));
+		//GLR added clean text for xml reading
+		reqText = reqText.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;");
 		reqId   = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Id"));
 		reqName = Utilities.replaceBracketCharacters(namedRefEl.getName());
 
@@ -742,7 +744,7 @@ public class Query {
 	
 
 	
-	private String processFlowProperties(NamedElement namedRefEl) { 
+	protected String processFlowProperties(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String content = "";
 		boolean fpFound = false;
@@ -801,7 +803,7 @@ public class Query {
 		return content;
 	}
 	
-	private String processPartProperties(NamedElement namedRefEl) { 
+	protected String processPartProperties(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String content = "";
 		boolean ppFound = false;
@@ -872,7 +874,7 @@ public class Query {
 		return content;
 	}
 
-	private String processReferenceProperties(NamedElement namedRefEl) { 
+	protected String processReferenceProperties(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String content = "";
 		boolean ppFound = false;
@@ -935,7 +937,7 @@ public class Query {
 	}
 
 	
-	private String processValueProperties(NamedElement namedRefEl) { 
+	protected String processValueProperties(NamedElement namedRefEl) { 
 		String tablePrefix= "";
 		String content = "";
 		boolean vpFound = false;
@@ -1078,7 +1080,7 @@ public class Query {
 	}
 
 	
-	private static String getQueryType(Element el) {
+	protected static String getQueryType(Element el) {
 		//int rval = 0;
 		String rval = "";
 		List<?> list = StereotypesHelper.getStereotypePropertyValue(el ,theUtilities.getTheQueryStereotype(), "type");
@@ -1174,7 +1176,7 @@ public class Query {
 		return StereotypesHelper.getStereotypePropertyValue(el, theUtilities.getTheQueryStereotype(), "property");
 	}
 
-	private static String entryReplaceBrackets(String theContent) { 
+	protected static String entryReplaceBrackets(String theContent) { 
 		return "<entry align=\"left\">"+ Utilities.replaceBracketCharacters (theContent) + "</entry>";
 	}
 

@@ -45,7 +45,6 @@ import javax.imageio.stream.ImageOutputStream;
 import javax.swing.JOptionPane;
 
 import com.nomagic.magicdraw.core.Application;
-
 import com.nomagic.magicdraw.core.Project;
 import com.nomagic.magicdraw.core.options.EnvironmentOptions;
 import com.nomagic.magicdraw.dependencymatrix.configuration.MatrixDataHelper;
@@ -54,6 +53,7 @@ import com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Diagram;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
@@ -62,13 +62,13 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.TypedElement;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 import com.nomagic.magicdraw.export.image.ImageExporter;
+
 import javax.swing.Icon;
 
 import org.eso.sdd.mbse.doc.options.MBSEOptionsGroup;
 import org.eso.sdd.mbse.doc.options.MBSEOptionsGroup.DiagramGraphicsFormat;
 
 import com.nomagic.uml2.ext.jmi.helpers.ElementImageHelper;
-
 import com.nomagic.generictable.GenericTableManager;
 import com.nomagic.reportwizard.tools.DiagramTableTool;
 import com.nomagic.reportwizard.*;
@@ -325,9 +325,14 @@ public class CommonGenerator implements RunnableWithProgress {
 
 		} else if (Utilities.isQuery(el)) {
 			// insert refactored code here
-			Query theQuery = new Query(el, Debug);
-			content.append(theQuery.provideDocBookForQuery());
-			logDebugIndent(el," is Query ");
+			Query theQuery = null;
+			if (Utilities.isGenericQuery(el)){
+				theQuery = new GenQuery(el, Debug);
+			} else {
+				theQuery = new Query(el, Debug);
+			}
+				content.append(theQuery.provideDocBookForQuery());
+				logDebugIndent(el," is Query ");
 			
 		} else if (Utilities.isDiagramTable(el)) {
 			processDiagramTable(el,prefix,postfix,content,navigateDown);
@@ -878,9 +883,21 @@ public class CommonGenerator implements RunnableWithProgress {
 	}
 
 	private void processChapter(Element el, StringBuffer prefix, StringBuffer postfix, StringBuffer content, List navigateDown) { 
+		//Gerhard le Roux customisation to indicate whether chapter should be landscaped
+		List<EnumerationLiteral> layoutlist = StereotypesHelper.getStereotypePropertyValue(el,theUtilities.getTheChapterStereotype(),"layout");
+		String layout = "";
+		if (!layoutlist.isEmpty())  {
+			EnumerationLiteral Enuml = layoutlist.get(0);
+			String layoutvalue = Enuml.getName();
+			layout = " role = \""+ layoutvalue + "\"";
+		}
+		//end of customisation
+		
 		prefix.insert(0,"<chapter xml:id=\""
 				+ Utilities.uniqueID(el)
-				+ "\" >"
+				+"\""
+				+ layout //customisation Gerhard le Roux
+				+ ">"
 				+ lE
 				+ "   <title>"
 				+ Utilities.replaceBracketCharacters(((NamedElement) el)

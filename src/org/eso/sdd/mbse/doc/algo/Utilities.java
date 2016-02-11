@@ -30,8 +30,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
-import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
+import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 import com.nomagic.magicdraw.core.Application;
 import com.nomagic.magicdraw.core.Project;
 import com.nomagic.magicdraw.ui.dialogs.MDDialogParentProvider;
@@ -40,6 +40,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Property;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.impl.EnumerationLiteralImpl;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Profile;
 
@@ -66,11 +67,14 @@ public class Utilities {
 	private Stereotype theRevisionEntryStereotype = null;
 	private Stereotype theRevisionHistoryStereotype = null;
 	
+	//Gerhard le Roux customisation
+	private Stereotype theGenericQueryStereotype = null;
 	
 	// from MD
 	private Stereotype theMDDiagramTableStereotype = null;
 	
 	private Profile docBookProfile = null;
+	private Profile docCustomProfile = null;
 	private Profile SysMLProfile = null;
 	private Profile UMLStandardProfile = null;
 	
@@ -97,6 +101,7 @@ public class Utilities {
 				.getProject(), "SysML");
 		UMLStandardProfile = StereotypesHelper.getProfile(Application.getInstance()
 				.getProject(), "MagicDraw Profile");
+		docCustomProfile =StereotypesHelper.getProfile(Application.getInstance().getProject(),"docCustomProfile");
 
 		theStereoCollection = new ArrayList<Stereotype>();
 
@@ -172,6 +177,10 @@ public class Utilities {
 					.getInstance().getProject(), "revhistory", docBookProfile);
 			theStereoCollection.add(theRevisionHistoryStereotype);
 			
+			theGenericQueryStereotype = StereotypesHelper.getStereotype(Application.getInstance().getProject()
+					, "genericQueryStereotype",docCustomProfile);
+			theStereoCollection.add(theGenericQueryStereotype);
+			
 		}
 
 		// SYSML 
@@ -198,6 +207,10 @@ public class Utilities {
 	public List<Stereotype> getStereotypesList() {
 		return theStereoCollection;
 
+	}
+	//Gerhard le Roux customisation: returns only the local properties as a list for the derived stereotype
+	public List<Property> getPropertyTypes(Stereotype theStereotype){
+		return StereotypesHelper.getPropertiesIncludingParents(theStereotype).get(theStereotype);
 	}
 
 	public static void insertElementInTaggedValueList(Element father,
@@ -307,6 +320,11 @@ public class Utilities {
 	}
 	public Stereotype getTheRevisionEntryStereotype() {
 		return theRevisionEntryStereotype;
+	}
+	
+	//Gerhard customisation
+	public Stereotype gettheGenericQueryStereotype() {
+		return theGenericQueryStereotype;
 	}
 
 	public static boolean isPackage(Element ne) {
@@ -429,6 +447,11 @@ public class Utilities {
 	public static boolean isAuthor(Element ne) {
 		return StereotypesHelper.hasStereotypeOrDerived(ne, "author");
 	}
+	
+	//Gerhard customisation
+	public static boolean isGenericQuery(Element el){
+		return StereotypesHelper.hasStereotype(el,"genericQueryStereotype");
+	}
 
 	public static String getFirstElementString(Element theElement,
 			Stereotype theStereotype, String key) {
@@ -539,6 +562,11 @@ public class Utilities {
 		String paraRepStart = "";
 		String paraRepEnd = "";
 		
+		//Gerhard hack to handle nulls in content
+		if (content == null) {
+			content = "";
+		}
+		
 		String pattern = "<table([^\\>]+)id=\"\\w*\"";
 		Matcher ma = null;
 		Pattern pa = Pattern.compile(pattern, Pattern.DOTALL);
@@ -573,6 +601,9 @@ public class Utilities {
 
 		content = content.replaceAll("<a [^\\>]*>", "<emphasis role=\"underline\">");
 		content = content.replaceAll("</a>", "</emphasis>");
+		
+		content = content.replaceAll("<br>","<linebreak>");
+		content = content.replaceAll("</br>","</linebreak>");
 		
 		ma = pa.matcher(content);
 		

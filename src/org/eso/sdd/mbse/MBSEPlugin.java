@@ -83,6 +83,9 @@ public class MBSEPlugin extends Plugin {
 
 	@Override
 	public void init() {
+		//GLR code
+		javax.swing.JOptionPane.showMessageDialog(null, "The MBSE plugin has been changed by Gerhard le Roux");
+		
 		ActionsConfiguratorsManager manager = ActionsConfiguratorsManager
 				.getInstance();
 		MBSEBrowserConfigurator mbseBrConfigurator = null;
