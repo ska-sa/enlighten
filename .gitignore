@@ -22,5 +22,4 @@
 # Virtualenv created by build script
 /venv
 # Where rsc gets installed for tests
-/lib
 tags
