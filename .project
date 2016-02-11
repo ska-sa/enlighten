@@ -14,4 +14,10 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<variableList>
+		<variable>
+			<name>MAGIC_DRAW_HOME</name>
+			<value>file:/Applications/Cameo%20Systems%20Modeler</value>
+		</variable>
+	</variableList>
 </projectDescription>
