@@ -4,6 +4,7 @@
   xmlns:exsl="http://exslt.org/common" version="1.0" exclude-result-prefixes="exsl d">
 
   <xsl:import href="docbook_custom.xsl"/>
+  <xsl:import href="SKA_TM_Logo.xsl"/>
 
 <!-- This stylesheet was copied from C:\Program Files\Oxygen XML Editor 12\frameworks\docbook\xsl\fo/titlepage-templates.xsl-->
 <!-- changes wrt original are marked with the keyword CHANGE -->
@@ -207,9 +208,7 @@
     <fo:block>
       <xsl:attribute name="space-before.minimum">8cm</xsl:attribute>
     </fo:block>
-    <fo:block text-align="center" space-after="20pt">
-        <fo:external-graphic src="../work/xsl/fo/SKA_TM_logo.png" content-height="70%" content-width="70%" />
-    </fo:block>
+    <xsl:call-template name="titlepage.logo"/>
     <!-- SKA: Note that all the custom SKA fields are present as XML tags in the
               the 'productnumber' docbook field -->
     <xsl:variable name="document.element" select="ancestor-or-self::*"/>
