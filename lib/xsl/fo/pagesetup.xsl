@@ -569,6 +569,105 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
                        display-align="after"/>
     </fo:simple-page-master>
 
+      <!-- *** SKA: adding a landscape body-first *** -->
+      <fo:simple-page-master master-name="body-first-landscape"
+                             page-width="{$page.height}"
+                             page-height="{$page.width}"
+                             margin-top="{$page.margin.top}"
+                             margin-bottom="{$page.margin.bottom}">
+        <xsl:attribute name="margin-{$direction.align.start}">
+          <xsl:value-of select="$page.margin.inner"/>
+          <xsl:if test="$fop.extensions != 0">
+            <xsl:value-of select="concat(' - (',$title.margin.left,')')"/>
+          </xsl:if>
+          <xsl:if test="$fop.extensions != 0">
+            <xsl:value-of select="concat(' - (',$title.margin.left,')')"/>
+          </xsl:if>
+        </xsl:attribute>
+        <xsl:attribute name="margin-{$direction.align.end}">
+          <xsl:value-of select="$page.margin.outer"/>
+        </xsl:attribute>
+        <xsl:if test="$axf.extensions != 0">
+          <xsl:call-template name="axf-page-master-properties">
+            <xsl:with-param name="page.master">body-first</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
+        <fo:region-body margin-bottom="{$body.margin.bottom}"
+                        margin-top="{$body.margin.top}"
+                        column-gap="{$column.gap.body}"
+                        column-count="{$column.count.body}">
+        </fo:region-body>
+        <fo:region-before region-name="xsl-region-before-first"
+                          extent="{$region.before.extent}"
+                          display-align="before"/>
+        <fo:region-after region-name="xsl-region-after-first"
+                         extent="{$region.after.extent}"
+                         display-align="after"/>
+      </fo:simple-page-master>
+      <!-- *** SKA: adding a landscape body-odd *** -->
+      <fo:simple-page-master master-name="body-odd-landscape"
+                             page-width="{$page.height}"
+                             page-height="{$page.width}"
+                             margin-top="{$page.margin.top}"
+                             margin-bottom="{$page.margin.bottom}">
+        <xsl:attribute name="margin-{$direction.align.start}">
+          <xsl:value-of select="$page.margin.inner"/>
+          <xsl:if test="$fop.extensions != 0">
+            <xsl:value-of select="concat(' - (',$title.margin.left,')')"/>
+          </xsl:if>
+        </xsl:attribute>
+        <xsl:attribute name="margin-{$direction.align.end}">
+          <xsl:value-of select="$page.margin.outer"/>
+        </xsl:attribute>
+        <xsl:if test="$axf.extensions != 0">
+          <xsl:call-template name="axf-page-master-properties">
+            <xsl:with-param name="page.master">body-odd</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
+        <fo:region-body margin-bottom="{$body.margin.bottom}"
+                        margin-top="{$body.margin.top}"
+                        column-gap="{$column.gap.body}" column-count="{$column.count.body}">
+        </fo:region-body>
+        <fo:region-before region-name="xsl-region-before-odd"
+                          extent="{$region.before.extent}"
+                          display-align="before"/>
+        <fo:region-after region-name="xsl-region-after-odd"
+                         extent="{$region.after.extent}"
+                         display-align="after"/>
+      </fo:simple-page-master>
+      <!-- *** SKA: adding a landscape body-even *** -->
+      <fo:simple-page-master master-name="body-even-landscape"
+                             page-width="{$page.height}"
+                             page-height="{$page.width}"
+                             margin-top="{$page.margin.top}"
+                             margin-bottom="{$page.margin.bottom}">
+        <xsl:attribute name="margin-{$direction.align.start}">
+          <xsl:value-of select="$page.margin.outer"/>
+          <xsl:if test="$fop.extensions != 0">
+            <xsl:value-of select="concat(' - (',$title.margin.left,')')"/>
+          </xsl:if>
+        </xsl:attribute>
+        <xsl:attribute name="margin-{$direction.align.end}">
+          <xsl:value-of select="$page.margin.inner"/>
+        </xsl:attribute>
+        <xsl:if test="$axf.extensions != 0">
+          <xsl:call-template name="axf-page-master-properties">
+            <xsl:with-param name="page.master">body-even</xsl:with-param>
+          </xsl:call-template>
+        </xsl:if>
+        <fo:region-body margin-bottom="{$body.margin.bottom}"
+                        margin-top="{$body.margin.top}"
+                        column-gap="{$column.gap.body}"
+                        column-count="{$column.count.body}">
+        </fo:region-body>
+        <fo:region-before region-name="xsl-region-before-even"
+                          extent="{$region.before.extent}"
+                          display-align="before"/>
+        <fo:region-after region-name="xsl-region-after-even"
+                         extent="{$region.after.extent}"
+                         display-align="after"/>
+      </fo:simple-page-master>
+
     <!-- index pages -->
     <fo:simple-page-master master-name="index-first"
                            page-width="{$page.width}"
@@ -1568,6 +1667,23 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
             <xsl:choose>
               <xsl:when test="$double.sided != 0">body-even</xsl:when>
               <xsl:otherwise>body-odd</xsl:otherwise>
+            </xsl:choose>
+          </xsl:attribute>
+        </fo:conditional-page-master-reference>
+      </fo:repeatable-page-master-alternatives>
+    </fo:page-sequence-master>
+
+    <!-- *** SKA: adding a body-landscape page sequence master *** -->
+    <fo:page-sequence-master master-name="body-landscape">
+      <fo:repeatable-page-master-alternatives>
+        <fo:conditional-page-master-reference master-reference="blank" blank-or-not-blank="blank"/>
+        <fo:conditional-page-master-reference master-reference="body-first-landscape" page-position="first"/>
+        <fo:conditional-page-master-reference master-reference="body-odd-landscape" odd-or-even="odd"/>
+        <fo:conditional-page-master-reference odd-or-even="even">
+          <xsl:attribute name="master-reference">
+            <xsl:choose>
+              <xsl:when test="$double.sided != 0">body-even-landscape</xsl:when>
+              <xsl:otherwise>body-odd-landscape</xsl:otherwise>
             </xsl:choose>
           </xsl:attribute>
         </fo:conditional-page-master-reference>
