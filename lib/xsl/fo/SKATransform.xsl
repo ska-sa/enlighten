@@ -499,119 +499,150 @@
         </fo:table-row>
       </fo:table-header>
       <fo:table-body start-indent="1pt" end-indent="1pt" font-size="8pt" font-family="{$title.fontset}">
-          <xsl:for-each select="d:bookinfo/d:revhistory/d:revision">
-            <fo:table-row>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
-                <fo:block>
-                    <xsl:value-of select="d:revnumber" />
-                </fo:block>
-                </fo:table-cell>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
-                <fo:block>
-                    <xsl:value-of select="d:date" />
-                </fo:block>
-                </fo:table-cell>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
-                <xsl:call-template name="ska.para.format-newlines">
-                    <xsl:with-param name="para" select="d:revremark"/>
-                </xsl:call-template>
-                </fo:table-cell>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
-                <xsl:call-template name="ska.para.format-newlines">
-                    <xsl:with-param name="para" select="d:revdescription"/>
-                </xsl:call-template>
-                </fo:table-cell>
-            </fo:table-row>
-          </xsl:for-each>
+          <xsl:choose>
+          <xsl:when test="d:bookinfo/d:revhistory/d:revision">
+            <xsl:for-each select="d:bookinfo/d:revhistory/d:revision">
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        <xsl:value-of select="d:revnumber" />
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        <xsl:value-of select="d:date" />
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <xsl:call-template name="ska.para.format-newlines">
+                        <xsl:with-param name="para" select="d:revremark"/>
+                    </xsl:call-template>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <xsl:call-template name="ska.para.format-newlines">
+                        <xsl:with-param name="para" select="d:revdescription"/>
+                    </xsl:call-template>
+                    </fo:table-cell>
+                </fo:table-row>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        Unknown
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        Unknown
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        Unknown
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.dochistory-table.cell">
+                    <fo:block>
+                        Unknown
+                    </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+          </xsl:otherwise>
+          </xsl:choose>
       </fo:table-body>
     </fo:table>
 
     <!-- *** SKA: Document Software table *** -->
-    <fo:block padding-bottom="1cm" />
-    <fo:block font-size="14pt" font-weight="bold" text-align="center" padding-after="2pt">DOCUMENT SOFTWARE</fo:block>
-    <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid">
-      <fo:table-column column-number="1" column-width="20%"/>
-      <fo:table-column column-number="2" column-width="20%"/>
-      <fo:table-column column-number="3" column-width="20%"/>
-      <fo:table-column column-number="4" column-width="40%"/>
-      <fo:table-header start-indent="1pt" end-indent="1pt" font-size="8pt" font-weight="bold" font-family="{$title.fontset}" text-align="center">
-        <fo:table-row xsl:use-attribute-sets="titlepage.docsw-table.cell">
-            <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-              <fo:block padding-before="3pt" padding-after="3pt">
-              </fo:block>
-            </fo:table-cell>
-            <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-              <fo:block padding-before="3pt" padding-after="3pt">
-              Package
-              </fo:block>
-            </fo:table-cell>
-            <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-              <fo:block padding-before="3pt" padding-after="3pt">
-              Version
-              </fo:block>
-            </fo:table-cell>
-            <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-              <fo:block padding-before="3pt" padding-after="3pt">
-              Filename
-              </fo:block>
-            </fo:table-cell>
-        </fo:table-row>
-      </fo:table-header>
-      <fo:table-body start-indent="1pt" end-indent="1pt" font-size="8pt" font-family="{$title.fontset}">
-          <xsl:for-each select="$document.element/d:info/d:productnumber/d:ska-field[@type='docsw']">
-            <fo:table-row>
+    <xsl:if test="$document.element/d:info/d:productnumber/d:ska-field[@type='docsw']">
+        <fo:block padding-bottom="1cm" />
+        <fo:block font-size="14pt" font-weight="bold" text-align="center" padding-after="2pt">DOCUMENT SOFTWARE</fo:block>
+        <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid">
+        <fo:table-column column-number="1" column-width="20%"/>
+        <fo:table-column column-number="2" column-width="20%"/>
+        <fo:table-column column-number="3" column-width="20%"/>
+        <fo:table-column column-number="4" column-width="40%"/>
+        <fo:table-header start-indent="1pt" end-indent="1pt" font-size="8pt" font-weight="bold" font-family="{$title.fontset}" text-align="center">
+            <fo:table-row xsl:use-attribute-sets="titlepage.docsw-table.cell">
                 <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-                <fo:block font-weight="bold">
-                    <xsl:value-of select="d:type" />
+                <fo:block padding-before="3pt" padding-after="3pt">
                 </fo:block>
                 </fo:table-cell>
                 <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-                <fo:block>
-                    <xsl:value-of select="d:package" />
+                <fo:block padding-before="3pt" padding-after="3pt">
+                Package
                 </fo:block>
                 </fo:table-cell>
                 <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-                <fo:block>
-                    <xsl:value-of select="d:version" />
+                <fo:block padding-before="3pt" padding-after="3pt">
+                Version
                 </fo:block>
                 </fo:table-cell>
                 <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
-                <fo:block>
-                    <xsl:value-of select="d:filename" />
+                <fo:block padding-before="3pt" padding-after="3pt">
+                Filename
                 </fo:block>
                 </fo:table-cell>
             </fo:table-row>
-          </xsl:for-each>
-      </fo:table-body>
-    </fo:table>
+        </fo:table-header>
+        <fo:table-body start-indent="1pt" end-indent="1pt" font-size="8pt" font-family="{$title.fontset}">
+            <xsl:for-each select="$document.element/d:info/d:productnumber/d:ska-field[@type='docsw']">
+                <fo:table-row>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
+                    <fo:block font-weight="bold">
+                        <xsl:value-of select="d:type" />
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
+                    <fo:block>
+                        <xsl:value-of select="d:package" />
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
+                    <fo:block>
+                        <xsl:value-of select="d:version" />
+                    </fo:block>
+                    </fo:table-cell>
+                    <fo:table-cell xsl:use-attribute-sets="titlepage.docsw-table.cell">
+                    <fo:block>
+                        <xsl:value-of select="d:filename" />
+                    </fo:block>
+                    </fo:table-cell>
+                </fo:table-row>
+            </xsl:for-each>
+        </fo:table-body>
+        </fo:table>
+    </xsl:if>
 
     <!-- *** SKA: Organisation Details table *** -->
-    <fo:block padding-bottom="1cm" />
-    <fo:block font-size="14pt" font-weight="bold" text-align="center" padding-after="2pt">ORGANISATION DETAILS</fo:block>
-    <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid">
-      <fo:table-column column-number="1" column-width="30%"/>
-      <fo:table-column column-number="2" column-width="70%"/>
-      <fo:table-body start-indent="1pt" end-indent="1pt" font-size="8pt" font-family="{$title.fontset}">
-          <xsl:for-each select="$document.element/d:info/d:productnumber/d:ska-field[@type='orgdetail']">
-            <fo:table-row>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.orgdetail-table.cell">
-                    <fo:block text-align="center">
-                        <xsl:value-of select="d:name" />
-                    </fo:block>
-                </fo:table-cell>
-                <fo:table-cell xsl:use-attribute-sets="titlepage.orgdetail-table.cell">
-                    <fo:block>
-                        <!-- <xsl:value&#45;of select="d:value" /> -->
-                        <xsl:call-template name="ska.para.format-newlines">
-                            <xsl:with-param name="para" select="d:value"/>
-                        </xsl:call-template>
-                    </fo:block>
-                </fo:table-cell>
-            </fo:table-row>
-            </xsl:for-each>
-      </fo:table-body>
-    </fo:table>
-
+    <xsl:if test="$document.element/d:info/d:productnumber/d:ska-field[@type='orgdetail']">
+        <fo:block padding-bottom="1cm" />
+        <fo:block font-size="14pt" font-weight="bold" text-align="center" padding-after="2pt">ORGANISATION DETAILS</fo:block>
+        <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid">
+        <fo:table-column column-number="1" column-width="30%"/>
+        <fo:table-column column-number="2" column-width="70%"/>
+            <fo:table-body start-indent="1pt" end-indent="1pt" font-size="8pt" font-family="{$title.fontset}">
+                <xsl:for-each select="$document.element/d:info/d:productnumber/d:ska-field[@type='orgdetail']">
+                    <fo:table-row>
+                        <fo:table-cell xsl:use-attribute-sets="titlepage.orgdetail-table.cell">
+                            <fo:block text-align="center">
+                                <xsl:value-of select="d:name" />
+                            </fo:block>
+                        </fo:table-cell>
+                        <fo:table-cell xsl:use-attribute-sets="titlepage.orgdetail-table.cell">
+                            <fo:block>
+                                <!-- <xsl:value&#45;of select="d:value" /> -->
+                                <xsl:call-template name="ska.para.format-newlines">
+                                    <xsl:with-param name="para" select="d:value"/>
+                                </xsl:call-template>
+                            </fo:block>
+                        </fo:table-cell>
+                    </fo:table-row>
+                    </xsl:for-each>
+            </fo:table-body>
+        </fo:table>
+    </xsl:if>
 
 </xsl:template>
 
