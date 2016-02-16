@@ -1115,7 +1115,7 @@
         </xsl:when>
 
         <xsl:when test="$pageclass = 'titlepage' and $sequence='first'">
-            <!-- nothing for now --!>
+            <!-- nothing for now -->
         </xsl:when>
     </xsl:choose>
 
@@ -1268,19 +1268,19 @@
     </xsl:variable>
 
     <!-- Really output a header? -->
-    <!-- SKA: Comment out to prevent headers -->
-    <xsl:choose>
-      <xsl:when test="$pageclass = 'titlepage' and $gentext-key = 'book'
-        and $sequence='first'">
-        <xsl:copy-of select="$candidate"/>
-      </xsl:when>
-      <xsl:when test="$sequence = 'blank' and $headers.on.blank.pages = 0">
-        <!-- no output -->
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:copy-of select="$candidate"/>
-      </xsl:otherwise>
-    </xsl:choose>
+    <!-- SKA: Commented out to prevent headers -->
+    <!-- <xsl:choose> -->
+    <!--   <xsl:when test="$pageclass = 'titlepage' and $gentext&#45;key = 'book' -->
+    <!--     and $sequence='first'"> -->
+    <!--     <xsl:copy&#45;of select="$candidate"/> -->
+    <!--   </xsl:when> -->
+    <!--   <xsl:when test="$sequence = 'blank' and $headers.on.blank.pages = 0"> -->
+    <!--     <!&#45;&#45; no output &#45;&#45;> -->
+    <!--   </xsl:when> -->
+    <!--   <xsl:otherwise> -->
+    <!--     <xsl:copy&#45;of select="$candidate"/> -->
+    <!--   </xsl:otherwise> -->
+    <!-- </xsl:choose> -->
   </xsl:template>
 
 
