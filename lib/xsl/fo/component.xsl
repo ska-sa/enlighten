@@ -430,13 +430,13 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
       <xsl:variable name="toc.params">
         <xsl:call-template name="find.path.params">
-          <xsl:with-param name="table" 
+          <xsl:with-param name="table"
                           select="normalize-space($generate.toc)"/>
         </xsl:call-template>
       </xsl:variable>
       <xsl:if test="contains($toc.params, 'toc')">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" 
+          <xsl:with-param name="toc.title.p"
                           select="contains($toc.params, 'title')"/>
         </xsl:call-template>
         <xsl:call-template name="component.toc.separator"/>
@@ -461,7 +461,12 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
   </xsl:variable>
 
   <xsl:variable name="master-reference">
-    <xsl:call-template name="select.pagemaster"/>
+    <xsl:choose>
+      <xsl:when test="@layout='landscape'">body-landscape</xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="select.pagemaster"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:variable>
 
   <fo:page-sequence hyphenate="{$hyphenate}"
@@ -528,7 +533,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
       </xsl:variable>
       <xsl:if test="contains($toc.params, 'toc')">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" 
+          <xsl:with-param name="toc.title.p"
                           select="contains($toc.params, 'title')"/>
         </xsl:call-template>
         <xsl:call-template name="component.toc.separator"/>
@@ -620,7 +625,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
       <xsl:if test="contains($toc.params, 'toc')">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" 
+          <xsl:with-param name="toc.title.p"
                           select="contains($toc.params, 'title')"/>
         </xsl:call-template>
         <xsl:call-template name="component.toc.separator"/>
@@ -712,7 +717,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
       <xsl:if test="contains($toc.params, 'toc')">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" 
+          <xsl:with-param name="toc.title.p"
                           select="contains($toc.params, 'title')"/>
         </xsl:call-template>
         <xsl:call-template name="component.toc.separator"/>
@@ -754,8 +759,8 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
     </xsl:if>
 
     <xsl:if test="$passivetex.extensions != 0">
-      <fotex:bookmark xmlns:fotex="http://www.tug.org/fotex" 
-                      fotex-bookmark-level="{count(ancestor::*)+2}" 
+      <fotex:bookmark xmlns:fotex="http://www.tug.org/fotex"
+                      fotex-bookmark-level="{count(ancestor::*)+2}"
                       fotex-bookmark-label="{$id}">
         <xsl:value-of select="$titleabbrev"/>
       </fotex:bookmark>
@@ -783,7 +788,7 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
       <xsl:if test="contains($toc.params, 'toc')">
         <xsl:call-template name="component.toc">
-          <xsl:with-param name="toc.title.p" 
+          <xsl:with-param name="toc.title.p"
                           select="contains($toc.params, 'title')"/>
         </xsl:call-template>
         <xsl:call-template name="component.toc.separator"/>
@@ -886,4 +891,3 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 </xsl:template>
 
 </xsl:stylesheet>
-
