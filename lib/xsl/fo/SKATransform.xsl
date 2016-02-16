@@ -110,10 +110,11 @@
         <xsl:otherwise>1</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-    <xsl:if test="(normalize-space($verso.content) != '') or ($verso.elements.count &gt; 0)">
-      <fo:block><xsl:copy-of select="$verso.content"/></fo:block>
-    </xsl:if>
-    <xsl:call-template name="book.titlepage.separator"/>
+    <!-- *** SKA: Commented out this if which causes a 'Publication date' text entry *** -->
+    <!-- <xsl:if test="(normalize&#45;space($verso.content) != '') or ($verso.elements.count &#38;gt; 0)"> -->
+    <!--   <fo:block><xsl:copy&#45;of select="$verso.content"/></fo:block> -->
+    <!-- </xsl:if> -->
+    <!-- <xsl:call&#45;template name="book.titlepage.separator"/> -->
   </fo:block>
 </xsl:template>
 
@@ -632,7 +633,6 @@
                         </fo:table-cell>
                         <fo:table-cell xsl:use-attribute-sets="titlepage.orgdetail-table.cell">
                             <fo:block>
-                                <!-- <xsl:value&#45;of select="d:value" /> -->
                                 <xsl:call-template name="ska.para.format-newlines">
                                     <xsl:with-param name="para" select="d:value"/>
                                 </xsl:call-template>
