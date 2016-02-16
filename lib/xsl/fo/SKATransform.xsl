@@ -1107,7 +1107,7 @@
                 </fo:block>
 
                 <fo:block xsl:use-attribute-sets="footer.block">
-                Page <fo:page-number/> of <xsl:value-of select="$ebnf.statement.terminator"/>
+                    Page <fo:page-number/> of <fo:page-number-citation ref-id="SKA.VeryLastPage"/>
                 </fo:block>
 
                 </xsl:when>

@@ -267,6 +267,19 @@ xmlns:fo="http://www.w3.org/1999/XSL/Format"
 
   <xsl:call-template name="back.cover"/>
 
+  <!-- *** SKA: Adding a last page reference *** -->
+  <xsl:call-template name="page.sequence">
+      <xsl:with-param name="master-reference" select="'back'"/>
+      <xsl:with-param name="blank-or-not-blank" select="'blank'"/>
+      <xsl:with-param name="content">
+        <xsl:variable name="document.element" select="ancestor-or-self::*" />
+        <fo:block id="SKA.VeryLastPage"/>
+        <fo:block text-align="center" font-size="16pt" space-before="200pt">End of Document <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='TM Number']/d:value" />
+        </fo:block>
+        <fo:block text-align="center" font-size="16pt" space-before="10pt">Page intentionally left blank</fo:block>
+      </xsl:with-param>
+  </xsl:call-template>
+
 </xsl:template>
 
 <xsl:template match="d:book/d:bookinfo"></xsl:template>
