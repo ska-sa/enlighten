@@ -1047,69 +1047,6 @@
     </xsl:choose>
   </xsl:template>
 
-  <!--******************************-->
-
-  <xsl:template name="Xfooter.content">
-    <xsl:param name="pageclass" select="''"/>
-    <xsl:param name="sequence" select="''"/>
-    <xsl:param name="position" select="''"/>
-    <xsl:param name="gentext-key" select="''"/>
-
-    <fo:block>
-        <xsl:value-of select="$pageclass"/>
-        <xsl:text>, </xsl:text>
-        <xsl:value-of select="$sequence"/>
-        <xsl:text>, </xsl:text>
-        <xsl:value-of select="$position"/>
-        <xsl:text>, </xsl:text>
-        <xsl:value-of select="$gentext-key"/>
-    </fo:block>
-
-    <fo:block>
-      <!-- pageclass can be front, body, back -->
-      <!-- sequence can be odd, even, first, blank -->
-      <!-- position can be left, center, right -->
-      <xsl:choose>
-        <xsl:when test="$pageclass = 'titlepage'">
-          <!-- nop; no footer on title pages -->
-        </xsl:when>
-
-        <xsl:when test="$double.sided != 0 and $sequence = 'even'
-          and $position='left'">
-          <fo:page-number/>
-        </xsl:when>
-
-        <xsl:when
-          test="$double.sided != 0 and ($sequence = 'odd' or $sequence = 'first')
-          and $position='right'">
-          <fo:page-number/>
-        </xsl:when>
-
-        <xsl:when test="$double.sided = 0 and $position='center'">
-          <!-- nop -->
-        </xsl:when>
-
-        <xsl:when test="$sequence='blank'">
-          <xsl:choose>
-            <xsl:when test="$double.sided != 0 and $position = 'left'">
-              <fo:page-number/>
-            </xsl:when>
-            <xsl:when test="$double.sided = 0 and $position = 'center'">
-              <fo:page-number/>
-            </xsl:when>
-            <xsl:otherwise>
-              <!-- nop -->
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:when>
-
-
-        <xsl:otherwise>
-          <!-- nop -->
-        </xsl:otherwise>
-      </xsl:choose>
-    </fo:block>
-  </xsl:template>
 
 <!--******************************-->
 
@@ -1120,7 +1057,6 @@
   <xsl:attribute name="font-size">8pt</xsl:attribute>
   </xsl:attribute-set>
 
-  <!-- <xsl:template name="header.content"> -->
   <xsl:template name="footer.content">
     <xsl:param name="pageclass" select="''"/>
     <xsl:param name="sequence" select="''"/>
@@ -1128,109 +1064,61 @@
     <xsl:param name="gentext-key" select="''"/>
 
     <xsl:variable name="document.element" select="ancestor-or-self::*" />
-    <!-- <xsl:variable name="docnumber" select="'[docnumber unknown]'" /> -->
-    <!-- <xsl:variable name="docclass" select="'[docclass unknown]'" /> -->
-    <!-- <xsl:for&#45;each select="$document.element/d:info/d:productnumber/d:ska&#45;field[@type='docinfo']"> -->
-    <!--     <fo:block> -->
-    <!--     <xsl:value&#45;of select="d:name" /> -->
-    <!--     </fo:block> -->
-    <!--     <xsl:choose> -->
-    <!--         <xsl:when test="d:name='TM Number'"> -->
-    <!--             <xsl:variable name="docnumber" select="d:value" /> -->
-    <!--         </xsl:when> -->
-    <!--         <xsl:when test="d:name='Document Classification'"> -->
-    <!--             <xsl:variable name="docclass" select="d:value" /> -->
-    <!--         </xsl:when> -->
-    <!--     </xsl:choose> -->
-    <!-- </xsl:for&#45;each> -->
-    <!-- <xsl:variable name="docrev" select="$document.element/d:info/d:issuenum[1]"/> -->
-    <!-- <xsl:variable name="docdate" select="$document.element/d:info/d:pubdate[1]"/> -->
 
-      <xsl:choose>
+    <xsl:choose>
         <xsl:when test="$pageclass != 'titlepage' or ($pageclass = 'titlepage' and $sequence!='first')">
-           <xsl:choose>
-             <xsl:when test="$sequence='blank'">
-               <!-- no output -->
-             </xsl:when>
+            <xsl:choose>
+                <xsl:when test="$sequence='blank'">
+                <!-- no output -->
+                </xsl:when>
 
-             <xsl:when test="$double.sided = 0 and $position='left'">
+                <xsl:when test="$double.sided = 0 and $position='left'">
 
                 <fo:block xsl:use-attribute-sets="footer.block">
-                 Document No.: <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='TM Number']/d:value" />
-                 Revision: <xsl:value-of select="$document.element/d:info/d:issuenum[1]"/>
+                    Document No.: <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='TM Number']/d:value" />
+                    Revision: <xsl:value-of select="$document.element/d:info/d:issuenum[1]"/>
                 </fo:block>
 
-               <xsl:variable name="date">
-                  Date:
-                 <xsl:choose>
-                   <xsl:when test="$document.element/d:info/d:pubdate[1]">
-                     <xsl:value-of select="$document.element/d:info/d:pubdate[1]"/>
-                   </xsl:when>
-                   <xsl:otherwise>[could not find document date]</xsl:otherwise>
-                 </xsl:choose>
-               </xsl:variable>
-               <fo:block xsl:use-attribute-sets="footer.block">
-               <xsl:value-of select="$date"/>
-               </fo:block>
-             </xsl:when>
+                <xsl:variable name="date">
+                    Date:
+                    <xsl:choose>
+                    <xsl:when test="$document.element/d:info/d:pubdate[1]">
+                        <xsl:value-of select="$document.element/d:info/d:pubdate[1]"/>
+                    </xsl:when>
+                    <xsl:otherwise>[could not find document date]</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <fo:block xsl:use-attribute-sets="footer.block">
+                <xsl:value-of select="$date"/>
+                </fo:block>
+                </xsl:when>
 
-             <xsl:when test="$double.sided = 0 and $position = 'center'">
-               <fo:block text-align="center">
-               </fo:block>
-             </xsl:when>
+                <xsl:when test="$double.sided = 0 and $position = 'center'">
+                <fo:block text-align="center">
+                </fo:block>
+                </xsl:when>
 
-             <xsl:when test="$position = 'right'" >
-               <fo:block xsl:use-attribute-sets="footer.block" text-align="end">
-                 <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='Document Classification']/d:value" />
-               </fo:block>
-               <fo:block xsl:use-attribute-sets="footer.block" text-align="end">
-                 Author: <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='Primary Author']/d:value" />
-               </fo:block>
+                <xsl:when test="$position = 'right'" >
+                <fo:block xsl:use-attribute-sets="footer.block" text-align="end">
+                    <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='Document Classification']/d:value" />
+                </fo:block>
+                <fo:block xsl:use-attribute-sets="footer.block" text-align="end">
+                    Author: <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='Primary Author']/d:value" />
+                </fo:block>
 
                 <fo:block xsl:use-attribute-sets="footer.block">
                 Page <fo:page-number/> of <xsl:value-of select="$ebnf.statement.terminator"/>
                 </fo:block>
 
-             </xsl:when>
-           </xsl:choose>
+                </xsl:when>
+            </xsl:choose>
         </xsl:when>
 
         <xsl:when test="$pageclass = 'titlepage' and $sequence='first'">
-          <xsl:choose>
-            <xsl:when test="$position = 'left'">
-              <fo:external-graphic content-height="1.5cm">
-                <xsl:attribute name="src">
-                  <xsl:call-template name="fo-external-image">
-                    <xsl:with-param name="filename" select="$ESO.logo.image"/>
-                  </xsl:call-template>
-                </xsl:attribute>
-              </fo:external-graphic>
-            </xsl:when>
-            <xsl:when test="$position = 'center'">
-              <fo:table table-layout="fixed">
-                <fo:table-column column-number="1" column-width="proportional-column-width(1)"/>
-                <fo:table-column column-number="2" column-width="proportional-column-width(1)"/>
-                <fo:table-column column-number="3" column-width="proportional-column-width(1)"/>
-                <fo:table-body start-indent="0pt" end-indent="0pt">
-                  <fo:table-row>
-                    <fo:table-cell><fo:block text-align="left">European Organisation</fo:block> <fo:block text-align="left">for Astronomical Research in the Southern Hemisphere</fo:block>
-                    </fo:table-cell>
-                    <fo:table-cell>
-                      <fo:block text-align="left">Organisation Européenne pour des Recherches Astronomiques dans I'Hémisphère Austral</fo:block>
-                    </fo:table-cell>
-                    <fo:table-cell>
-                      <fo:block text-align="left">Europäische Organisation für astronomische Forschung in der südlichen Hemisphäre</fo:block>
-                    </fo:table-cell>
-                  </fo:table-row>
-                </fo:table-body>
-              </fo:table>
-            </xsl:when>
-            <xsl:when test="$position = 'right'">
-<!--              no output-->
-              </xsl:when>
-          </xsl:choose>
+            <!-- nothing for now --!>
         </xsl:when>
-     </xsl:choose>
+    </xsl:choose>
+
   </xsl:template>
 
   <!--******************************-->
@@ -1381,18 +1269,18 @@
 
     <!-- Really output a header? -->
     <!-- SKA: Comment out to prevent headers -->
-    <!-- <xsl:choose> -->
-    <!--   <xsl:when test="$pageclass = 'titlepage' and $gentext&#45;key = 'book' -->
-    <!--     and $sequence='first'"> -->
-    <!--     <xsl:copy&#45;of select="$candidate"/> -->
-    <!--   </xsl:when> -->
-    <!--   <xsl:when test="$sequence = 'blank' and $headers.on.blank.pages = 0"> -->
-    <!--     <!&#45;&#45; no output &#45;&#45;> -->
-    <!--   </xsl:when> -->
-    <!--   <xsl:otherwise> -->
-    <!--     <xsl:copy&#45;of select="$candidate"/> -->
-    <!--   </xsl:otherwise> -->
-    <!-- </xsl:choose> -->
+    <xsl:choose>
+      <xsl:when test="$pageclass = 'titlepage' and $gentext-key = 'book'
+        and $sequence='first'">
+        <xsl:copy-of select="$candidate"/>
+      </xsl:when>
+      <xsl:when test="$sequence = 'blank' and $headers.on.blank.pages = 0">
+        <!-- no output -->
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:copy-of select="$candidate"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 
