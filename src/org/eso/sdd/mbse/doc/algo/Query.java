@@ -720,6 +720,10 @@ public class Query {
 		reqText = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Text"));
 		//GLR added clean text for xml reading
 		reqText = reqText.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;");
+		//GLR added section to handle hmlt text for requirements
+		if (reqText.indexOf("<html>") != -1) {
+			reqText = Utilities.convertHTML2DocBook(reqText, false);
+		}
 		reqId   = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Id"));
 		reqName = Utilities.replaceBracketCharacters(namedRefEl.getName());
 
