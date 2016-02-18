@@ -24,3 +24,4 @@
 # Where rsc gets installed for tests
 tags
 /bin/
+/MDDist/

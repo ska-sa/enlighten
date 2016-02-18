@@ -718,12 +718,12 @@ public class Query {
 		String reqName, reqId,  reqText = null;
 		String content = "";
 		reqText = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Text"));
-		//GLR added clean text for xml reading
-		reqText = reqText.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;");
+		
 		//GLR added section to handle hmlt text for requirements
 		if (reqText.indexOf("<html>") != -1) {
-			reqText = Utilities.convertHTML2DocBook(reqText, false);
+			reqText =  Utilities.convertHTML2DocBook(reqText, false);
 		}
+		
 		reqId   = ((String)StereotypesHelper.getStereotypePropertyFirst(namedRefEl, theUtilities.getTheRequirementStereotype(), "Id"));
 		reqName = Utilities.replaceBracketCharacters(namedRefEl.getName());
 
@@ -738,7 +738,7 @@ public class Query {
 			//content += "</tbody></tgroup></table>" + lE;
 		} else {
 			// we're showing many less attributes of a requirement than in table mode
-			content +=   reqId + "," + "\"" + reqText + "\"" + "<para></para>";
+			content += "<emphasis role=\"underline\">" + reqId + "- " + reqName +":"+ "</emphasis>" + reqText  + "<para></para>";
 		}
 		// here we assume that if it is a requirement other features like ports, constraints 
 		// and that like do not need to be documented.
