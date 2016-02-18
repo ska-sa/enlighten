@@ -5782,9 +5782,9 @@ length (not a percentage).</para>
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="normal.para.spacing">
-  <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.2em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.3em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.4em</xsl:attribute>
 </xsl:attribute-set>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.doctitle"> 
