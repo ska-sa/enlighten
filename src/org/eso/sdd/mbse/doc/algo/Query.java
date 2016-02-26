@@ -73,10 +73,7 @@ public class Query {
 		el = theQueryElement;
 		
 		referenced = StereotypesHelper.getStereotypePropertyValue(el ,theUtilities.getTheQueryStereotype(), "element");
-		//Gerhard le roux customised code to load a smart package list
-		//if (referenced.isEmpty()) {
-		//	referenced = StereotypesHelper.getStereotypePropertyValue(el,theUtilities.getTheQueryStereotype(),"test");
-		//}
+
 		queryType         = getQueryType(el);
 		tableRep          = isQueryRepTable(el);
 		useText           = theUtilities.isTextToBeUsed(el,theUtilities.getTheQueryStereotype(), "useQueryText");
@@ -743,7 +740,7 @@ public class Query {
 			//content += "</tbody></tgroup></table>" + lE;
 		} else {
 			// we're showing many less attributes of a requirement than in table mode
-			content += "<emphasis role=\"underline\">" + reqId + " - " + reqName +":"+ "</emphasis>" + reqText  + "<para></para><para></para>";
+			content += "<emphasis role=\"underline\">" + reqId + " - " + reqName +":  "+ "</emphasis>" + reqText  + "<para></para><para></para>";
 		}
 		// here we assume that if it is a requirement other features like ports, constraints 
 		// and that like do not need to be documented.

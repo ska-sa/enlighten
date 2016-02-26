@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -1040,12 +1041,14 @@ public class CommonGenerator implements RunnableWithProgress {
 		Vector<String>  columnIds     = new Vector<String>();
 		Vector<Integer> columnWidth   = new Vector<Integer>();
 		Vector<String>  rowElementsId = new Vector<String>();
+		
 
 		Object diagramObject = StereotypesHelper
 				.getStereotypePropertyFirst(el,
 						theDocBookTDStereo,
 						"diagramTable");
 		logDebugIndent(el,"is DiagramTable");
+		
 		if(theDiagramTableStereo == null) { 
 			System.err.println("ERROR: The stereotype for  DiagramTable appears to be empty.");
 		}
@@ -1139,10 +1142,27 @@ public class CommonGenerator implements RunnableWithProgress {
 				colIdx++;
 			}
 		}
-
-		for(Iterator<Element> it = GenericTableManager.getRowElements(theDiagram).iterator(); it.hasNext(); ) { 
-				rowElementsId.add(it.next().getID());
+		//Gerhard le Roux customisation to filter elements based on setting in stereotype
+		String Filter = (String) StereotypesHelper.getStereotypePropertyFirst(el,theDocBookTDStereo,"Filter");
+		String FilterOnProperty = (String) StereotypesHelper.getStereotypePropertyFirst(el,theDocBookTDStereo,"FilterOnProperty");
+		boolean FilterTable = false;
+		if (Filter != null & FilterOnProperty != null){
+			FilterTable = true;
 		}
+		List<Element> RowElements = new ArrayList<Element>(GenericTableManager.getRowElements(theDiagram));
+		for (Element RowElement : RowElements){
+			if (FilterTable) {
+				Collection<String> PropertyValueList = (Collection<String>) RowElement.refGetValue(FilterOnProperty);
+				//because the list is a singleton we can always work on the first element in list
+				String PropertyValue = PropertyValueList.iterator().next();
+				if (PropertyValue.contains(Filter)){
+					rowElementsId.add(RowElement.getID());
+				}
+			} else {
+				rowElementsId.add(RowElement.getID());
+			}
+		}
+
 
 		tablePrefix = lE + "<table annotations=\"Diagram Table  rows:" + rowElementsId.size() + "\" " + "xml:id=\""
 				+ Utilities.uniqueID(el) + "\" "
@@ -1186,127 +1206,136 @@ public class CommonGenerator implements RunnableWithProgress {
 		// remove the _NUMBER_ columns ID
 		columnIds.removeElementAt(0);
 
-		// LOOP OVER ROWS		
-		for (String objectID : rowElementsId) {
-
-			elementByID = (Element) targetProject.getElementByID(objectID);
-			// iterate over all selected columns
-			if(elementByID == null) {
-				logDebugIndent(el,"Cannot retrieve element for given ID " + objectID);
-				continue;
-			}
+		if (rowElementsId.size() == 0) { //i.e. the filter mechanism ended up with an empty list and therefore adds an empty table
 			sContent += "<row>" +lE;
 			sContent += "<entry align=\"left\">" + rowIdx++	+ "</entry>" + lE;
-			
-			// LOOP OVER COLUMNS
 			for (String colId : columnIds) {
-				// use MD diagramtabletool to retrieve elementInfo
-				com.nomagic.magicdraw.properties.Property theProp = GenericTableManager.getCellValue(theDiagram, elementByID, colId);
-				if(theProp == null) { 
-					logDebugIndent(el,"Null property returned for " + colId + " skipping");
+				sContent += "<entry align=\"left\">" + "  "	+ "</entry>" + lE;	
+			}
+			sContent += "</row>" + lE;
+		} else {
+			// LOOP OVER ROWS
+			for (String objectID : rowElementsId) {
+	
+				elementByID = (Element) targetProject.getElementByID(objectID);
+				// iterate over all selected columns
+				if(elementByID == null) {
+					logDebugIndent(el,"Cannot retrieve element for given ID " + objectID);
 					continue;
 				}
-				//logDebugIndent(el,"Property is of type: " + theProp.getClass().getName());
-				String elementInfo =  null;
-				if(theProp instanceof com.nomagic.magicdraw.properties.StringProperty ) { 
-					elementInfo = theProp.getValueStringRepresentation();
-					elementInfo = Utilities.convertHTML2DocBook(elementInfo, false);
-					elementInfo = "<entry align=\"left\" annotations=\"StringProperty\" >"	+ elementInfo + "</entry>" +lE;
-				} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementListProperty ) {
-					String subTable = "";
-					com.nomagic.magicdraw.properties.ElementListProperty elp = (com.nomagic.magicdraw.properties.ElementListProperty)theProp;
-					Element[] theSubEle = elp.getValue();
-					if(theSubEle.length > 0) {
-						subTable += "<entrytbl cols='" + theSubEle.length + "'>"+ lE + "<tbody>" + lE;
-						for(int i = 0; i < theSubEle.length; i++ ) {
-							Element theEle = theSubEle[i];
-							if(theEle != null) {
-								String theRep = null;
-								String theAnno = theEle.getClass().getName();
-								if(theEle.getHumanType().equals("Literal String")) {
-									LiteralString ls = (LiteralString)theEle;
-									theRep = ls.getValue();	
-								} else if(theEle.getHumanType().equals("Instance Value")){ 
-									//logDebugIndent(el, ">>> "+theEle.getClass().getName()+ " " + theEle.getHumanType());
-									InstanceValue iv = (InstanceValue)theEle;
-									theRep = iv.getInstance().getName();
-								} else if(theEle.getHumanType().equals("Slot")){ 
-									Slot theSlot = (Slot)theEle;
-									if(theSlot.getValue().iterator().next() instanceof LiteralString) {
-										theRep = ( (LiteralString)theSlot.getValue().iterator().next() ).getValue();
+				sContent += "<row>" +lE;
+				sContent += "<entry align=\"left\">" + rowIdx++	+ "</entry>" + lE;
+				
+				// LOOP OVER COLUMNS
+				for (String colId : columnIds) {
+					// use MD diagramtabletool to retrieve elementInfo
+					com.nomagic.magicdraw.properties.Property theProp = GenericTableManager.getCellValue(theDiagram, elementByID, colId);
+					if(theProp == null) { 
+						logDebugIndent(el,"Null property returned for " + colId + " skipping");
+						continue;
+					}
+					//logDebugIndent(el,"Property is of type: " + theProp.getClass().getName());
+					String elementInfo =  null;
+					if(theProp instanceof com.nomagic.magicdraw.properties.StringProperty ) { 
+						elementInfo = theProp.getValueStringRepresentation();
+						elementInfo = Utilities.convertHTML2DocBook(elementInfo, false);
+						elementInfo = "<entry align=\"left\" annotations=\"StringProperty\" >"	+ elementInfo + "</entry>" +lE;
+					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementListProperty ) {
+						String subTable = "";
+						com.nomagic.magicdraw.properties.ElementListProperty elp = (com.nomagic.magicdraw.properties.ElementListProperty)theProp;
+						Element[] theSubEle = elp.getValue();
+						if(theSubEle.length > 0) {
+							subTable += "<entrytbl cols='" + theSubEle.length + "'>"+ lE + "<tbody>" + lE;
+							for(int i = 0; i < theSubEle.length; i++ ) {
+								Element theEle = theSubEle[i];
+								if(theEle != null) {
+									String theRep = null;
+									String theAnno = theEle.getClass().getName();
+									if(theEle.getHumanType().equals("Literal String")) {
+										LiteralString ls = (LiteralString)theEle;
+										theRep = ls.getValue();	
+									} else if(theEle.getHumanType().equals("Instance Value")){ 
+										//logDebugIndent(el, ">>> "+theEle.getClass().getName()+ " " + theEle.getHumanType());
+										InstanceValue iv = (InstanceValue)theEle;
+										theRep = iv.getInstance().getName();
+									} else if(theEle.getHumanType().equals("Slot")){ 
+										Slot theSlot = (Slot)theEle;
+										if(theSlot.getValue().iterator().next() instanceof LiteralString) {
+											theRep = ( (LiteralString)theSlot.getValue().iterator().next() ).getValue();
+										} else {
+											theRep = "ERROR";
+										}
 									} else {
-										theRep = "ERROR";
+										logDebugIndent(el, ">>> UNKNOWN "+theEle.getClass().getName()+ " " + theEle.getHumanType());
+										String name = "";
+										String type = "";
+										if(theEle instanceof NamedElement) { 
+											name = ((NamedElement)theEle).getName();
+										}
+										if(theEle instanceof TypedElement) { 
+											type = ((TypedElement)theEle).getType().getName();
+										}
+										theRep = name + ":"+ type;
 									}
-								} else {
-									logDebugIndent(el, ">>> UNKNOWN "+theEle.getClass().getName()+ " " + theEle.getHumanType());
-									String name = "";
-									String type = "";
-									if(theEle instanceof NamedElement) { 
-										name = ((NamedElement)theEle).getName();
-									}
-									if(theEle instanceof TypedElement) { 
-										type = ((TypedElement)theEle).getType().getName();
-									}
-									theRep = name + ":"+ type;
+	
+									subTable += "<row><entry annotations=\""+theAnno+"\">" + Utilities.transformSpecialCharacter(theRep) + "</entry></row>"+lE;
+									//logDebugIndent(el, " "+theEle.getClass().getName()+ " " + theEle.getHumanType());
 								}
-
-								subTable += "<row><entry annotations=\""+theAnno+"\">" + Utilities.transformSpecialCharacter(theRep) + "</entry></row>"+lE;
-								//logDebugIndent(el, " "+theEle.getClass().getName()+ " " + theEle.getHumanType());
 							}
+	
+							subTable += "</tbody>" + lE + "</entrytbl>" + lE;
 						}
-
-						subTable += "</tbody>" + lE + "</entrytbl>" + lE;
-					}
-					elementInfo = subTable;
-					
-				} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementProperty ) {
-					if(theProp.getName().equals("Type")) { 
-						TypedElement te = (TypedElement)elementByID;
-						elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
-								Utilities.convertHTML2DocBook(te.getType().getName(), false) 
-									+ "</entry>" +lE;
-					} else {
-						elementInfo = "<entry align=\"left\" annotations=\"ElementProperty\" >"	+ 
-								Utilities.convertHTML2DocBook(theProp.getValueStringRepresentation(), false) 
-									+ "</entry>" +lE;
-					}
-				} else {
-					logDebugIndent(el, " WARNING: unidentified type: " + theProp.getClass().getName() + " for column: " + colId);
-					Object theUnknown = theProp.getValue();
-					if(theUnknown instanceof Object[]) {
-						String subTable = "<entrytbl cols='1'>"+ lE + "<tbody>" + lE;								
-						Object[] theArray = (Object[])theUnknown;
-						for(int i = 0; i < theArray.length;i++) {
-							String theAnno = null;
-							String theRep = "fault";
-							if(theArray[i] instanceof com.nomagic.magicdraw.properties.StringProperty) {
-								theAnno = theArray[i].getClass().getName();
-								com.nomagic.magicdraw.properties.StringProperty sp = (com.nomagic.magicdraw.properties.StringProperty)theArray[i];
-								theRep = sp.getValueStringRepresentation();
-							}
-							subTable += "<row>" + lE + "<entry annotation=\"" + theAnno + "\" >" + 
-									Utilities.transformSpecialCharacter(Utilities.convertHTML2DocBook(theRep, false)) + 
-									"</entry>"	+ lE + "</row>"+lE;									
-						}
-						subTable += "</tbody>" + lE + "</entrytbl>" + lE;
 						elementInfo = subTable;
-
+						
+					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementProperty ) {
+						if(theProp.getName().equals("Type")) { 
+							TypedElement te = (TypedElement)elementByID;
+							elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
+									Utilities.convertHTML2DocBook(te.getType().getName(), false) 
+										+ "</entry>" +lE;
+						} else {
+							elementInfo = "<entry align=\"left\" annotations=\"ElementProperty\" >"	+ 
+									Utilities.convertHTML2DocBook(theProp.getValueStringRepresentation(), false) 
+										+ "</entry>" +lE;
+						}
 					} else {
-						elementInfo = "<entry align=\"left\" annotations=\"" + 
-								theProp.getClass().getName() + "\" >"	+ 
-									theProp.getValueStringRepresentation() + "</entry>" +lE;
+						logDebugIndent(el, " WARNING: unidentified type: " + theProp.getClass().getName() + " for column: " + colId);
+						Object theUnknown = theProp.getValue();
+						if(theUnknown instanceof Object[]) {
+							String subTable = "<entrytbl cols='1'>"+ lE + "<tbody>" + lE;								
+							Object[] theArray = (Object[])theUnknown;
+							for(int i = 0; i < theArray.length;i++) {
+								String theAnno = null;
+								String theRep = "fault";
+								if(theArray[i] instanceof com.nomagic.magicdraw.properties.StringProperty) {
+									theAnno = theArray[i].getClass().getName();
+									com.nomagic.magicdraw.properties.StringProperty sp = (com.nomagic.magicdraw.properties.StringProperty)theArray[i];
+									theRep = sp.getValueStringRepresentation();
+								}
+								subTable += "<row>" + lE + "<entry annotation=\"" + theAnno + "\" >" + 
+										Utilities.transformSpecialCharacter(Utilities.convertHTML2DocBook(theRep, false)) + 
+										"</entry>"	+ lE + "</row>"+lE;									
+							}
+							subTable += "</tbody>" + lE + "</entrytbl>" + lE;
+							elementInfo = subTable;
+	
+						} else {
+							elementInfo = "<entry align=\"left\" annotations=\"" + 
+									theProp.getClass().getName() + "\" >"	+ 
+										theProp.getValueStringRepresentation() + "</entry>" +lE;
+						}
 					}
-				}
-
-				if (elementByID != null) {
-					sContent += elementInfo;
-				} else {
-					sContent += "<entry align=\"left\">"	+ "NULL" + "</entry>";
-				}
-			} // loop over column id
-			rowIndex++;
-			sContent += "</row>" + lE;
-		} // loop over ObjectID
+	
+					if (elementByID != null) {
+						sContent += elementInfo;
+					} else {
+						sContent += "<entry align=\"left\">"	+ "NULL" + "</entry>";
+					}
+				} // loop over column id
+				rowIndex++;
+				sContent += "</row>" + lE;
+			} // loop over ObjectID
+		}
 		sContent += "</tbody></tgroup></table>" + lE;
 		content.insert(0,sContent);
 	}
