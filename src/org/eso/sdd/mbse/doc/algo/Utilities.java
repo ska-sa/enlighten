@@ -591,7 +591,9 @@ public class Utilities {
 		// <font face="Times New Roman">
 		content = content.replaceAll("<font[^\\>]*>", "");
 		content = content.replaceAll("</font>", "");
-
+		//gerhard le Roux add strike through handling
+		content = content.replaceAll("<strike>", "<emphasis role=\"strikethrough\">");
+		content = content.replaceAll("</strike>", "</emphasis>");
 
 		content = content.replaceAll("<strong[^\\>]*>", "<emphasis role=\"bold\">");
 		content = content.replaceAll("</strong>", "</emphasis>");
