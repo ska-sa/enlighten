@@ -1154,9 +1154,11 @@ public class CommonGenerator implements RunnableWithProgress {
 			if (FilterTable) {
 				Collection<String> PropertyValueList = (Collection<String>) RowElement.refGetValue(FilterOnProperty);
 				//because the list is a singleton we can always work on the first element in list
-				String PropertyValue = PropertyValueList.iterator().next();
-				if (PropertyValue.contains(Filter)){
-					rowElementsId.add(RowElement.getID());
+				if (PropertyValueList.iterator().hasNext()) {
+					String PropertyValue = PropertyValueList.iterator().next();
+					if (PropertyValue.contains(Filter)){
+						rowElementsId.add(RowElement.getID());
+					}
 				}
 			} else {
 				rowElementsId.add(RowElement.getID());
@@ -1230,12 +1232,13 @@ public class CommonGenerator implements RunnableWithProgress {
 				for (String colId : columnIds) {
 					// use MD diagramtabletool to retrieve elementInfo
 					com.nomagic.magicdraw.properties.Property theProp = GenericTableManager.getCellValue(theDiagram, elementByID, colId);
+					String elementInfo =  null;
 					if(theProp == null) { 
+						elementInfo = "<entry></entry> ";//addes an empty cell if no property have been defined
 						logDebugIndent(el,"Null property returned for " + colId + " skipping");
 						continue;
 					}
 					//logDebugIndent(el,"Property is of type: " + theProp.getClass().getName());
-					String elementInfo =  null;
 					if(theProp instanceof com.nomagic.magicdraw.properties.StringProperty ) { 
 						elementInfo = theProp.getValueStringRepresentation();
 						elementInfo = Utilities.convertHTML2DocBook(elementInfo, false);
