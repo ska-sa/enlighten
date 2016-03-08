@@ -1249,7 +1249,8 @@ public class CommonGenerator implements RunnableWithProgress {
 						com.nomagic.magicdraw.properties.ElementListProperty elp = (com.nomagic.magicdraw.properties.ElementListProperty)theProp;
 						Element[] theSubEle = elp.getValue();
 						if(theSubEle.length > 0) {
-							subTable += "<entrytbl cols='" + theSubEle.length + "'>"+ lE + "<tbody>" + lE;
+							//GLR changed nr of cols to static 1
+							subTable += "<entrytbl cols='1'>"+ lE + "<tbody>" + lE;
 							for(int i = 0; i < theSubEle.length; i++ ) {
 								Element theEle = theSubEle[i];
 								if(theEle != null) {
