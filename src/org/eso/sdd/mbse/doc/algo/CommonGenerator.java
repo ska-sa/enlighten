@@ -1234,10 +1234,11 @@ public class CommonGenerator implements RunnableWithProgress {
 					com.nomagic.magicdraw.properties.Property theProp = GenericTableManager.getCellValue(theDiagram, elementByID, colId);
 					String elementInfo =  null;
 					if(theProp == null) { 
-						elementInfo = "<entry></entry> ";//addes an empty cell if no property have been defined
+						elementInfo = "<entry></entry> ";//adds an empty cell if no property have been defined
 						logDebugIndent(el,"Null property returned for " + colId + " skipping");
 						continue;
 					}
+					//"Property is of type: " + theProp.getClass().getName()
 					//logDebugIndent(el,"Property is of type: " + theProp.getClass().getName());
 					if(theProp instanceof com.nomagic.magicdraw.properties.StringProperty ) { 
 						elementInfo = theProp.getValueStringRepresentation();
@@ -1287,6 +1288,8 @@ public class CommonGenerator implements RunnableWithProgress {
 							}
 	
 							subTable += "</tbody>" + lE + "</entrytbl>" + lE;
+						} else { //GLR i.e. its an empty list (sometimes this happens with derived properties
+							subTable = "<entrytbl cols='1'><tbody><row><entry></entry></row></tbody></entrytbl>";
 						}
 						elementInfo = subTable;
 						
