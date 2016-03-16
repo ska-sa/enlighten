@@ -1156,7 +1156,8 @@ public class CommonGenerator implements RunnableWithProgress {
 				//because the list is a singleton we can always work on the first element in list
 				if (PropertyValueList.iterator().hasNext()) {
 					String PropertyValue = PropertyValueList.iterator().next();
-					if (PropertyValue.contains(Filter)){
+					//if (PropertyValue.contains(Filter)){
+					if (PropertyValue.matches(Filter)){
 						rowElementsId.add(RowElement.getID());
 					}
 				}
