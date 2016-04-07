@@ -592,20 +592,23 @@ public class Utilities {
 		content = content.replaceAll("<font[^\\>]*>", "");
 		content = content.replaceAll("</font>", "");
 		//gerhard le Roux add strike through handling
-		content = content.replaceAll("<strike>", "<emphasis role=\"strikethrough\">");
+		content = content.replaceAll("<strike(.*)>", "<emphasis role=\"strikethrough\"$1>");
 		content = content.replaceAll("</strike>", "</emphasis>");
 
-		content = content.replaceAll("<strong[^\\>]*>", "<emphasis role=\"bold\">");
+		content = content.replaceAll("<strong[^\\>](.*)>", "<emphasis role=\"bold\"$1>");
 		content = content.replaceAll("</strong>", "</emphasis>");
 
-		content = content.replaceAll("<h[1-6]+>", "<emphasis role=\"bold\">");
-		content = content.replaceAll("</h[1-6]+>", "</emphasis>");
+		content = content.replaceAll("<h[1-6](.*)>", "<emphasis role=\"bold\"$1>");
+		content = content.replaceAll("</h[1-6](.*)>", "</emphasis>");
 
-		content = content.replaceAll("<a [^\\>]*>", "<emphasis role=\"underline\">");
+		content = content.replaceAll("<a [^\\>](.*)>", "<emphasis role=\"underline\"$1>");
 		content = content.replaceAll("</a>", "</emphasis>");
 		
 		content = content.replaceAll("<br>","<linebreak>");
 		content = content.replaceAll("</br>","</linebreak>");
+		//gerhard le Roux replace spans
+		//content = content.replaceAll("<span.*>","");
+		//content = content.replaceAll("</span>","");
 		
 		ma = pa.matcher(content);
 		
@@ -639,22 +642,22 @@ public class Utilities {
 		content = content.replaceAll("</li>", paraRepEnd + lE + "</listitem>"
 				+ lE);
 
-		content = content.replaceAll("<ul>", "<itemizedlist>");
+		content = content.replaceAll("<ul(.*)>", "<itemizedlist $1>");
 		content = content.replaceAll("</ul>", "</itemizedlist>");
 
-		content = content.replaceAll("<ol>", "<orderedlist>");
+		content = content.replaceAll("<ol(.*)>", "<orderedlist $1>");
 		content = content.replaceAll("</ol>", "</orderedlist>");
 
-		content = content.replaceAll("<b>", "<emphasis role=\"bold\">");
+		content = content.replaceAll("<b(.*)>", "<emphasis role=\"bold\"$1>");
 		content = content.replaceAll("</b>", "</emphasis>");
 
-		content = content.replaceAll("<u>", "<emphasis role=\"underline\">");
+		content = content.replaceAll("<u(.*)>", "<emphasis role=\"underline\"$1>");
 		content = content.replaceAll("</u>", "</emphasis>");
 
-		content = content.replaceAll("<i>", "<emphasis role=\"italic\">");
+		content = content.replaceAll("<i(.*)>", "<emphasis role=\"italic\"$1>");
 		content = content.replaceAll("</i>", "</emphasis>");
 		
-		content = content.replaceAll("<sup>", "<superscript>");
+		content = content.replaceAll("<sup(.*)>", "<superscript>$1");
 		content = content.replaceAll("</sup>", "</superscript>");
 		
 
