@@ -532,6 +532,9 @@ public class Utilities {
 				.replaceAll("\u00FC", "&#252;")
 				.replaceAll("\u00d6", "&#214;")
 				.replaceAll("\u03bc", "&micro;")
+			//	.replaceAll("&","&amp;")//allow & characters (Gerhard le Roux)
+			//	.replaceAll("&amp;amp;","&amp;") // in case it was done already
+			//	.replaceAll("&amp#","&#") // in case of special characters
 				.replaceAll("\u00F6", "&#246;");
 		content = content.replaceAll("[^\\x20-\\x7e]", "");
 		return content;
