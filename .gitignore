@@ -28,4 +28,5 @@ tags
 # Bin/build directories
 /bin/*
 /MDDist/*
-./MBSEPlugin.zip
+MBSEPlugin.jar
+MBSEPlugin.zip
