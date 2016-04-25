@@ -25,5 +25,7 @@
 /venv
 # Where rsc gets installed for tests
 tags
+# Bin/build directories
 /bin/*
 /MDDist/*
+./MBSEPlugin.zip
