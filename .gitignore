@@ -1,9 +1,11 @@
 
 # /
 /build
-/dist
+/dist/*
 /*.egg-info
 *.pyc
+*.bak
+*.DS_Store
 *~
 *.sw*
 .ropeproject
@@ -23,5 +25,5 @@
 /venv
 # Where rsc gets installed for tests
 tags
-/bin/
-/MDDist/
+/bin/*
+/MDDist/*
