@@ -4,7 +4,6 @@
   xmlns:exsl="http://exslt.org/common" version="1.0" exclude-result-prefixes="exsl d">
 
   <xsl:import href="docbook_custom.xsl"/>
-  <xsl:import href="SKA_TM_Logo.xsl"/>
 
 <!-- This stylesheet was copied from C:\Program Files\Oxygen XML Editor 12\frameworks\docbook\xsl\fo/titlepage-templates.xsl-->
 <!-- changes wrt original are marked with the keyword CHANGE -->
@@ -206,10 +205,14 @@
 <xsl:template name="book.titlepage.recto">
 
     <!-- *** SKA: Titlepage logo *** -->
-    <fo:block>
+    <fo:block space-after="2.5cm">
       <xsl:attribute name="space-before.minimum">8cm</xsl:attribute>
+      <fo:block text-align="center">
+        <!-- SKA: Note that the base path for the plugin is the root of the Cameo install directory -->
+        <fo:external-graphic src="lib/xsl/fo/SKA_TM_Logo.png" content-width="8cm"/>
+      </fo:block>
+      <xsl:attribute name="space-after.minimum">8cm</xsl:attribute>
     </fo:block>
-    <xsl:call-template name="titlepage.logo"/>
     <!-- SKA: Note that all the custom SKA fields are present as XML tags in the
               the 'productnumber' docbook field -->
     <xsl:variable name="document.element" select="ancestor-or-self::*"/>
@@ -979,25 +982,6 @@
     <fo:block/>
   </xsl:template>
 
-  <!-- SKA-TM Titlepage logo -->
-  <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="SKA.logo.image">
-    <refmeta>
-      <refentrytitle>SKA.logo.image</refentrytitle>
-      <refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo>
-    </refmeta>
-    <refnamediv>
-      <refname>SKA.logo.image</refname>
-      <refpurpose>The URI of the image to be used for draft watermarks</refpurpose>
-    </refnamediv>
-    <refsection>
-      <info>
-        <title>Description</title>
-      </info>
-      <para>The image to be used for SKA-TM logo</para>
-    </refsection>
-  </doc:refentry>
-  <xsl:param name="SKA.logo.image">./SKA_TM_logo.png</xsl:param>
-
   <!-- ACHTUNG, ADDED FOR TEST PURPOSES, MZA/RKA -->
   <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="ESO.logo.image">
     <refmeta>
@@ -1068,11 +1052,12 @@
     <xsl:choose>
         <xsl:when test="$pageclass != 'titlepage' or ($pageclass = 'titlepage' and $sequence!='first')">
             <xsl:choose>
-                <xsl:when test="$sequence='blank'">
-                <!-- no output -->
-                </xsl:when>
 
-                <xsl:when test="$double.sided = 0 and $position='left'">
+              <xsl:when test="$sequence='blank'">
+              <!-- no output -->
+              </xsl:when>
+
+              <xsl:when test="$double.sided = 0 and $position='left'">
 
                 <fo:block xsl:use-attribute-sets="footer.block">
                     Document No.: <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='TM Number']/d:value" />
@@ -1091,14 +1076,14 @@
                 <fo:block xsl:use-attribute-sets="footer.block">
                 <xsl:value-of select="$date"/>
                 </fo:block>
-                </xsl:when>
+              </xsl:when>
 
-                <xsl:when test="$double.sided = 0 and $position = 'center'">
+              <xsl:when test="$double.sided = 0 and $position = 'center'">
                 <fo:block text-align="center">
                 </fo:block>
-                </xsl:when>
+              </xsl:when>
 
-                <xsl:when test="$position = 'right'" >
+              <xsl:when test="$position = 'right'" >
                 <fo:block xsl:use-attribute-sets="footer.block" text-align="end">
                     <xsl:value-of select="$document.element/d:info/d:productnumber/d:ska-field[d:name='Document Classification']/d:value" />
                 </fo:block>
@@ -1110,7 +1095,7 @@
                     Page <fo:page-number/> of <fo:page-number-citation ref-id="SKA.VeryLastPage"/>
                 </fo:block>
 
-                </xsl:when>
+              </xsl:when>
             </xsl:choose>
         </xsl:when>
 
