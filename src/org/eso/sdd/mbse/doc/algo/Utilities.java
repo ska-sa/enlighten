@@ -607,9 +607,9 @@ public class Utilities {
 		content = content.replaceAll("<a [^\\>](.*)>", "<emphasis role=\"underline\"$1>");
 		content = content.replaceAll("</a>", "</emphasis>");
 		
-		content = content.replaceAll("<br>","<linebreak>");
-		content = content.replaceAll("</br>","</linebreak>");
-		content = content.replaceAll("<br/>","<linebreak/>");
+		content = content.replaceAll("<br>","<?linebreak?>");
+		content = content.replaceAll("</br>","");
+		content = content.replaceAll("<br/>","<?linebreak?>");
 		//gerhard le Roux replace spans
 		//content = content.replaceAll("<span.*>","");
 		//content = content.replaceAll("</span>","");
@@ -646,22 +646,23 @@ public class Utilities {
 		content = content.replaceAll("</li>", paraRepEnd + lE + "</listitem>"
 				+ lE);
 
-		content = content.replaceAll("<ul(.*)>", "<itemizedlist $1>");
-		content = content.replaceAll("</ul>", "</itemizedlist>");
 
-		content = content.replaceAll("<ol(.*)>", "<orderedlist $1>");
-		content = content.replaceAll("</ol>", "</orderedlist>");
-
-		content = content.replaceAll("<b(.*)>", "<emphasis role=\"bold\"$1>");
-		content = content.replaceAll("</b>", "</emphasis>");
-
-		content = content.replaceAll("<u(.*)>", "<emphasis role=\"underline\"$1>");
-		content = content.replaceAll("</u>", "</emphasis>");
-
-		content = content.replaceAll("<i(.*)>", "<emphasis role=\"italic\"$1>");
+		content = content.replaceAll("<i( .*?)?>", "<emphasis role=\"italic\"$1>");
 		content = content.replaceAll("</i>", "</emphasis>");
 		
-		content = content.replaceAll("<sup(.*)>", "<superscript>$1");
+		content = content.replaceAll("<ul(.*?)>", "<itemizedlist $1>");
+		content = content.replaceAll("</ul>", "</itemizedlist>");
+
+		content = content.replaceAll("<ol(.*?)>", "<orderedlist $1>");
+		content = content.replaceAll("</ol>", "</orderedlist>");
+
+		content = content.replaceAll("<b(.*?)>", "<emphasis role=\"bold\"$1>");
+		content = content.replaceAll("</b>", "</emphasis>");
+
+		content = content.replaceAll("<u(.*?)>", "<emphasis role=\"underline\"$1>");
+		content = content.replaceAll("</u>", "</emphasis>");
+
+		content = content.replaceAll("<sup(.*?)>", "<superscript>$1");
 		content = content.replaceAll("</sup>", "</superscript>");
 		
 
