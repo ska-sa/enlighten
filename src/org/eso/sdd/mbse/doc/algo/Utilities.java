@@ -609,6 +609,7 @@ public class Utilities {
 		
 		content = content.replaceAll("<br>","<linebreak>");
 		content = content.replaceAll("</br>","</linebreak>");
+		content = content.replaceAll("<br/>","<linebreak/>");
 		//gerhard le Roux replace spans
 		//content = content.replaceAll("<span.*>","");
 		//content = content.replaceAll("</span>","");
