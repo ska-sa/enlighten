@@ -209,7 +209,7 @@
       <xsl:attribute name="space-before.minimum">8cm</xsl:attribute>
       <fo:block text-align="center">
         <!-- SKA: Note that the base path for the plugin is the root of the Cameo install directory -->
-        <fo:external-graphic src="lib/xsl/fo/SKA_TM_Logo.png" content-width="8cm"/>
+        <fo:external-graphic src="lib/xsl/fo/SKA_TM_Logo.jpg" content-width="8cm"/>
       </fo:block>
       <xsl:attribute name="space-after.minimum">8cm</xsl:attribute>
     </fo:block>
