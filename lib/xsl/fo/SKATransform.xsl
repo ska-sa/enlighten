@@ -33,6 +33,11 @@
  *
 -->
 <!--  ************don't put a separator after pubdate because it is the last entry******************-->
+<xsl:template match="processing-instruction('linebreak')">
+  <fo:block/>
+</xsl:template>
+
+
 <xsl:template match="d:pubdate" mode="bibliography.mode">
   <fo:inline>
     <xsl:apply-templates mode="bibliography.mode"/>
@@ -957,6 +962,15 @@
   </xsl:template>
 
   <!--******************************-->
+<xsl:attribute-set name="list.block.spacing">
+  <xsl:attribute name="margin-left">
+    <xsl:choose>
+      <xsl:when test="self::itemizedlist">1in</xsl:when>
+      <xsl:otherwise>0pt</xsl:otherwise>
+    </xsl:choose>
+  </xsl:attribute>
+</xsl:attribute-set>
+
 
   <xsl:attribute-set name="formal.title.properties" use-attribute-sets="normal.para.spacing">
     <xsl:attribute name="font-weight">bold</xsl:attribute>
