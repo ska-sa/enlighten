@@ -630,12 +630,15 @@ public class Utilities {
 
 		// I wish there were a special character groups for punctuation marks
 
-		content = content.replaceAll("<p[\\s|\\w|:|;|\\.|=|\\-\"]*>",
+		content = content.replaceAll("<p.*?>",
 				paraRepStart);
 
 		// getting rid of divs
 		content = content.replaceAll("<div[\\s|\\w|:|;|\\.|=|\\-\"]*>", "");
 		content = content.replaceAll("</div>", "");
+		//geting rid of spans
+		content = content.replaceAll("<span.*?>", "");
+		content = content.replaceAll("</span>", "");
 
 		// content = content.replaceAll("<p>","<para>");
 		// content = content.replaceAll("</p","</para");
