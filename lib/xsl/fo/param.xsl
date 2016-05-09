@@ -5092,7 +5092,8 @@ to be treated as case insensitive".</para>
 
 </refsection>
 </doc:refentry>
-<xsl:param name="line-height">normal</xsl:param>
+<!-- <xsl:param name="line&#45;height">normal</xsl:param> -->
+<xsl:param name="line-height">1.5</xsl:param>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="linenumbering.everyNth">
 <refmeta>
@@ -5220,12 +5221,12 @@ justified in a field "width" characters wide.
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="list.block.spacing">
-  <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
-  <xsl:attribute name="space-after.optimum">1em</xsl:attribute>
-  <xsl:attribute name="space-after.minimum">0.8em</xsl:attribute>
-  <xsl:attribute name="space-after.maximum">1.2em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.9em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-after.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.9em</xsl:attribute>
 </xsl:attribute-set>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="list.item.spacing">
@@ -5244,9 +5245,9 @@ justified in a field "width" characters wide.
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="list.item.spacing">
-  <xsl:attribute name="space-before.optimum">1em</xsl:attribute>
-  <xsl:attribute name="space-before.minimum">0.8em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">1.2em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.9em</xsl:attribute>
 </xsl:attribute-set>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="make.index.markup">
