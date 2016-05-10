@@ -532,7 +532,7 @@ public class Utilities {
 				.replaceAll("\u00FC", "&#252;")
 				.replaceAll("\u00d6", "&#214;")
 				.replaceAll("\u03bc", "&micro;")
-				.replaceAll("(?!&amp|&#)&","&amp;")//allow & characters (Gerhard le Roux)
+				.replaceAll("(?!&amp|&#|&gt;|&lt;)&","&amp;")//allow & characters (Gerhard le Roux)
 			//	.replaceAll("&amp;amp;","&amp;") // in case it was done already
 			//	.replaceAll("&amp#","&#") // in case of special characters
 				.replaceAll("\u00F6", "&#246;");
@@ -650,7 +650,7 @@ public class Utilities {
 				+ lE);
 
 
-		content = content.replaceAll("<i( .*?)?>", "<emphasis role=\"italic\"$1>");
+		content = content.replaceAll("<i(\\s.*?)?>", "<emphasis role=\"italic\"$1>");
 		content = content.replaceAll("</i>", "</emphasis>");
 		
 		content = content.replaceAll("<ul(.*?)>", "<itemizedlist $1>");
