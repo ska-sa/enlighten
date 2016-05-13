@@ -402,7 +402,7 @@ public class CommonGenerator implements RunnableWithProgress {
 		Matcher width_matcher = null;
 		Pattern width_pattern = Pattern.compile("width=\"(\\d+)\"", Pattern.DOTALL);
 		Matcher align_matcher = null;
-		Pattern align_pattern = Pattern.compile("align=\"(\\w+)\"", Pattern.DOTALL);
+		Pattern align_pattern = Pattern.compile("\\salign=\"(\\w+)\"", Pattern.DOTALL);
 
 		String captionText = "";
 		String token = tokenNameHTML;
