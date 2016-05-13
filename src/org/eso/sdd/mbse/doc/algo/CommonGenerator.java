@@ -461,7 +461,7 @@ public class CommonGenerator implements RunnableWithProgress {
 		String tableColSpec = "";
 		
 		for(int i =0;i<numColumn;i++){
-			tableColSpec += "<colspec colname='c"+i+1+"' />" +lE;
+			tableColSpec += "<colspec colname='c"+i+1+"' colwidth='"+widths[i]+"*'/>" +lE;
 		}
 		
 		String tableHeaderStart = "<thead><row>"+lE;
