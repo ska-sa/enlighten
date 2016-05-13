@@ -399,9 +399,10 @@ public class CommonGenerator implements RunnableWithProgress {
 		String firstRow = null;
 		String tableDeclaration = null;
 
-		String pattern = "width=\"(\\d+)\"";
-		Matcher ma = null;
-		Pattern pa = Pattern.compile(pattern, Pattern.DOTALL);
+		Matcher width_matcher = null;
+		Pattern width_pattern = Pattern.compile("width=\"(\\d+)\"", Pattern.DOTALL);
+		Matcher align_matcher = null;
+		Pattern align_pattern = Pattern.compile("align=\"(\\w+)\"", Pattern.DOTALL);
 
 		String captionText = "";
 		String token = tokenNameHTML;
@@ -432,7 +433,8 @@ public class CommonGenerator implements RunnableWithProgress {
 		}
 		tableDeclaration = content.substring(content.indexOf("<table"),content.indexOf("</tr>"));
 		firstRow = content.substring(content.indexOf("<tr"),content.indexOf("</tr>"));
-		ma = pa.matcher(firstRow);
+		width_matcher = width_pattern.matcher(firstRow);
+		align_matcher = align_pattern.matcher(firstRow);
 		
 		if(firstRow.length() == 0) { 
 			System.out.println("Could not determine first row with headers");
@@ -443,12 +445,25 @@ public class CommonGenerator implements RunnableWithProgress {
 
 		System.out.println("Rows: "+numRow + " columns: " + numColumn);
 		String[] widths = new String[numColumn];
-		while(ma.find()) {
-			widths[z] = ma.group(1);
-			System.out.println("\t****Width: " + z +"/"+numColumn+ "=" + widths[z]);
+		String[] aligns = new String[numColumn];
+		// Make sure we have at least a width and alignment specified for every column
+		for(int i =0;i<numColumn;i++) {
+			// Default width is relative 1*
+			widths[i] = "1*";
+			// Default align is left
+			aligns[i] = "left";
+		}
+		while(width_matcher.find()) {
+			widths[z] = width_matcher.group(1);
+			System.out.println("\t****Width: " + (z+1) +"/"+numColumn+ "=" + widths[z]);
 			z++;
 		};
-		
+		z = 0;
+		while(align_matcher.find()) {
+			aligns[z] = align_matcher.group(1);
+			System.out.println("\t****Align: " + (z+1) +"/"+numColumn+ "=" + aligns[z]);
+			z++;
+		};
 		
         String cc = content.substring(content.indexOf("</tr>")+5,content.length());
         //System.out.println(cc);
@@ -461,7 +476,7 @@ public class CommonGenerator implements RunnableWithProgress {
 		String tableColSpec = "";
 		
 		for(int i =0;i<numColumn;i++){
-			tableColSpec += "<colspec colname='c"+i+1+"' colwidth='"+widths[i]+"*'/>" +lE;
+			tableColSpec += "<colspec colname='c" + (i+1) + "' colwidth='" + widths[i] + "'/>" + lE;
 		}
 		
 		String tableHeaderStart = "<thead><row>"+lE;
@@ -471,7 +486,7 @@ public class CommonGenerator implements RunnableWithProgress {
 		String[] header = firstRow.split("</td>");
 		
 		for(int i=0;i<header.length-1;i++){
-			tableHeaderBody += "<entry align=\"center\">" + header[i].replaceAll("\\<.*?>", "").trim() + "</entry>" + lE;
+			tableHeaderBody += "<entry align=\"" + aligns[i] + "\">" + header[i].replaceAll("\\<.*?>", "").trim() + "</entry>" + lE;
 		}
 				
 		tableHeaderBody += "</row></thead>" + lE;
@@ -491,16 +506,16 @@ public class CommonGenerator implements RunnableWithProgress {
 			  String pS = eachRowContent[i];
 			  String[] rower = pS.split("</td>");
 			  
-			  for(int j=0;j<rower.length-1;j++){
-				  tableBody += "<entry align=\"center\">" + Utilities.convertHTML2DocBook(rower[j].replaceAll("\\<.*?>", ""),true).trim() + "</entry>"+lE;
-				  //
+			  for(int j=0;j<rower.length-1;j++) {
+				  // Note that the alignment of every row-cell will match the alignment of the first (header) row
+				  tableBody += "<entry align=\"" + aligns[j] + "\">" + Utilities.convertHTML2DocBook(rower[j].replaceAll("\\<.*?>", ""),true).trim() + "</entry>"+lE;
 			  }
 			  tableBody += "</row>"+lE;
 		  }
 		  
 		  tableBody += "</tbody>" + lE;  
 		
-		String tableEnd = "</tgroup>"+lE+"</table>" +lE;
+		String tableEnd = "</tgroup>"+lE+"</table>"+lE;
 
 		//solve xref
 
