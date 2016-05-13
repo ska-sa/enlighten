@@ -961,17 +961,6 @@
     </fo:block>
   </xsl:template>
 
-  <!--******************************-->
-<xsl:attribute-set name="list.block.spacing">
-  <xsl:attribute name="margin-left">
-    <xsl:choose>
-      <xsl:when test="self::itemizedlist">1in</xsl:when>
-      <xsl:otherwise>0pt</xsl:otherwise>
-    </xsl:choose>
-  </xsl:attribute>
-</xsl:attribute-set>
-
-
   <xsl:attribute-set name="formal.title.properties" use-attribute-sets="normal.para.spacing">
     <xsl:attribute name="font-weight">bold</xsl:attribute>
     <xsl:attribute name="font-size">
