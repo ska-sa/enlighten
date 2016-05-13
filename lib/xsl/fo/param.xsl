@@ -164,7 +164,7 @@ The default value is 1.
 <refmeta>
   <refentrytitle>admonition.properties</refentrytitle>
   <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>admonition.properties</refname>
 <refpurpose>To set the style for admonitions.</refpurpose>
@@ -297,7 +297,7 @@ to the rest of the content.</para>
 <refsection><info><title>Description</title></info>
 
 <para>The default text alignment is used for most body text.
-Allowed values are 
+Allowed values are
 <literal>left</literal>,
 <literal>right</literal>,
 <literal>start</literal>,
@@ -314,7 +314,7 @@ The default value is <literal>justify</literal>.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="appendix.autolabel">
 <refmeta>
 <refentrytitle>appendix.autolabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">0<alt>none</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
@@ -690,7 +690,7 @@ following WiKi page</link>.</para>
 <refmeta>
   <refentrytitle>blockquote.properties</refentrytitle>
   <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>blockquote.properties</refname>
 <refpurpose>To set the style for block quotations.</refpurpose>
@@ -848,14 +848,14 @@ the means of indenting the body text relative to
 section titles.
 For left-to-right text direction, it indents the left side.
 For right-to-left text direction, it indents the right side.
-It is used in place of the 
+It is used in place of the
 <parameter>title.margin.left</parameter> for
 all XSL-FO processors except FOP 0.25.
 It enables support for side floats to appear
 in the indented margin area.
 </para>
 <para>This start-indent property is added to the fo:flow
-for certain page sequences.  Which page-sequences it is 
+for certain page sequences.  Which page-sequences it is
 applied to is determined by the template named
 <literal>set.flow.properties</literal>.
 By default, that template adds it to the flow
@@ -901,7 +901,7 @@ parameter to the negative value of the desired indent.
 <refsection><info><title>Description</title></info>
 
 <para>This end-indent property is added to the fo:flow
-for certain page sequences.  Which page-sequences it is 
+for certain page sequences.  Which page-sequences it is
 applied to is determined by the template named
 <literal>set.flow.properties</literal>.
 By default, that template adds it to the flow
@@ -919,7 +919,7 @@ master-reference, as well as appendixes and prefaces.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="bookmarks.collapse">
 <refmeta>
 <refentrytitle>bookmarks.collapse</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">boolean</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">boolean</refmiscinfo>
 </refmeta>
 <refnamediv>
 <refname>bookmarks.collapse</refname>
@@ -930,8 +930,8 @@ master-reference, as well as appendixes and prefaces.
 
 <refsection><info><title>Description</title></info>
 
-<para>If non-zero, the bookmark tree is collapsed so that only the 
-top-level bookmarks are displayed initially. Otherwise, the whole tree 
+<para>If non-zero, the bookmark tree is collapsed so that only the
+top-level bookmarks are displayed initially. Otherwise, the whole tree
 of bookmarks is displayed.</para>
 
 <para>This parameter currently works with FOP 0.93 or later.</para>
@@ -1196,8 +1196,8 @@ be used.
 is non-zero, unicode characters are used to represent
 callout numbers. The value of
 <parameter>callout.unicode.start.character</parameter>
-is the decimal unicode value used for callout number one. Currently, 
-only 10102 is supported in the stylesheets for this parameter. 
+is the decimal unicode value used for callout number one. Currently,
+only 10102 is supported in the stylesheets for this parameter.
 </para>
 
 </refsection>
@@ -1230,7 +1230,7 @@ callout elements.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="chapter.autolabel">
 <refmeta>
 <refentrytitle>chapter.autolabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">0<alt>none</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
@@ -1292,30 +1292,30 @@ the default number format (arabic).
 </doc:refentry>
 <xsl:param name="chapter.autolabel" select="1"/>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="collect.xref.targets"> 
-<refmeta> 
-<refentrytitle>collect.xref.targets</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="collect.xref.targets">
+<refmeta>
+<refentrytitle>collect.xref.targets</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">only</refmiscinfo>
-</refmeta> 
-<refnamediv> 
-<refname>collect.xref.targets</refname> 
+</refmeta>
+<refnamediv>
+<refname>collect.xref.targets</refname>
 <refpurpose>Controls whether cross reference data is
-collected</refpurpose> 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+collected</refpurpose>
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 <para>
 In order to resolve olinks efficiently, the stylesheets can
 generate an external data file containing information about
 all potential cross reference endpoints in a document.
 This parameter determines whether the collection process is run when the document is processed by the stylesheet. The default value is  <literal>no</literal>, which means the data file is not generated during processing. The other choices are <literal>yes</literal>, which means the data file is created and the document is processed for output, and <literal>only</literal>, which means the data file is created but the document is not processed for output.
 See also <parameter>targets.filename</parameter>.
-</para> 
-</refsection> 
+</para>
+</refsection>
 </doc:refentry>
 <xsl:param name="collect.xref.targets">no</xsl:param>
 
@@ -1571,7 +1571,7 @@ List of Figures, etc.</para>
 <refmeta>
 <refentrytitle>compact.list.item.spacing</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>compact.list.item.spacing</refname>
 <refpurpose>What space do you want between list items (when spacing="compact")?</refpurpose>
@@ -1672,7 +1672,7 @@ each chapter unambiguously.
 <refsection><info><title>Description</title></info>
 
 <para>The properties that are applied to the outer block containing
-all the component title page information. 
+all the component title page information.
 Its main use is to set a <literal>span="all"</literal>
 property on the block that is a direct child of the flow.</para>
 
@@ -1767,24 +1767,24 @@ works only with XEP if you have <parameter>xep.extensions</parameter> set.</para
 </doc:refentry>
 <xsl:param name="crop.mark.bleed">6pt</xsl:param>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="current.docid"> 
-<refmeta> 
-<refentrytitle>current.docid</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>current.docid</refname> 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="current.docid">
+<refmeta>
+<refentrytitle>current.docid</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>current.docid</refname>
 <refpurpose>targetdoc identifier for the document being
-processed</refpurpose> 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+processed</refpurpose>
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 <para>When olinks between documents are resolved for HTML output, the stylesheet can compute the relative path between the current document and the target document. The stylesheet needs to know the <literal>targetdoc</literal> identifiers for both documents, as they appear in the <parameter>target.database.document</parameter> database file. This parameter passes to the stylesheet
 the targetdoc identifier of the current document, since that
 identifier does not appear in the document itself. </para>
-<para>This parameter can also be used for print output. If an olink's  <literal>targetdoc</literal>  id differs from the <literal>current.docid</literal>, then the stylesheet can append the target document's title to the generated olink text. That identifies to the reader that the link is to a different document, not the current document. See also <parameter>olink.doctitle</parameter> to enable that feature.</para> 
-</refsection> 
+<para>This parameter can also be used for print output. If an olink's  <literal>targetdoc</literal>  id differs from the <literal>current.docid</literal>, then the stylesheet can append the target document's title to the generated olink text. That identifies to the reader that the link is to a different document, not the current document. See also <parameter>olink.doctitle</parameter> to enable that feature.</para>
+</refsection>
 </doc:refentry>
 <xsl:param name="current.docid"/>
 
@@ -1830,7 +1830,7 @@ before direction is the top of the page.</para>
 <refsection><info><title>Description</title></info>
 
 <para>If specified, this value will be used for the
-<tag class="attribute">width</tag> attribute on images that do not specify any 
+<tag class="attribute">width</tag> attribute on images that do not specify any
 <emphasis xmlns:xlink="http://www.w3.org/1999/xlink" xlink:title="DocBook 5: The Definitive Guide" xlink:href="http://docbook.org/tdg5/en/html/imagedata.html#viewport.area">viewport dimensions</emphasis>.</para>
 
 </refsection>
@@ -1850,7 +1850,7 @@ before direction is the top of the page.</para>
 <refsection><info><title>Description</title></info>
 <para>If non-zero, this value will be used for the
 <literal>width</literal> attribute on <tag>table</tag>s that do not specify an
-alternate width (with the <tag class="xmlpi">dbhtml table-width</tag> or 
+alternate width (with the <tag class="xmlpi">dbhtml table-width</tag> or
 <tag class="xmlpi">dbfo table-width</tag> processing instruction).</para>
 </refsection>
 </doc:refentry>
@@ -1894,7 +1894,7 @@ table. </para>
 <para>Tables using HTML markup elements can use an attribute
 named <tag class="attribute">rules</tag> on the <tag>table</tag> or
 <tag>informaltable</tag> element
-to specify whether column and row border rules should be 
+to specify whether column and row border rules should be
 displayed. This parameter lets you specify a global default
 style for all HTML tables that don't otherwise have
 that attribute.</para>
@@ -2030,7 +2030,7 @@ into account.</para>
 <refmeta>
 <refentrytitle>draft.mode</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">no</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">maybe</refmiscinfo>
 </refmeta>
@@ -2148,7 +2148,7 @@ in <tag>productionset</tag>.</para>
 
 <footnote><para>For delimiters, the
 stylesheets are currently hard-coded to output angle
-brackets.</para></footnote> 
+brackets.</para></footnote>
 
 are generated around e-mail addresses
 (the output of the <tag>email</tag> element).</para>
@@ -2269,7 +2269,7 @@ function even though it is available.</para>
 
 </refsection>
 </doc:refentry>
-<xsl:param name="exsl.node.set.available"> 
+<xsl:param name="exsl.node.set.available">
   <xsl:choose>
     <xsl:when xmlns:exsl="http://exslt.org/common" exsl:foo="" test="function-available('exsl:node-set') or                        contains(system-property('xsl:vendor'),                          'Apache Software Foundation')">1</xsl:when>
     <xsl:otherwise>0</xsl:otherwise>
@@ -2280,7 +2280,7 @@ function even though it is available.</para>
 <refmeta>
 <refentrytitle>figure.properties</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>figure.properties</refname>
 <refpurpose>Properties associated with a figure</refpurpose>
@@ -2397,7 +2397,7 @@ double-sided output.
 <para>For single-sided output, the first number is the
 relative width of left footer for left-to-right
 text direction, or the right footer for right-to-left
-text direction.  
+text direction.
 The third number is the
 relative width of right footer for left-to-right
 text direction, or the left footer for right-to-left
@@ -2409,7 +2409,7 @@ In the FO output, this looks like:
 </para>
 
 <programlisting>
-&lt;fo:table-column column-number="1" 
+&lt;fo:table-column column-number="1"
     column-width="proportional-column-width(1)"/&gt;
 </programlisting>
 
@@ -2457,8 +2457,8 @@ since the right area is three times the width of the left area.
 <para>Page footers in print output use a three column table
 to position text at the left, center, and right side of
 the footer on the page.
-This parameter lets you specify the minimum height 
-of the single row in the table.  
+This parameter lets you specify the minimum height
+of the single row in the table.
 Since this specifies only the minimum height,
 the table should automatically grow to fit taller content.
 The default value is "14pt".</para>
@@ -2536,7 +2536,7 @@ The default value is "14pt".</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="footnote.number.format">
 <refmeta>
 <refentrytitle>footnote.number.format</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">a<alt>a,b,c...</alt></refmiscinfo>
@@ -2595,7 +2595,7 @@ that you may have trouble using those symbols for footnotes.</para>
 <refmeta>
 <refentrytitle>footnote.mark.properties</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>footnote.mark.properties</refname>
 <refpurpose>Properties applied to each footnote mark
@@ -2629,7 +2629,7 @@ an error if baseline-shift is used.
 <refmeta>
 <refentrytitle>footnote.properties</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">attribute set</refmiscinfo>
-</refmeta>  
+</refmeta>
 <refnamediv>
 <refname>footnote.properties</refname>
 <refpurpose>Properties applied to each footnote body
@@ -2640,7 +2640,7 @@ an error if baseline-shift is used.
 
 <refsection><info><title>Description</title></info>
 
-<para>This attribute set is applied to the footnote-block 
+<para>This attribute set is applied to the footnote-block
 for each footnote.
 It can be used to set the
 font-size, font-family, and other inheritable properties that will be
@@ -2682,7 +2682,7 @@ the separator.
 </para>
 <para>If you want to do more than just set properties on
 the leader element, then you can customize the template
-named <literal>footnote.separator</literal> in 
+named <literal>footnote.separator</literal> in
 <filename>fo/pagesetup.xsl</filename>.</para>
 
 </refsection>
@@ -2738,7 +2738,7 @@ instead.
 
 <refsection><info><title>Description</title></info>
 
-<para>If non-zero, extensions for 
+<para>If non-zero, extensions for
 <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://xml.apache.org/fop/">FOP</link>
 version 0.90 and later will be used.
 </para>
@@ -3043,7 +3043,7 @@ path/value parser to get confused.</para>
 
 <para>Section ToCs are further controlled by the
 <parameter>generate.section.toc.level</parameter> parameter.
-For a given section level to have a ToC, it must have both an entry in 
+For a given section level to have a ToC, it must have both an entry in
 <parameter>generate.toc</parameter> and be within the range enabled by
 <parameter>generate.section.toc.level</parameter>.</para>
 </refsection>
@@ -3371,7 +3371,7 @@ in document order.
 <refmeta>
 <refentrytitle>glossentry.show.acronym</refentrytitle>
 <refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">no</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">primary</refmiscinfo>
 </refmeta>
@@ -3431,9 +3431,9 @@ then they are shown as the primary text for the entry.</para>
 
 <refsection><info><title>Description</title></info>
 
-<para>If non-zero, links from inline <tag>glossterm</tag>s to the corresponding 
-<tag>glossentry</tag> elements in a <tag>glossary</tag> or <tag>glosslist</tag> 
-will be automatically generated. This is useful when your glossterms are consistent 
+<para>If non-zero, links from inline <tag>glossterm</tag>s to the corresponding
+<tag>glossentry</tag> elements in a <tag>glossary</tag> or <tag>glosslist</tag>
+will be automatically generated. This is useful when your glossterms are consistent
 and you don't want to add links manually.</para>
 
 <para>The automatic link generation feature is not used on <tag>glossterm</tag> elements
@@ -3718,7 +3718,7 @@ double-sided output.
 <para>For single-sided output, the first number is the
 relative width of left header for left-to-right
 text direction, or the right header for right-to-left
-text direction.  
+text direction.
 The third number is the
 relative width of right header for left-to-right
 text direction, or the left header for right-to-left
@@ -3730,7 +3730,7 @@ In the FO output, this looks like:
 </para>
 
 <programlisting>
-&lt;fo:table-column column-number="1" 
+&lt;fo:table-column column-number="1"
     column-width="proportional-column-width(1)"/&gt;
 </programlisting>
 
@@ -3778,8 +3778,8 @@ since the right area is three times the width of the left area.
 <para>Page headers in print output use a three column table
 to position text at the left, center, and right side of
 the header on the page.
-This parameter lets you specify the minimum height 
-of the single row in the table.  
+This parameter lets you specify the minimum height
+of the single row in the table.
 Since this specifies only the minimum height,
 the table should automatically grow to fit taller content.
 The default value is "14pt".</para>
@@ -3866,24 +3866,24 @@ be syntactically highlighted?</refpurpose>
 
 <refsection><info><title>Description</title></info>
 
-<para>When this parameter is non-zero, the stylesheets will try to do syntax highlighting of the 
-content of <tag>programlisting</tag> elements. You specify the language for each programlisting 
-by using the <tag class="attribute">language</tag> attribute. The <parameter>highlight.default.language</parameter> 
-parameter can be used to specify the language for programlistings without a <tag class="attribute">language</tag> 
+<para>When this parameter is non-zero, the stylesheets will try to do syntax highlighting of the
+content of <tag>programlisting</tag> elements. You specify the language for each programlisting
+by using the <tag class="attribute">language</tag> attribute. The <parameter>highlight.default.language</parameter>
+parameter can be used to specify the language for programlistings without a <tag class="attribute">language</tag>
 attribute. Syntax highlighting also works for <tag>screen</tag> and <tag>synopsis</tag> elements.</para>
 
-<para>The actual highlighting work is done by the XSLTHL extension module. This is an external Java library that has to be 
+<para>The actual highlighting work is done by the XSLTHL extension module. This is an external Java library that has to be
 downloaded separately (see below).</para>
 
 <itemizedlist>
-<para>In order to use this extension, you must</para> 
+<para>In order to use this extension, you must</para>
 
 <listitem><para>add <filename>xslthl-2.x.x.jar</filename> to your Java classpath. The latest version is available
-from <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://sourceforge.net/projects/xslthl">the XSLT syntax highlighting project</link> 
+from <link xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="http://sourceforge.net/projects/xslthl">the XSLT syntax highlighting project</link>
 at SourceForge.</para>
 </listitem>
 <listitem>
-<para>use a customization layer in which you import one of the following stylesheet modules: 
+<para>use a customization layer in which you import one of the following stylesheet modules:
 <itemizedlist>
   <listitem>
     <para><filename>html/highlight.xsl</filename>
@@ -3905,20 +3905,20 @@ at SourceForge.</para>
 </para>
 </listitem>
 <listitem><para>let either the <literal>xslthl.config</literal> Java system property or the
-<parameter>highlight.xslthl.config</parameter> parameter point to the configuration file for syntax 
-highlighting (using URL syntax). DocBook XSL comes with a ready-to-use configuration file, 
+<parameter>highlight.xslthl.config</parameter> parameter point to the configuration file for syntax
+highlighting (using URL syntax). DocBook XSL comes with a ready-to-use configuration file,
 <filename>highlighting/xslthl-config.xml</filename>.</para>
 </listitem>
 </itemizedlist>
 
-<para>The extension works with Saxon 6.5.x and Xalan-J. (Saxon 8.5 or later is also supported, but since it is 
+<para>The extension works with Saxon 6.5.x and Xalan-J. (Saxon 8.5 or later is also supported, but since it is
 an XSLT 2.0 processor it is not guaranteed to work with DocBook XSL in all circumstances.)</para>
 
 <para>The following is an example of a Saxon 6 command adapted for syntax highlighting, to be used on Windows:</para>
 
 <informalexample>
-<para><command>java -cp c:/Java/saxon.jar;c:/Java/xslthl-2.0.1.jar 
--Dxslthl.config=file:///c:/docbook-xsl/highlighting/xslthl-config.xml com.icl.saxon.StyleSheet 
+<para><command>java -cp c:/Java/saxon.jar;c:/Java/xslthl-2.0.1.jar
+-Dxslthl.config=file:///c:/docbook-xsl/highlighting/xslthl-config.xml com.icl.saxon.StyleSheet
 -o test.html test.xml myhtml.xsl</command></para>
 </informalexample>
 
@@ -4002,7 +4002,7 @@ select appropriate hyphenation character (e.g. hook arrow). This can
 be done using <parameter>monospace.verbatim.properties</parameter>
 attribute set:</para>
 
-<programlisting>&lt;xsl:attribute-set name="monospace.verbatim.properties" 
+<programlisting>&lt;xsl:attribute-set name="monospace.verbatim.properties"
                    use-attribute-sets="verbatim.properties monospace.properties"&gt;
   &lt;xsl:attribute name="wrap-option"&gt;wrap&lt;/xsl:attribute&gt;
   &lt;xsl:attribute name="hyphenation-character"&gt;&amp;#x25BA;&lt;/xsl:attribute&gt;
@@ -4074,9 +4074,9 @@ ignored.</para>
 
 <refsection><info><title>Description</title></info>
 
-<para>Add a path prefix to the value of the <tag class="attribute">fileref</tag> 
-attribute of <tag>graphic</tag>, <tag>inlinegraphic</tag>, and <tag>imagedata</tag> elements. The resulting 
-compound path is used in the output as the value of the <tag class="attribute">src</tag> 
+<para>Add a path prefix to the value of the <tag class="attribute">fileref</tag>
+attribute of <tag>graphic</tag>, <tag>inlinegraphic</tag>, and <tag>imagedata</tag> elements. The resulting
+compound path is used in the output as the value of the <tag class="attribute">src</tag>
 attribute of <tag class="element">img</tag> (HTML) or <tag class="element">external-graphic</tag> (FO).
 </para>
 
@@ -4154,7 +4154,7 @@ the DocBook locale file for the given language.
 See, for example, the French locale file <filename>common/fr.xml</filename>.
 This method requires that the XSLT processor
 supports the EXSLT extensions (most do).
-It also requires support for using 
+It also requires support for using
 user-defined functions in xsl:key (xsltproc does not).
 </para>
 <para>This method is suitable for any language for which you can
@@ -4178,7 +4178,7 @@ Saxon 6 or Xalan (xsltproc and Saxon 8 do not).
 </listitem>
 <listitem>
 <para>Import the appropriate index extensions stylesheet module
-<filename>fo/autoidx-kosek.xsl</filename> or 
+<filename>fo/autoidx-kosek.xsl</filename> or
 <filename>html/autoidx-kosek.xsl</filename> into your
 customization.
 </para>
@@ -4192,7 +4192,7 @@ customization.
 <listitem>
 <para>
 This method uses extensions to the Saxon processor to implement
-sophisticated indexing processes. It uses its own 
+sophisticated indexing processes. It uses its own
 configuration file, which can include information for any number of
 languages. Each language's configuration can group
 words using one of two processes. In the
@@ -4235,7 +4235,7 @@ the documentation that comes with it.
 </listitem>
 <listitem>
 <para>Import the appropriate index extensions stylesheet module
-<filename>fo/autoidx-kimber.xsl</filename> or 
+<filename>fo/autoidx-kimber.xsl</filename> or
 <filename>html/autoidx-kimber.xsl</filename> into your
 customization.
 </para>
@@ -4265,7 +4265,7 @@ customization.
 <refsection><info><title>Description</title></info>
 
 <para>
-If non-zero, 
+If non-zero,
 then an <tag>index</tag> element that has a
 <tag class="attribute">role</tag> attribute
 value will contain only those <tag>indexterm</tag>
@@ -4307,7 +4307,7 @@ attribute value</refpurpose>
 <refsection><info><title>Description</title></info>
 
 <para>
-If non-zero, 
+If non-zero,
 then an <tag>index</tag> element that has a
 <tag class="attribute">type</tag> attribute
 value will contain only those <tag>indexterm</tag>
@@ -4328,7 +4328,7 @@ the <tag class="attribute">type</tag> attribute is not available
 for index terms.  However, you can achieve the same
 effect by using the <tag class="attribute">role</tag> attribute
 in the same manner on <tag>indexterm</tag>
-and <tag>index</tag>, and setting the stylesheet parameter 
+and <tag>index</tag>, and setting the stylesheet parameter
 <parameter>index.on.role</parameter> to a nonzero value.
 </para>
 
@@ -4350,7 +4350,7 @@ and <tag>index</tag>, and setting the stylesheet parameter
 
 <refsection><info><title>Description</title></info>
 
-<para>Properties associated with page numbers in indexes. 
+<para>Properties associated with page numbers in indexes.
 Changing color to indicate the page number is a link is
 one possibility.
 </para>
@@ -4567,7 +4567,7 @@ applied to all index entries.</para>
 <refsection><info><title>Description</title></info>
 
 <para>This parameter permits you to override the text to insert between
-page references in a formatted index entry.  Typically 
+page references in a formatted index entry.  Typically
 that would be a comma and a space.
 </para>
 
@@ -4656,7 +4656,7 @@ and this parameter has no effect.
 </refmeta>
 <refnamediv>
 <refname>index.term.separator</refname>
-<refpurpose>Override for punctuation separating an index term 
+<refpurpose>Override for punctuation separating an index term
 from its list of page references in an index</refpurpose>
 </refnamediv>
 
@@ -4684,7 +4684,7 @@ This parameter would apply to all languages.
 <para>So this text string can be customized in two ways.
 You can reset the default gentext string using
 the <parameter>local.l10n.xml</parameter> parameter, or you can
-fill in the content for this normally empty 
+fill in the content for this normally empty
 override parameter.
 The content can be a simple string, or it can be
 something more complex such as a call-template.
@@ -4699,7 +4699,7 @@ element to provide space of a specific length, or a dot leader.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="insert.link.page.number">
 <refmeta>
 <refentrytitle>insert.link.page.number</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">maybe</refmiscinfo>
@@ -4737,7 +4737,7 @@ attribute is used.
 <varlistentry>
 <term>maybe</term>
 <listitem><para>Page number references will not be generated
-for a <tag>link</tag> element unless 
+for a <tag>link</tag> element unless
 it has an
 <tag class="attribute">xrefstyle</tag>
 attribute whose value specifies a page reference.
@@ -4761,7 +4761,7 @@ in the <literal>l:context name="xref"</literal>.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="insert.xref.page.number">
 <refmeta>
 <refentrytitle>insert.xref.page.number</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">maybe</refmiscinfo>
@@ -4799,7 +4799,7 @@ attribute is used.
 <varlistentry>
 <term>maybe</term>
 <listitem><para>Page number references will not be generated
-for an <tag>xref</tag> element unless 
+for an <tag>xref</tag> element unless
 it has an
 <tag class="attribute">xrefstyle</tag>
 attribute whose value specifies a page reference.
@@ -4849,7 +4849,7 @@ attribute whose value specifies a page reference.
 </doc:refentry>
 <xsl:attribute-set name="itemizedlist.label.properties">
 </xsl:attribute-set>
-    
+
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="itemizedlist.label.width">
 <refmeta>
 <refentrytitle>itemizedlist.label.width</refentrytitle>
@@ -4870,7 +4870,7 @@ particular list with the “dbfo” processing instruction using the
 </refsection>
 </doc:refentry>
 <xsl:param name="itemizedlist.label.width">1.0em</xsl:param>
-  
+
 
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="keep.relative.image.uris">
@@ -4909,7 +4909,7 @@ for some purposes, this only applies to the resulting output.</para>
     <refpurpose>Sets the default language for generated text</refpurpose>
   </refnamediv>
 
-  
+
 
 <refsection><info><title>Description</title></info>
 
@@ -5221,12 +5221,12 @@ justified in a field "width" characters wide.
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="list.block.spacing">
-  <xsl:attribute name="space-before.optimum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.6em</xsl:attribute>
   <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">0.9em</xsl:attribute>
-  <xsl:attribute name="space-after.optimum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.7em</xsl:attribute>
+  <xsl:attribute name="space-after.optimum">0.6em</xsl:attribute>
   <xsl:attribute name="space-after.minimum">0.5em</xsl:attribute>
-  <xsl:attribute name="space-after.maximum">0.9em</xsl:attribute>
+  <xsl:attribute name="space-after.maximum">0.7em</xsl:attribute>
 </xsl:attribute-set>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="list.item.spacing">
@@ -5245,9 +5245,9 @@ justified in a field "width" characters wide.
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="list.item.spacing">
-  <xsl:attribute name="space-before.optimum">0.7em</xsl:attribute>
-  <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">0.9em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.3em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.2em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.4em</xsl:attribute>
 </xsl:attribute-set>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="make.index.markup">
@@ -5444,11 +5444,11 @@ content and characteristics as template parameters.
 <refmiscinfo class="other" otherclass="value">none</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">before</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">left</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">start</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">start</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">right</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">end</refmiscinfo>     
+<refmiscinfo class="other" otherclass="value">end</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">inside</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">outside</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">outside</refmiscinfo>
 </refmeta>
 <refnamediv>
 <refname>margin.note.float.type</refname>
@@ -5468,13 +5468,13 @@ an example.
 <itemizedlist>
 <listitem>
 <para>If <parameter>margin.note.float.type</parameter> is
-<quote><literal>none</literal></quote>, then 
+<quote><literal>none</literal></quote>, then
 no float is used.
 </para>
 </listitem>
 <listitem>
 <para>If <parameter>margin.note.float.type</parameter> is
-<quote><literal>before</literal></quote>, then 
+<quote><literal>before</literal></quote>, then
 the float appears at the top of the page.  On some processors,
 that may be the next page rather than the current page.
 </para>
@@ -5482,14 +5482,14 @@ that may be the next page rather than the current page.
 <listitem>
 <para>If <parameter>margin.note.float.type</parameter> is
 <quote><literal>left</literal></quote> or
-<quote><literal>start</literal></quote>, then 
+<quote><literal>start</literal></quote>, then
 a left side float is used.
 </para>
 </listitem>
 <listitem>
 <para>If <parameter>margin.note.float.type</parameter> is
 <quote><literal>right</literal></quote> or
-<quote><literal>end</literal></quote>, then 
+<quote><literal>end</literal></quote>, then
 a right side float is used.
 </para>
 </listitem>
@@ -5497,7 +5497,7 @@ a right side float is used.
 <para>If your XSL-FO processor supports floats positioned on the
 <quote><literal>inside</literal></quote> or
 <quote><literal>outside</literal></quote>
-of double-sided pages, then you have those two 
+of double-sided pages, then you have those two
 options for side floats as well.
 </para>
 </listitem>
@@ -5526,8 +5526,8 @@ float.  The width determines the degree to which the margin note block
 intrudes into the text area.
 </para>
 <para>If <parameter>margin.note.float.type</parameter> is
-<quote><literal>before</literal></quote> or 
-<quote><literal>none</literal></quote>, then 
+<quote><literal>before</literal></quote> or
+<quote><literal>none</literal></quote>, then
 this parameter is ignored.
 </para>
 
@@ -5552,7 +5552,7 @@ this parameter is ignored.
 <para>The <parameter>marker.section.level</parameter> parameter
 controls the depth of section levels that may be displayed
 in running headers and footers.  For example, if the value
-is 2 (the default), then titles from <tag>sect1</tag> and 
+is 2 (the default), then titles from <tag>sect1</tag> and
 <tag>sect2</tag> or equivalent <tag>section</tag>
 elements are candidates for use in running headers and
 footers.
@@ -5599,7 +5599,7 @@ with <tag>guimenuitem</tag> or
 are linked with <parameter>menuchoice.separator</parameter>.
 </para>
 <para>The default value is &amp;#x2192;, which is the
-&amp;rarr; (right arrow) character entity.  
+&amp;rarr; (right arrow) character entity.
 The current FOP (0.20.5) requires setting the font-family
 explicitly.
 </para>
@@ -5729,14 +5729,14 @@ formatter supports it.</para>
 of the monospace font. The default value is <literal>0.6em</literal>.</para>
 
 <para>This parameter is only used when a <tag>screen</tag>
-or <tag>programlisting</tag> element has a 
+or <tag>programlisting</tag> element has a
 <tag class="attribute">width</tag> attribute, which is
 expressed as a plain integer to indicate the maximum character count
 of each line.
 To convert this character count to an actual maximum width
 measurement, the width of the font characters must be provided.
 Different monospace fonts have different character width,
-so this parameter should be adjusted to fit the 
+so this parameter should be adjusted to fit the
 monospace font being used.
 </para>
 
@@ -5783,27 +5783,27 @@ length (not a percentage).</para>
 </refsection>
 </doc:refentry>
 <xsl:attribute-set name="normal.para.spacing">
-  <xsl:attribute name="space-before.minimum">0.2em</xsl:attribute>
-  <xsl:attribute name="space-before.optimum">0.3em</xsl:attribute>
-  <xsl:attribute name="space-before.maximum">0.4em</xsl:attribute>
+  <xsl:attribute name="space-before.minimum">0.5em</xsl:attribute>
+  <xsl:attribute name="space-before.optimum">0.6em</xsl:attribute>
+  <xsl:attribute name="space-before.maximum">0.7em</xsl:attribute>
 </xsl:attribute-set>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.doctitle"> 
-<refmeta> 
-<refentrytitle>olink.doctitle</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.doctitle">
+<refmeta>
+<refentrytitle>olink.doctitle</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">maybe</refmiscinfo>
-</refmeta> 
-<refnamediv> 
-<refname>olink.doctitle</refname> 
+</refmeta>
+<refnamediv>
+<refname>olink.doctitle</refname>
 <refpurpose>show the document title for external olinks?</refpurpose>
 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 <para>When olinks between documents are resolved, the generated text
 may not make it clear that the reference is to another document.
 It is possible for the stylesheets to append the other document's
@@ -5829,7 +5829,7 @@ Then if an olink's  <literal>targetdoc</literal> id differs from
 the <literal>current.docid</literal> value, the stylesheet knows
 that it is a reference to another document and can
 append the target document's
-title to the generated olink text. </para> 
+title to the generated olink text. </para>
 
 <para>The text for the target document's title is copied from the
 olink database from the <tag>ttl</tag> element
@@ -5910,36 +5910,36 @@ is <literal>yes</literal>.
 </listitem>
 </varlistentry>
 </variablelist>
-<para>Another way of inserting the target document name 
+<para>Another way of inserting the target document name
 for a single olink is to employ an
 <tag class="attribute">xrefstyle</tag>
 attribute using the <literal>template:</literal> syntax.
 The <literal>%o</literal> placeholder (the letter o, not zero)
 in such a template
 will be filled in with the target document's title when it is processed.
-This will occur regardless of 
+This will occur regardless of
 the value of <parameter>olink.doctitle</parameter>.
 </para>
 <para>Note that prior to version 1.66 of the XSL stylesheets,
 the allowed values for this parameter were 0 and 1.  Those
 values are still supported and mapped to 'no' and 'yes', respectively.
 </para>
-</refsection> 
+</refsection>
 </doc:refentry>
-<xsl:param name="olink.doctitle">no</xsl:param> 
+<xsl:param name="olink.doctitle">no</xsl:param>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.base.uri"> 
-<refmeta> 
-<refentrytitle>olink.base.uri</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>olink.base.uri</refname> 
-<refpurpose>Base URI used in olink hrefs</refpurpose> 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.base.uri">
+<refmeta>
+<refentrytitle>olink.base.uri</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>olink.base.uri</refname>
+<refpurpose>Base URI used in olink hrefs</refpurpose>
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 <para>When cross reference data is collected for resolving olinks, it
 may be necessary to prepend a base URI to each target's href. This
 parameter lets you set that base URI when cross reference data is
@@ -5953,7 +5953,7 @@ value of this parameter. Then the hrefs recorded in the cross
 reference data collection look like
 <literal>outfile.html#idref</literal>, which can be reached as links
 from other documents.</para>
-</refsection> 
+</refsection>
 </doc:refentry>
 <xsl:param name="olink.base.uri"/>
 
@@ -5975,7 +5975,7 @@ from other documents.</para>
 messages about how it is being resolved during processing.
 This is useful when an olink does not resolve properly
 and the standard error messages are not sufficient to
-find the problem. 
+find the problem.
 </para>
 
 <para>You may need to read through the olink XSL templates
@@ -5993,7 +5993,7 @@ to understand the context for some of the debug messages.
 </refmeta>
 <refnamediv>
 <refname>olink.properties</refname>
-<refpurpose>Properties associated with the cross-reference 
+<refpurpose>Properties associated with the cross-reference
 text of an olink.</refpurpose>
 </refnamediv>
 
@@ -6012,19 +6012,19 @@ document.</para>
   <xsl:attribute name="show-destination">replace</xsl:attribute>
 </xsl:attribute-set>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.lang.fallback.sequence"> 
-<refmeta> 
-<refentrytitle>olink.lang.fallback.sequence</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>olink.lang.fallback.sequence</refname> 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="olink.lang.fallback.sequence">
+<refmeta>
+<refentrytitle>olink.lang.fallback.sequence</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>olink.lang.fallback.sequence</refname>
 <refpurpose>look up translated documents if olink not found?</refpurpose>
 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 
 <para>This parameter defines a list of lang values
 to search among to resolve olinks.
@@ -6041,7 +6041,7 @@ parameter.
 <para>An olink database can contain target data for the same
 document in multiple languages.  Each set of data has the
 same value for the <tag>targetdoc</tag> attribute in
-the <tag>document</tag> element in the database, but with a 
+the <tag>document</tag> element in the database, but with a
 different <tag>lang</tag> attribute value.
 </para>
 
@@ -6066,7 +6066,7 @@ olink database starting with:</para>
 </literallayout>
 
 <para>If there is no such element, then the
-<parameter>olink.lang.fallback.sequence</parameter> 
+<parameter>olink.lang.fallback.sequence</parameter>
 parameter is consulted.
 If its value is, for example, <quote>fr en</quote>, then the processor next
 looks for <literal>targetdoc="adminguide" lang="fr"</literal>, and
@@ -6077,7 +6077,7 @@ lang attribute.
 </para>
 
 <para>This parameter is useful when a set of documents is only
-partially translated, or is in the process of being translated.  
+partially translated, or is in the process of being translated.
 If a target of an olink has not yet been translated, then this
 parameter permits the processor to look for the document in
 other languages.  This assumes the reader would rather have
@@ -6085,7 +6085,7 @@ a link to a document in a different language than to have
 a broken link.
 </para>
 
-</refsection> 
+</refsection>
 </doc:refentry>
 <xsl:param name="olink.lang.fallback.sequence"/>
 
@@ -6169,12 +6169,12 @@ you may want to redirect some of your olinks.  This parameter
 permits you to redirect an olink to the current document.
 </para>
 
-<para>For example: you are writing documentation for a  product, 
+<para>For example: you are writing documentation for a  product,
 which includes 3 manuals: a little installation
-booklet (booklet.xml), a user 
+booklet (booklet.xml), a user
 guide (user.xml), and a reference manual (reference.xml).
-All 3 documents begin with the same introduction section (intro.xml) that 
-contains a reference to the customization section (custom.xml) which is 
+All 3 documents begin with the same introduction section (intro.xml) that
+contains a reference to the customization section (custom.xml) which is
 included in both user.xml and reference.xml documents.
 </para>
 
@@ -6184,8 +6184,8 @@ so that it is interpreted correctly in all 3 documents?</para>
 <listitem><para>If you use xref, it will fail in user.xml.</para>
 </listitem>
 <listitem><para>If you use olink (pointing to reference.xml),
-the reference in user.xml  
-will point to the customization section of the reference manual, while it is 
+the reference in user.xml
+will point to the customization section of the reference manual, while it is
 actually available in user.xml.</para>
 </listitem>
 </itemizedlist>
@@ -6224,7 +6224,7 @@ individual olink instances.</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="insert.olink.page.number">
 <refmeta>
 <refentrytitle>insert.olink.page.number</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">no</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">yes</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">maybe</refmiscinfo>
@@ -6240,7 +6240,7 @@ individual olink instances.</para>
 
 <para>The value of this parameter determines if
 cross references made between documents with
-<tag>olink</tag> will 
+<tag>olink</tag> will
 include page number citations.
 In most cases this is only applicable to references in printed output.
 </para>
@@ -6264,7 +6264,7 @@ attribute is used.
 <varlistentry>
 <term>maybe</term>
 <listitem><para>Page number references will not be generated
-for an <tag>olink</tag> element unless 
+for an <tag>olink</tag> element unless
 it has an
 <tag class="attribute">xrefstyle</tag>
 attribute whose value specifies a page reference.
@@ -6277,9 +6277,9 @@ the <parameter>insert.xref.page.number</parameter> parameter.
 </para>
 
 <para>Page number references for olinks to
-external documents can only be inserted if the 
-information exists in the olink database. 
-This means each olink target element 
+external documents can only be inserted if the
+information exists in the olink database.
+This means each olink target element
 (<tag>div</tag> or <tag>obj</tag>)
 must have a <tag class="attribute">page</tag> attribute
 whose value is its page number in the target document.
@@ -6313,7 +6313,7 @@ page numbers in the olink database.
 
 <para>The value of this parameter determines whether
 the cross reference URIs to PDF documents made with
-<tag>olink</tag> will 
+<tag>olink</tag> will
 include fragment identifiers.
 </para>
 
@@ -6325,7 +6325,7 @@ the PDF file to a location within the document instead of
 the first page.
 However, not all PDF files have id
 values embedded in them, and not all PDF viewers can
-handle fragment identifiers. 
+handle fragment identifiers.
 </para>
 
 <para>If <parameter>insert.olink.pdf.frag</parameter> is set
@@ -6344,7 +6344,7 @@ contains the fragment identifier.
 </para>
 
 <para>If <parameter>insert.olink.pdf.frag</parameter> is set
-to zero (the default value), then 
+to zero (the default value), then
 the <tag class="attribute">href</tag> attribute
 from the olink database
 is not appended to PDF olinks, so the fragment identifier is left off.
@@ -6636,7 +6636,7 @@ landscape orientation, it is vertical.
 <refsection><info><title>Description</title></info>
 
 <para>The page width is generally calculated from the
-<parameter>paper.type</parameter> and 
+<parameter>paper.type</parameter> and
 <parameter>page.orientation</parameter> parameters.</para>
 
 </refsection>
@@ -6783,7 +6783,7 @@ B, and C sizes. See <parameter>page.width.portrait</parameter>, for example.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="part.autolabel">
 <refmeta>
 <refentrytitle>part.autolabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">0<alt>none</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
@@ -6870,7 +6870,7 @@ and sorted index terms.
 are supported</para>
 
 <note>
-  <para>PassiveTeX is incomplete and development has ceased. In most cases, 
+  <para>PassiveTeX is incomplete and development has ceased. In most cases,
 another XSL-FO engine is probably a better choice.</para>
 </note>
 
@@ -6926,7 +6926,7 @@ some processors anyway.
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="preface.autolabel">
 <refmeta>
 <refentrytitle>preface.autolabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">0<alt>none</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
@@ -7668,9 +7668,9 @@ honorific in a personal name.</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="qanda.defaultlabel">
 <refmeta>
 <refentrytitle>qanda.defaultlabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">number</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">qanda</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">qanda</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">none</refmiscinfo>
 </refmeta>
 <refnamediv>
@@ -7684,7 +7684,7 @@ honorific in a personal name.</para>
 
 <para>If no <literal>defaultlabel</literal> attribute is specified on
 a <tag>qandaset</tag>, this value is used. It is generally one of the legal
-values for the defaultlabel attribute (<literal>none</literal>, 
+values for the defaultlabel attribute (<literal>none</literal>,
 <literal>number</literal> or
 <literal>qanda</literal>), or one of the additional stylesheet-specific values
 (<literal>qnumber</literal> or <literal>qnumberanda</literal>).
@@ -7708,8 +7708,8 @@ are not labeled. </para>
 
 <varlistentry><term><literal>qnumber</literal></term>
 <listitem>
-<para>The questions are labeled "Q:" followed by a number, and answers are not 
-labeled. 
+<para>The questions are labeled "Q:" followed by a number, and answers are not
+labeled.
 When sections are numbered, adding a label
 to the number distinguishes the question numbers
 from the section numbers.
@@ -7722,7 +7722,7 @@ of a <tag>qandaset</tag> element.</para>
 <varlistentry><term><literal>qnumberanda</literal></term>
 <listitem>
 <para>The questions are labeled "Q:" followed by a number, and
-the answers are labeled "A:". 
+the answers are labeled "A:".
 When sections are numbered, adding a label
 to the number distinguishes the question numbers
 from the section numbers.
@@ -7734,7 +7734,7 @@ of a <tag>qandaset</tag> element.</para>
 
 <varlistentry><term><literal>none</literal></term>
 <listitem>
-<para>No distinguishing label precedes Questions or Answers. 
+<para>No distinguishing label precedes Questions or Answers.
 </para>
 </listitem>
 </varlistentry>
@@ -7751,7 +7751,7 @@ of a <tag>qandaset</tag> element.</para>
 </refmeta>
 <refnamediv>
 <refname>qanda.in.toc</refname>
-<refpurpose>Should qandaentry questions appear in 
+<refpurpose>Should qandaentry questions appear in
 the document table of contents?</refpurpose>
 </refnamediv>
 
@@ -7760,7 +7760,7 @@ the document table of contents?</refpurpose>
 <refsection><info><title>Description</title></info>
 
 <para>If true (non-zero), then the generated table of contents
-for a document will include <tag>qandaset</tag> titles, 
+for a document will include <tag>qandaset</tag> titles,
 <tag>qandadiv</tag> titles,
 and <tag>question</tag> elements.  The default value (zero) excludes
 them from the TOC.
@@ -8160,7 +8160,7 @@ attribute-set, computed from the location of the
 </refmeta>
 <refnamediv>
 <refname>refentry.xref.manvolnum</refname>
-<refpurpose>Output <tag>manvolnum</tag> as part of 
+<refpurpose>Output <tag>manvolnum</tag> as part of
 <tag>refentry</tag> cross-reference?</refpurpose>
 </refnamediv>
 
@@ -8176,11 +8176,11 @@ or <tag>citerefentry</tag>.
 </refsection>
 </doc:refentry>
 <xsl:param name="refentry.xref.manvolnum" select="1"/>
-  
+
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="reference.autolabel">
 <refmeta>
 <refentrytitle>reference.autolabel</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">0<alt>none</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
@@ -8578,7 +8578,7 @@ is only necessary when producing multi-column output
 that contains page-wide spans.  Using <literal>fo:wrapper</literal>
 avoids the nesting of <literal>fo:block</literal>
 elements that prevents spans from working (the standard says
-a span must be on a block that is a direct child of 
+a span must be on a block that is a direct child of
 <literal>fo:flow</literal>).
 </para>
 
@@ -8591,9 +8591,9 @@ border are not.
 </para>
 
 <para>Only some XSL-FO processors need to use this parameter.
-The Antenna House processor, for example, will handle 
+The Antenna House processor, for example, will handle
 spans in nested blocks without changing the element name.
-The RenderX XEP product and FOP follow the XSL-FO standard 
+The RenderX XEP product and FOP follow the XSL-FO standard
 and need to use <literal>wrapper</literal>.
 </para>
 
@@ -9002,7 +9002,7 @@ general <tag>section.properties</tag> attribute set.
 
 <para>The properties that apply to the containing
 block of a level 6 or lower section, and therefore apply to
-the whole section.  This includes 
+the whole section.  This includes
 <tag>section</tag> elements at level 6 and lower.
 </para>
 
@@ -9038,7 +9038,7 @@ general <tag>section.properties</tag> attribute set.
 
 <para>The properties that apply to the containing
 block of all section levels, and therefore apply to
-the whole section.  
+the whole section.
 This attribute set is inherited by the
 more specific attribute sets such as
 <tag>section.level1.properties</tag>.
@@ -9214,11 +9214,11 @@ unavailable.
 <refmiscinfo class="other" otherclass="value">none</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">before</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">left</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">start</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">start</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">right</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">end</refmiscinfo>     
+<refmiscinfo class="other" otherclass="value">end</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">inside</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">outside</refmiscinfo> 
+<refmiscinfo class="other" otherclass="value">outside</refmiscinfo>
 </refmeta>
 <refnamediv>
 <refname>sidebar.float.type</refname>
@@ -9234,13 +9234,13 @@ unavailable.
 <itemizedlist>
 <listitem>
 <para>If <parameter>sidebar.float.type</parameter> is
-<quote><literal>none</literal></quote>, then 
+<quote><literal>none</literal></quote>, then
 no float is used.
 </para>
 </listitem>
 <listitem>
 <para>If <parameter>sidebar.float.type</parameter> is
-<quote><literal>before</literal></quote>, then 
+<quote><literal>before</literal></quote>, then
 the float appears at the top of the page.  On some processors,
 that may be the next page rather than the current page.
 </para>
@@ -9280,7 +9280,7 @@ When the text direction is right-to-left, a left side float is used.
 <para>If your XSL-FO processor supports floats positioned on the
 <quote><literal>inside</literal></quote> or
 <quote><literal>outside</literal></quote>
-of double-sided pages, then you have those two 
+of double-sided pages, then you have those two
 options for side floats as well.
 </para>
 </listitem>
@@ -9309,8 +9309,8 @@ The width determines the degree to which the sidebar block intrudes into
 the text area.
 </para>
 <para>If <parameter>sidebar.float.type</parameter> is
-<quote><literal>before</literal></quote> or 
-<quote><literal>none</literal></quote>, then 
+<quote><literal>before</literal></quote> or
+<quote><literal>none</literal></quote>, then
 this parameter is ignored.
 </para>
 
@@ -9408,7 +9408,7 @@ specifies additional fonts that should be searched for
 special characters not in the normal font.
 These symbol font names are automatically appended
 to the body or title font family name when fonts
-are specified in a 
+are specified in a
 <tag class="attribute">font-family</tag>
 property in the FO output.
 </para>
@@ -9444,7 +9444,7 @@ navy, olive, orange, purple, red, silver, teal, white, and
 yellow.</para>
 
 <note>
-  <para>To control properties of cell borders in HTML output, you must also turn on the 
+  <para>To control properties of cell borders in HTML output, you must also turn on the
   <parameter>table.borders.with.css</parameter> parameter.</para>
 </note>
 
@@ -9455,16 +9455,16 @@ yellow.</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="table.cell.border.style">
 <refmeta>
 <refentrytitle>table.cell.border.style</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">none</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">solid</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">dotted</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">dashed</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">double</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">groove</refmiscinfo>                       
+<refmiscinfo class="other" otherclass="value">groove</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">ridge</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">inset</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">outset</refmiscinfo>          
+<refmiscinfo class="other" otherclass="value">outset</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">solid</refmiscinfo>
 </refmeta>
 <refnamediv>
@@ -9479,7 +9479,7 @@ yellow.</para>
 <para>Specifies the border style of table cells.</para>
 
 <note>
-  <para>To control properties of cell borders in HTML output, you must also turn on the 
+  <para>To control properties of cell borders in HTML output, you must also turn on the
   <parameter>table.borders.with.css</parameter> parameter.</para>
 </note>
 
@@ -9506,7 +9506,7 @@ cells. The units are points. See <link xmlns:xlink="http://www.w3.org/1999/xlink
 CSS</link></para>
 
 <note>
-  <para>To control properties of cell borders in HTML output, you must also turn on the 
+  <para>To control properties of cell borders in HTML output, you must also turn on the
   <parameter>table.borders.with.css</parameter> parameter.</para>
 </note>
 
@@ -9542,7 +9542,7 @@ CSS</link></para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="table.footnote.number.format">
 <refmeta>
 <refentrytitle>table.footnote.number.format</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">1<alt>1,2,3...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">A<alt>A,B,C...</alt></refmiscinfo>
 <refmiscinfo class="other" otherclass="value">a<alt>a,b,c...</alt></refmiscinfo>
@@ -9612,7 +9612,7 @@ that you may have trouble using those symbols for footnotes.</para>
 
 <refsection><info><title>Description</title></info>
 
-<para>This attribute set is applied to the footnote-block 
+<para>This attribute set is applied to the footnote-block
 for each table footnote.
 It can be used to set the
 font-size, font-family, and other inheritable properties that will be
@@ -9653,16 +9653,16 @@ applied to all table footnotes.</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="table.frame.border.style">
 <refmeta>
 <refentrytitle>table.frame.border.style</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">none</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">solid</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">dotted</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">dashed</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">double</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">groove</refmiscinfo>                       
+<refmiscinfo class="other" otherclass="value">groove</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">ridge</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">inset</refmiscinfo>
-<refmiscinfo class="other" otherclass="value">outset</refmiscinfo>          
+<refmiscinfo class="other" otherclass="value">outset</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">solid</refmiscinfo>
 </refmeta>
 <refnamediv>
@@ -9778,20 +9778,20 @@ of the table as a whole.
   <xsl:attribute name="border-before-width.conditionality">retain</xsl:attribute>
   <xsl:attribute name="border-collapse">collapse</xsl:attribute>
 </xsl:attribute-set>
- 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="target.database.document"> 
-<refmeta> 
-<refentrytitle>target.database.document</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>target.database.document</refname> 
+
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="target.database.document">
+<refmeta>
+<refentrytitle>target.database.document</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">uri</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>target.database.document</refname>
 <refpurpose>Name of master database file for resolving
-olinks</refpurpose> 
-</refnamediv> 
- 
+olinks</refpurpose>
+</refnamediv>
+
 <refsection><info><title>Description</title></info>
- 
+
 <para>
 To resolve olinks between documents, the stylesheets use a master
 database document that identifies the target datafiles for all the
@@ -9809,18 +9809,18 @@ system entity references or XIncludes. See also
 </doc:refentry>
 <xsl:param name="target.database.document">olinkdb.xml</xsl:param>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="targets.filename"> 
-<refmeta> 
-<refentrytitle>targets.filename</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>targets.filename</refname> 
-<refpurpose>Name of cross reference targets data file</refpurpose> 
-</refnamediv> 
- 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="targets.filename">
+<refmeta>
+<refentrytitle>targets.filename</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">string</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>targets.filename</refname>
+<refpurpose>Name of cross reference targets data file</refpurpose>
+</refnamediv>
+
 <refsection><info><title>Description</title></info>
- 
+
 <para>
 In order to resolve olinks efficiently, the stylesheets can
 generate an external data file containing information about
@@ -9830,8 +9830,8 @@ file from the default name <filename>target.db</filename>.
 The name must agree with that used in the target database
 used to resolve olinks during processing.
 See also <parameter>target.database.document</parameter>.
-</para> 
-</refsection> 
+</para>
+</refsection>
 </doc:refentry>
 <xsl:param name="targets.filename">target.db</xsl:param>
 
@@ -9852,7 +9852,7 @@ using textdata element</refpurpose>
 
 <para>Specifies the encoding of any external text files included using
 <tag>textdata</tag> element. This value is used only when you do
-not specify encoding by the appropriate attribute 
+not specify encoding by the appropriate attribute
 directly on textdata. An empty string is interpreted as the system
 default encoding.</para>
 
@@ -9869,7 +9869,7 @@ default encoding.</para>
 <refname>tex.math.delims</refname>
 <refpurpose>Should equations output for processing by TeX be
 surrounded by math mode delimiters?</refpurpose>
-</refnamediv> 
+</refnamediv>
 
 
 
@@ -9902,7 +9902,7 @@ you should set this parameter to 0.</para>
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="tex.math.in.alt">
 <refmeta>
 <refentrytitle>tex.math.in.alt</refentrytitle>
-<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo> 
+<refmiscinfo class="other" otherclass="datatype">list</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">plain</refmiscinfo>
 <refmiscinfo class="other" otherclass="value">latex</refmiscinfo>
 </refmeta>
@@ -9938,7 +9938,7 @@ store TeX inside <tag>alt</tag> element:</para>
 
 <programlisting>&lt;inlineequation&gt;
 &lt;alt role="tex"&gt;a^2+b^2=c^2&lt;/alt&gt;
-&lt;graphic fileref="a2b2c2.gif"/&gt;  
+&lt;graphic fileref="a2b2c2.gif"/&gt;
 &lt;/inlineequation&gt;</programlisting>
 
 <para>If you want use this feature, you should process your FO with
@@ -9967,7 +9967,7 @@ equations in your document.</para>
 
 </doc:refentry>
 <xsl:param name="tex.math.in.alt"/>
-  
+
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="textinsert.extension">
   <refmeta>
     <refentrytitle>textinsert.extension</refentrytitle>
@@ -9977,7 +9977,7 @@ equations in your document.</para>
     <refname>textinsert.extension</refname>
     <refpurpose>Enables the textinsert extension element</refpurpose>
   </refnamediv>
-  
+
   <refsection><info><title>Description</title></info>
     <para>The textinsert extension element inserts the contents of
       a file into the result tree (as text).</para>
@@ -10246,9 +10246,9 @@ TOC.
 <para>If non-zero, and if <parameter>ulink.show</parameter> also is non-zero,
 the URL of each <tag>ulink</tag> will appear as a footnote.</para>
 
-<note><para>DocBook 5 does not have an <tag>ulink</tag> element. When processing 
-DocBoook 5 documents, <parameter>ulink.footnotes</parameter> applies to all inline 
-elements that are marked up with <tag class="attribute">xlink:href</tag> attributes 
+<note><para>DocBook 5 does not have an <tag>ulink</tag> element. When processing
+DocBoook 5 documents, <parameter>ulink.footnotes</parameter> applies to all inline
+elements that are marked up with <tag class="attribute">xlink:href</tag> attributes
 that point to external resources.</para>
 </note>
 
@@ -10298,7 +10298,7 @@ supported than zero-width spaces for this purpose.</para>
 
 <refsection><info><title>Description</title></info>
 
-<para>If the <parameter>ulink.hyphenate</parameter> is not empty, then 
+<para>If the <parameter>ulink.hyphenate</parameter> is not empty, then
 hyphenation of ulinks is turned on, and any
 character contained in this parameter is treated as an allowable
 hyphenation point.</para>
@@ -10334,9 +10334,9 @@ are identical, the URL is suppressed. </para>
 
 <para>See also <parameter>ulink.footnotes</parameter>.</para>
 
-<note><para>DocBook 5 does not have an <tag>ulink</tag> element. When processing 
-DocBoook 5 documents, <parameter>ulink.show</parameter> applies to all inline 
-elements that are marked up with <tag class="attribute">xlink:href</tag> attributes 
+<note><para>DocBook 5 does not have an <tag>ulink</tag> element. When processing
+DocBoook 5 documents, <parameter>ulink.show</parameter> applies to all inline
+elements that are marked up with <tag class="attribute">xlink:href</tag> attributes
 that point to external resources.</para>
 </note>
 
@@ -10368,28 +10368,28 @@ be used.
 </doc:refentry>
 <xsl:param name="use.extensions" select="0"/>
 
-<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="use.local.olink.style"> 
-<refmeta> 
-<refentrytitle>use.local.olink.style</refentrytitle> 
-<refmiscinfo class="other" otherclass="datatype">boolean</refmiscinfo> 
-</refmeta> 
-<refnamediv> 
-<refname>use.local.olink.style</refname> 
+<doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="use.local.olink.style">
+<refmeta>
+<refentrytitle>use.local.olink.style</refentrytitle>
+<refmiscinfo class="other" otherclass="datatype">boolean</refmiscinfo>
+</refmeta>
+<refnamediv>
+<refname>use.local.olink.style</refname>
 <refpurpose>Process olinks using xref style of current
-document</refpurpose> 
-</refnamediv> 
- 
-<refsection><info><title>Description</title></info> 
- 
+document</refpurpose>
+</refnamediv>
+
+<refsection><info><title>Description</title></info>
+
 <para>When cross reference data is collected for use by olinks, the data for each potential target includes one field containing a completely assembled cross reference string, as if it were an xref generated in that document. Other fields record the separate title, number, and element name of each target. When an olink is formed to a target from another document, the olink resolves to that preassembled string by default. If the <parameter>use.local.olink.style</parameter> parameter is set to non-zero, then instead the cross
 reference string is formed again from the target title, number, and
 element name, using the stylesheet processing the targeting document.
 Then olinks will match the xref style in the targeting document
 rather than in the target document. If  both documents are processed
-with the same stylesheet, then the results will be the same.</para> 
-</refsection> 
+with the same stylesheet, then the results will be the same.</para>
+</refsection>
 </doc:refentry>
-<xsl:param name="use.local.olink.style" select="0"/> 
+<xsl:param name="use.local.olink.style" select="0"/>
 
 <doc:refentry xmlns:doc="http://nwalsh.com/xsl/documentation/1.0" id="use.role.as.xrefstyle">
 <refmeta>
@@ -10406,13 +10406,13 @@ with the same stylesheet, then the results will be the same.</para>
 
 <refsection><info><title>Description</title></info>
 
-<para>In DocBook documents that conform to a schema older than V4.3, this parameter allows 
+<para>In DocBook documents that conform to a schema older than V4.3, this parameter allows
 <tag class="attribute">role</tag> to serve the purpose of specifying the cross reference style.</para>
 
 <para>If non-zero, the <tag class="attribute">role</tag> attribute on
 <tag>xref</tag> will be used to select the cross reference style.
 In DocBook V4.3, the <tag class="attribute">xrefstyle</tag> attribute was added for this purpose.
-If the <tag class="attribute">xrefstyle</tag> attribute is present, 
+If the <tag class="attribute">xrefstyle</tag> attribute is present,
 <tag class="attribute">role</tag> will be ignored, regardless of the setting
 of this parameter.</para>
 
@@ -10484,7 +10484,7 @@ stylesheets to make use of the cross reference style:</para>
 </refmeta>
 <refnamediv>
 <refname>use.role.for.mediaobject</refname>
-<refpurpose>Use <tag class="attribute">role</tag> attribute 
+<refpurpose>Use <tag class="attribute">role</tag> attribute
 value for selecting which of several objects within a mediaobject to use.
 </refpurpose>
 </refnamediv>
@@ -10516,7 +10516,7 @@ of such objects is selected.
 </listitem>
 </orderedlist>
 <para>
-If the value of 
+If the value of
 <parameter>use.role.for.mediaobject</parameter>
 is zero, then role attributes are not considered
 and the first suitable object
@@ -10576,11 +10576,11 @@ list-presentation="blocks"</tag> or <tag class="xmlpi">dbfo
 list-presentation="list"</tag>.</para>
 
 <para>When using <literal>list-presentation="list"</literal>,
-you can also control the amount of space used for the <tag>term</tag>s with 
+you can also control the amount of space used for the <tag>term</tag>s with
 the <tag class="xmlpi">dbfo term-width=".25in"</tag> processing instruction,
 the <tag class="attribute">termlength</tag> attribute on <tag>variablelist</tag>,
-or allow the stylesheets to attempt to calculate the amount of space to leave based on the 
-number of letters in the longest term.  
+or allow the stylesheets to attempt to calculate the amount of space to leave based on the
+number of letters in the longest term.
 </para>
 
 <programlisting>  &lt;variablelist&gt;
@@ -10619,13 +10619,13 @@ number of letters in the longest term.
 <refsection><info><title>Description</title></info>
 
 <para>In variablelists, the <tag>listitem</tag>
-is indented to leave room for the 
+is indented to leave room for the
 <tag>term</tag> elements. That indent may be computed
 if it is not specified with a <tag class="attribute">termlength</tag>
 attribute on the <tag>variablelist</tag> element.
 </para>
 <para>
-The computation counts characters in the 
+The computation counts characters in the
 <tag>term</tag> elements in the list
 to find the longest term.  However, some terms are very long
 and would produce extreme indents.  This parameter lets you
@@ -10779,8 +10779,8 @@ after each <tag>term</tag>).</para>
 <refsection><info><title>Description</title></info>
 
 <para>Sets direction of text flow and text alignment based on locale.
-The value is normally taken from the gentext file for the 
-lang attribute of the document's root element, using the 
+The value is normally taken from the gentext file for the
+lang attribute of the document's root element, using the
 key name 'writing-mode' to look it up in the gentext file.
 But the param can also be
 set on the command line to override that gentext value.
@@ -10912,15 +10912,15 @@ attribute-set.</para>
 <para>
 This parameter allows you to control the punctuation of certain
 types of generated cross reference text.
-When cross reference text is generated for an 
-<tag class="element">xref</tag> or 
+When cross reference text is generated for an
+<tag class="element">xref</tag> or
 <tag class="element">olink</tag> element
 using an <tag class="attribute">xrefstyle</tag> attribute
 that makes use of the <literal>select:</literal> feature,
 and the selected components include both label and page
 but no title,
 then the value of this parameter is inserted between
-label and page number in the output.  
+label and page number in the output.
 If a title is included, then other separators are used.
 </para>
 
@@ -10945,14 +10945,14 @@ If a title is included, then other separators are used.
 <para>
 This parameter allows you to control the punctuation of certain
 types of generated cross reference text.
-When cross reference text is generated for an 
-<tag class="element">xref</tag> or 
+When cross reference text is generated for an
+<tag class="element">xref</tag> or
 <tag class="element">olink</tag> element
 using an <tag class="attribute">xrefstyle</tag> attribute
 that makes use of the <literal>select:</literal> feature,
 and the selected components include both label and title,
 then the value of this parameter is inserted between
-label and title in the output.  
+label and title in the output.
 </para>
 
 </refsection>
@@ -10998,14 +10998,14 @@ on cross reference text.</para>
 <para>
 This parameter allows you to control the punctuation of certain
 types of generated cross reference text.
-When cross reference text is generated for an 
-<tag class="element">xref</tag> or 
+When cross reference text is generated for an
+<tag class="element">xref</tag> or
 <tag class="element">olink</tag> element
 using an <tag class="attribute">xrefstyle</tag> attribute
 that makes use of the <literal>select:</literal> feature,
 and the selected components include both title and page number,
 then the value of this parameter is inserted between
-title and page number in the output.  
+title and page number in the output.
 </para>
 
 </refsection>
