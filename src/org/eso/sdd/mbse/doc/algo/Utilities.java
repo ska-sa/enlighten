@@ -589,6 +589,9 @@ public class Utilities {
 				"");
 		content = content.replaceFirst("<body>", "").replaceFirst("<html>", "");
 
+		//gerhard le Roux replace quotation marks
+		content = content.replaceAll("&quot;(.*?)&quot;","<quote>$1</quote>");
+		
 		content = content.replaceAll("<head>", "");
 		content = content.replaceAll("</head>", "");
 		// <font face="Times New Roman">
@@ -636,7 +639,7 @@ public class Utilities {
 		// getting rid of divs
 		content = content.replaceAll("<div[\\s|\\w|:|;|\\.|=|\\-\"]*>", "");
 		content = content.replaceAll("</div>", "");
-		//geting rid of spans
+		//getting rid of spans
 		content = content.replaceAll("<span.*?>", "");
 		content = content.replaceAll("</span>", "");
 
