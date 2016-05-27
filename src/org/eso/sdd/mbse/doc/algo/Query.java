@@ -723,6 +723,7 @@ public class Query {
 		
 		//GLR added section to handle hmlt text for requirements
 		if (reqText.indexOf("<html>") != -1) {
+			
 			reqText =  Utilities.convertHTML2DocBook(reqText, false);
 		}
 		

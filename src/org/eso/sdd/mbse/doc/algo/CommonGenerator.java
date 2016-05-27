@@ -1261,17 +1261,16 @@ public class CommonGenerator implements RunnableWithProgress {
 						elementInfo = Utilities.convertHTML2DocBook(elementInfo, false);
 						elementInfo = "<entry align=\"left\" annotations=\"StringProperty\" >"	+ elementInfo + "</entry>" +lE;
 					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementListProperty ) {
-						String subTable = "";
 						com.nomagic.magicdraw.properties.ElementListProperty elp = (com.nomagic.magicdraw.properties.ElementListProperty)theProp;
 						Element[] theSubEle = elp.getValue();
+						String entryList = "";
 						if(theSubEle.length > 0) {
-							//GLR changed nr of cols to static 1
-							subTable += "<entrytbl cols='1'>"+ lE + "<tbody>" + lE;
+							String theAnno = theSubEle[0].getClass().getName();
+							entryList = "<entry annotations=\""+theAnno+"\">";
 							for(int i = 0; i < theSubEle.length; i++ ) {
 								Element theEle = theSubEle[i];
 								if(theEle != null) {
 									String theRep = null;
-									String theAnno = theEle.getClass().getName();
 									if(theEle.getHumanType().equals("Literal String")) {
 										LiteralString ls = (LiteralString)theEle;
 										theRep = ls.getValue();	
@@ -1298,17 +1297,20 @@ public class CommonGenerator implements RunnableWithProgress {
 										}
 										theRep = name + ":"+ type;
 									}
+									if (i>0){// if list more than one create an extra newline
+										entryList += "<para></para>";
+									}
 	
-									subTable += "<row><entry annotations=\""+theAnno+"\">" + Utilities.transformSpecialCharacter(theRep) + "</entry></row>"+lE;
+									entryList +=  Utilities.transformSpecialCharacter(theRep) +lE;
 									//logDebugIndent(el, " "+theEle.getClass().getName()+ " " + theEle.getHumanType());
 								}
 							}
 	
-							subTable += "</tbody>" + lE + "</entrytbl>" + lE;
+							entryList += "</entry>" + lE;
 						} else { //GLR i.e. its an empty list (sometimes this happens with derived properties
-							subTable = "<entrytbl cols='1'><tbody><row><entry></entry></row></tbody></entrytbl>";
+							entryList = "<entry></entry>";
 						}
-						elementInfo = subTable;
+						elementInfo = entryList;
 						
 					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementProperty ) {
 						if(theProp.getName().equals("Type")) { 
@@ -1325,7 +1327,7 @@ public class CommonGenerator implements RunnableWithProgress {
 						logDebugIndent(el, " WARNING: unidentified type: " + theProp.getClass().getName() + " for column: " + colId);
 						Object theUnknown = theProp.getValue();
 						if(theUnknown instanceof Object[]) {
-							String subTable = "<entrytbl cols='1'>"+ lE + "<tbody>" + lE;								
+							String entryList = "<entry>";;								
 							Object[] theArray = (Object[])theUnknown;
 							for(int i = 0; i < theArray.length;i++) {
 								String theAnno = null;
@@ -1335,12 +1337,13 @@ public class CommonGenerator implements RunnableWithProgress {
 									com.nomagic.magicdraw.properties.StringProperty sp = (com.nomagic.magicdraw.properties.StringProperty)theArray[i];
 									theRep = sp.getValueStringRepresentation();
 								}
-								subTable += "<row>" + lE + "<entry annotation=\"" + theAnno + "\" >" + 
-										Utilities.transformSpecialCharacter(Utilities.convertHTML2DocBook(theRep, false)) + 
-										"</entry>"	+ lE + "</row>"+lE;									
+								if (i>0){// if list more than one create an extra newline
+									entryList += "<para></para>";
+								}
+								entryList += Utilities.transformSpecialCharacter(Utilities.convertHTML2DocBook(theRep, false)) + lE;									
 							}
-							subTable += "</tbody>" + lE + "</entrytbl>" + lE;
-							elementInfo = subTable;
+							entryList += "</entry>" + lE;
+							elementInfo = entryList;
 	
 						} else {
 							elementInfo = "<entry align=\"left\" annotations=\"" + 
