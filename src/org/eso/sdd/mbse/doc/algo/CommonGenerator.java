@@ -508,7 +508,7 @@ public class CommonGenerator implements RunnableWithProgress {
 			  
 			  for(int j=0;j<rower.length-1;j++) {
 				  // Note that the alignment of every row-cell will match the alignment of the first (header) row
-				  tableBody += "<entry align=\"" + aligns[j] + "\">" + Utilities.convertHTML2DocBook(rower[j].replaceAll("\\<.*?>", ""),true).trim() + "</entry>"+lE;
+				  tableBody += "<entry align=\"" + aligns[j] + "\">" + Utilities.convertHTML2DocBook(rower[j].replaceAll("\\<.*?>", ""),true,true).trim() + "</entry>"+lE;
 			  }
 			  tableBody += "</row>"+lE;
 		  }

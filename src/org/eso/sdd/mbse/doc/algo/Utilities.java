@@ -560,8 +560,11 @@ public class Utilities {
 				.replaceAll(">", "&gt;"));
 	}
 
-	
 	public static String convertHTML2DocBook(String content, boolean noparas) {
+		return convertHTML2DocBook(content, noparas, false);
+	}
+
+	public static String convertHTML2DocBook(String content, boolean noparas, boolean isTableParagraph) {
 		String paraRepStart = "";
 		String paraRepEnd = "";
 		
@@ -569,14 +572,14 @@ public class Utilities {
 		if (content == null) {
 			content = "";
 		}
-		
+
 		String pattern = "<table([^\\>]+)id=\"\\w*\"";
 		Matcher ma = null;
 		Pattern pa = Pattern.compile(pattern, Pattern.DOTALL);
 		// in case of non HTML we replace the brackets with &lt; and that like
 		// but will all the HTML possibilities be spotted by this check?
 		
-		if(! ( content.contains("<html>") || content.contains("<body>") ) ) {
+		if(! ( content.contains("<html>") || content.contains("<body>") || isTableParagraph ) ) {
 			content = replaceBracketCharacters(content);
 		}
 		
@@ -585,8 +588,7 @@ public class Utilities {
 			paraRepEnd = "</para>" + lE;
 		}
 
-		content = content.replaceFirst("</body>", "").replaceFirst("</html>",
-				"");
+		content = content.replaceFirst("</body>", "").replaceFirst("</html>", "");
 		content = content.replaceFirst("<body>", "").replaceFirst("<html>", "");
 
 		//gerhard le Roux replace quotation marks
