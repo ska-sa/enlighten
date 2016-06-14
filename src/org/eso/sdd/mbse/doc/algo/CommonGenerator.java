@@ -306,7 +306,40 @@ public class CommonGenerator implements RunnableWithProgress {
 			// find stereotype
 
 			if (Utilities.isFigureDiagram(el)) {
-				processFigureDiagram(el,prefix,postfix,content,navigateDown);				
+				/* GLR code to allow for multiple images under a single blockelement*/
+				Collection<Element> elements = (Collection<Element>) el.refGetValue("scopedDiagrams");
+				if (elements != null){
+					if (!elements.isEmpty()){
+
+						int count = 0;
+						for (Element theElement : elements){
+							count += 1;
+							String strCount = "";
+							if (count > 0) {
+								strCount = Integer.toString(count);
+							}
+							StringBuffer theContent = new StringBuffer("");
+							StringBuffer thePostfix = new StringBuffer("");
+							StringBuffer thePrefix = new StringBuffer("");
+							StereotypesHelper.setStereotypePropertyValue(
+									el, theUtilities.getTheFigureDiagramStereotype(), "diagram",theElement);
+							processFigureDiagram(el,thePrefix,thePostfix,theContent,navigateDown);
+							//since this is iterated instead of recursed we can not append prefixes and postfixes
+							//rather add them to content it self during each iteration
+							String s = thePrefix.toString();
+							s = s.replaceAll("<figure annotations=\"figure diagram\" xml:id=\"(.*?)\">","<figure annotations=\"figure diagram\" xml:id=\"$1_"+strCount+")\">");
+							s = s.replaceAll("<title>(.*?)</title>","<title>$1 "+strCount+"</title>");
+							content.append(s).append(theContent).append(thePostfix);	
+							
+						}
+					} else {
+						processFigureDiagram(el,prefix,postfix,content,navigateDown);
+					}
+					
+				}
+				 /* */
+				 
+							
 			} // end case is FigureDiagram
 
 			if (Utilities.isFigureImage(el)) {
@@ -325,6 +358,11 @@ public class CommonGenerator implements RunnableWithProgress {
 			logDebugIndent(el," is RevisionEntry ");
 
 		} else if (Utilities.isQuery(el)) {
+			//GLR code to switch the elements to that pointed by the scopedElements derived property
+			Collection<Element> elements = (Collection<Element>) el.refGetValue("scopedElements");
+			if (elements != null){
+				StereotypesHelper.setStereotypePropertyValue(el, theUtilities.getTheQueryStereotype(),"element",elements);
+			}
 			// insert refactored code here
 			Query theQuery = null;
 			if (Utilities.isGenericQuery(el)){
@@ -332,6 +370,7 @@ public class CommonGenerator implements RunnableWithProgress {
 			} else {
 				theQuery = new Query(el, Debug);
 			}
+				
 				content.append(theQuery.provideDocBookForQuery());
 				logDebugIndent(el," is Query ");
 			
@@ -356,7 +395,6 @@ public class CommonGenerator implements RunnableWithProgress {
 			}
 			content.insert(0,el.getHumanName());
 		}
-
 		DocDown.append(prefix.toString());
 		DocDown.append(content.toString());
 

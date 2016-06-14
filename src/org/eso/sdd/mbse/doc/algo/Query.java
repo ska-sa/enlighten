@@ -50,6 +50,7 @@ import org.eso.sdd.mbse.doc.algo.Utilities;
 
 public class Query {
 	String queryType = "";
+	String altText = "";
 	boolean tableRep = false;
 	Utilities.TEXTUSAGEKIND useText;
 	boolean showQueriedElementDocumentation = false;
@@ -83,7 +84,7 @@ public class Query {
 		showDefaultValue = isDefaultValueToBeShown(el);
 		showQualifiedName = isQualifiedNameToBeShown(el);
 		Debug = theDebug;
-
+		altText = (String) StereotypesHelper.getStereotypePropertyFirst(el,theUtilities.getTheQueryStereotype(),"altText");
 		if(el == null) { 
 			Utilities.displayWarning("Empty query element!");
 		}
@@ -741,7 +742,12 @@ public class Query {
 			//content += "</tbody></tgroup></table>" + lE;
 		} else {
 			// we're showing many less attributes of a requirement than in table mode
-			content += "<emphasis role=\"underline\">" + reqId + " - " + reqName +":  "+ "</emphasis>" + reqText  + "<para></para><para></para>";
+			if (altText == ""){
+				content += "<emphasis role=\"underline\">" + reqId + " - " + reqName +":  "+ "</emphasis>" + reqText  + "<para></para><para></para>";
+			} else {
+				Collection<String>strAltText = (Collection<String>) namedRefEl.refGetValue(altText);
+				content += Utilities.convertHTML2DocBook(strAltText.iterator().next(), false);
+			}
 		}
 		// here we assume that if it is a requirement other features like ports, constraints 
 		// and that like do not need to be documented.

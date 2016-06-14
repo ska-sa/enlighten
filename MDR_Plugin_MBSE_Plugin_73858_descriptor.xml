@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <resourceDescriptor critical="false" date="2016-01-01+00:00" description="SKA-TM modified version of MBDG plugin; Support for more productive Model Based Systems Engineering, following the recommendations in the Cookbook of the SE2 Challenge team http://mbse.gfse.de. The Plugin for the MagicDraw modelling tool provides support for model based document generation which ties together system model and documents to keep them up to date and consistent. It provides basic support to model variants and extract variants from a system model. It provides support to generate organizational structure automatically to keep the model structure consistent and under control. It provides basic support to reason on a system model, for example to extract numbers like total power, cost, power consumption for a given product tree (soon to be improved). The MBSE plugin for MagicDraw requires MagicDraw 17.0 SP4 or higher with an installed SysML plugin 17.0 SP5 or higher." group="SKA-TM SE; SE2 Resource" homePage="http://mbse.gfse.de" id="73858" mdVersionMax="higher" mdVersionMin="17.0" name="MBSE Plugin (SKA)" product="MBSE_Plugin (SKA)" restartMagicdraw="true" type="Plugin">
-    <version human="18.SKA4" internal="180001"></version>
+    <version human="18.SKA5" internal="180001"></version>
     <provider email="" homePage="http://mbse.gfse.de" name="SE2"/>
     <edition>Reader</edition>
     <edition>Community</edition>
