@@ -1,4 +1,4 @@
-﻿<?xml version='1.0'?>
+<?xml version='1.0'?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:d="http://docbook.org/ns/docbook"
   xmlns:exsl="http://exslt.org/common" version="1.0" exclude-result-prefixes="exsl d">
@@ -348,6 +348,37 @@
             <fo:table-cell xsl:use-attribute-sets="titlepage.signature-table.cell">
               <fo:block>
                     <xsl:value-of select="$ska.approver/d:affiliation" />
+              </fo:block>
+            </fo:table-cell>
+            <fo:table-cell number-columns-spanned="2" xsl:use-attribute-sets="titlepage.signature-table.cell" display-align="after" text-align="left">
+              <fo:block>
+              Date:
+              </fo:block>
+            </fo:table-cell>
+          </fo:table-row>
+          <!-- Accepted by-->
+          <fo:table-row>
+            <fo:table-cell number-columns-spanned="5" xsl:use-attribute-sets="titlepage.signature-table.cell">
+              <fo:block text-align="center">
+              Accepted by
+              </fo:block>
+            </fo:table-cell>
+          </fo:table-row>
+          <fo:table-row height="2cm">
+            <xsl:variable name="ska.accepter" select="$document.element/d:info/d:productnumber/d:ska-field[@type='accepter']" />
+            <fo:table-cell xsl:use-attribute-sets="titlepage.signature-table.cell">
+              <fo:block>
+                    <xsl:value-of select="$ska.accepter/d:name" />
+              </fo:block>
+            </fo:table-cell>
+            <fo:table-cell xsl:use-attribute-sets="titlepage.signature-table.cell">
+              <fo:block>
+                    <xsl:value-of select="$ska.accepter/d:designation" />
+              </fo:block>
+            </fo:table-cell>
+            <fo:table-cell xsl:use-attribute-sets="titlepage.signature-table.cell">
+              <fo:block>
+                    <xsl:value-of select="$ska.accepter/d:affiliation" />
               </fo:block>
             </fo:table-cell>
             <fo:table-cell number-columns-spanned="2" xsl:use-attribute-sets="titlepage.signature-table.cell" display-align="after" text-align="left">
