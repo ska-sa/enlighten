@@ -24,16 +24,24 @@
 
 package org.eso.sdd.mbse.doc.algo;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import com.nomagic.magicdraw.core.Application;
+import com.nomagic.magicdraw.core.options.EnvironmentOptions;
+import com.nomagic.magicdraw.dependencymatrix.configuration.MatrixDataHelper;
+import com.nomagic.magicdraw.export.image.ImageExporter;
+import com.nomagic.magicdraw.uml.symbols.DiagramPresentationElement;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdinterfaces.Interface;
 import com.nomagic.uml2.ext.magicdraw.classes.mdinterfaces.InterfaceRealization;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Constraint;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Diagram;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Enumeration;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.EnumerationLiteral;
@@ -47,6 +55,8 @@ import com.nomagic.uml2.ext.magicdraw.compositestructures.mdports.Port;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 
 import org.eso.sdd.mbse.doc.algo.Utilities;
+import org.eso.sdd.mbse.doc.options.MBSEOptionsGroup;
+import org.eso.sdd.mbse.doc.options.MBSEOptionsGroup.DiagramGraphicsFormat;
 
 public class Query {
 	String queryType = "";
@@ -58,20 +68,34 @@ public class Query {
 	boolean showPropertiesDocumentation = false;
 	boolean showDefaultValue = false;
 	boolean showQualifiedName = false;
+	boolean showDiagrams = false;
 	private static Utilities  theUtilities = null;
 	boolean Debug = false;
 	List<?> referenced  = null;
 	Element el = null;
 	public String lE = Utilities.lE;
 	Stereotype theQueryStereotype = null;
+	List<String> additional = null;
+	private static List<File> imageFilesForDeletion = null;
+	private static File baseDir = null;
 
 	private static Property thePropertiesProperty = null;
 	
 	
 	
-	public Query (Element theQueryElement, boolean theDebug){ 
+	public Query (Element theQueryElement, boolean theDebug,File theDestFile){ 
 		theUtilities = new Utilities();
+		imageFilesForDeletion = new ArrayList<File>();
 		el = theQueryElement;
+		baseDir = new File(theDestFile.getParent());
+		//GLR code to handle additional derived properties based on a comma separated list of derived properties
+		String StrAdditionalPoperties = (String) StereotypesHelper.getStereotypePropertyFirst(el,theUtilities.getTheQueryStereotype(),"additionalPoperties");
+		if (StrAdditionalPoperties != null) {
+			additional = java.util.Arrays.asList(StrAdditionalPoperties.split("\\s*,\\s*"));
+		}
+		//GLR code to handle showing of internal owned diagrams
+		showDiagrams = isQueryPropertySet(el,"showInternalDiagrams");
+		
 		
 		referenced = StereotypesHelper.getStereotypePropertyValue(el ,theUtilities.getTheQueryStereotype(), "element");
 
@@ -81,6 +105,7 @@ public class Query {
 		showQueriedElementDocumentation = isDocToBeShown(el);
 		showTypesDocumentation      = isTypesDocToBeShown(el);
 		showPropertiesDocumentation = isPropertiesDocToBeShown(el);
+		
 		showDefaultValue = isDefaultValueToBeShown(el);
 		showQualifiedName = isQualifiedNameToBeShown(el);
 		Debug = theDebug;
@@ -125,6 +150,7 @@ public class Query {
 		" showPropertiesDocumentation="+ 		showPropertiesDocumentation + 
 		" showDefaultValue="+ 		showDefaultValue +"\">" + lE ;
 		
+		
 
 		if(useText == Utilities.TEXTUSAGEKIND.before) { 
 			content +=  Utilities.convertHTML2DocBook(((Comment)el).getBody(), true) + lE;
@@ -136,6 +162,7 @@ public class Query {
 		for (Object refElement : referenced) {
 			if(refElement != null) {
 				// special handling
+
 				if(! (refElement instanceof NamedElement) ) {
 					System.out.println("\tWARNING: referenced element is not a NamedElement type but a "+ 
 							refElement.getClass().toString());
@@ -158,6 +185,13 @@ public class Query {
 						tableHeaderDone = true;
 					}
 					content += processRequirement(namedRefEl);
+					//GLR code to handle displaying of additional properties
+					if (additional != null) {
+						for (String additionalProperty : additional){
+							//assume the result is always a singleton list
+							content += Utilities.convertHTML2DocBook(((Collection<String>)((Element)refElement).refGetValue(additionalProperty)).iterator().next(), false) + lE;
+						}
+					}
 					continue;
 				}
 
@@ -172,19 +206,32 @@ public class Query {
 						content += "<row>";
 						content += entryReplaceBrackets(namedRefEl.getName()) + lE;
 						content += entryReplaceBrackets(Utilities.getDocumentation(namedRefEl)) + lE;
+						//GLR code to handle displaying of additional properties
+						if (additional != null) {
+							for (String additionalProperty : additional){
+								//assume the result is always a singleton list
+								content += Utilities.convertHTML2DocBook(((Collection<String>)((Element)refElement).refGetValue(additionalProperty)).iterator().next(), false) + lE;
+							}
+						}
 						content += "</row>" + lE;
 						
 					} else {
 						// GENERIC ELEMENT INFO
 						// representation attribute ignored in this case
-						content +=  "<emphasis role=\"bold\">" + Utilities.replaceBracketCharacters(namedRefEl.getName()) + "</emphasis>";
+						content +=  "<emphasis role=\"bold\"><emphasis role=\"underline\">" + Utilities.replaceBracketCharacters(namedRefEl.getHumanName()) + "</emphasis></emphasis>";
 						if(showQualifiedName) { 
 							content += "<emphasis> ( " + Utilities.replaceBracketCharacters(namedRefEl.getQualifiedName()) + " )  </emphasis>" + lE;
 						}
 						content += "<para annotations=\"finished doc\">" + lE;
-
 						if(Utilities.hasDocumentation(namedRefEl)) { 
 							content += Utilities.getDocumentation(namedRefEl) + lE;
+						}
+						//GLR code to handle displaying of additional properties
+						if (additional != null) {
+							for (String additionalProperty : additional){
+								//assume the result is always a singleton list
+								content += Utilities.convertHTML2DocBook(((Collection<String>)((Element)refElement).refGetValue(additionalProperty)).iterator().next(), false) + lE;
+							}
 						}
 						content += "</para><para></para>" + lE;
 					}
@@ -215,7 +262,21 @@ public class Query {
 				} else { // no owned elements 
 					// content += "this referenced object does not seem to have any owned elements.."+ lE;
 				} // end if no owned elements
-
+				//GLR code to handle diagrams
+				if (showDiagrams){
+					System.out.println("Show Diagrams are true; trying to render onwed diagrams...");
+					if(namedRefEl.hasOwnedElement()) {
+						Collection<Element> elements = namedRefEl.getOwnedElement();
+						int count = 0;
+						for (Element element : elements){
+							if (element instanceof Diagram){
+								count += 1;
+								content+= processDiagrams((Diagram)element,count);
+							}
+						}
+						
+					}
+				}
 			} // referenced element not null
 		} // end loop over all referenced elements
 		if(tableRep && queryType.equals("documentation") && tableHeaderDone) {
@@ -398,6 +459,84 @@ public class Query {
 		
 	}
 	
+	protected String processDiagrams(Diagram diagramObject,int count){
+		//GLR custom method to allow Query to also handle generation of diagrams
+		String content = "";
+		Diagram theDiagram = null;
+		int id = count;
+		int width = 100, contentdepth = 100;
+		String prefix = "";
+		String postfix = "";
+		
+		if (diagramObject instanceof Diagram) {
+			theDiagram = (Diagram) diagramObject;
+			String captionText = theDiagram.getName();
+			prefix += "<figure annotations=\"figure diagram\" xml:id=\"" + Utilities.uniqueID(el)
+					+"_"+count
+					+ "\">" + lE + "<title>" + captionText
+					+ "</title>" + lE + "<mediaobject>" + lE
+					+ "<imageobject>" + lE;
+			postfix += "</imageobject>" + lE + "</mediaobject>" + lE
+					+ "</figure>" + lE;
+			postfix += "<para>" + Utilities.getDocumentation(theDiagram) + "</para>"+lE;//defaults take documentation of diagram
+			String fileName = "";
+			DiagramPresentationElement diagramPE = theUtilities.getPROJECT().getDiagram(theDiagram);
+			// need to set the file to the same directory where the
+			// final XML file will be stored.
+			
+			// [HM] get options
+			Application application = Application.getInstance(); 
+			EnvironmentOptions options = application.getEnvironmentOptions(); 
+			MBSEOptionsGroup mbse_environment_options = (MBSEOptionsGroup) options.getGroup("options.mbse");
+			DiagramGraphicsFormat dgf = mbse_environment_options.getDiagramGraphicsFormat();
+			fileName = cleanUpString4FileName(Utilities.shortUniqueID(theDiagram)) + dgf.getFileExtension();
+			File imageFile = new File(baseDir, fileName);
+			scheduleImageFileForDeletion(imageFile);
+			content += "<imagedata fileref=\""
+					+ imageFile.getName() + "\" width=\"" + width 
+					+ "%\" scalefit=\"1\" align=\"center\"/>" + lE;
+			
+			// due to  	MDUMLCS-13047 the diagram, if of type dependency matrix, needs to be closed first.
+			// this might be applicable also for other auto-computed diagrams, but I cannot know it now
+
+			if(StereotypesHelper.hasStereotype(theDiagram, theUtilities.getTheMDDiagramTableStereotype())) { 
+				if (MatrixDataHelper.isRebuildNeeded(theDiagram )) {
+						  MatrixDataHelper.buildMatrix(theDiagram );
+				} // I suspect this will modify the model, but we have no alternatives for the time being.	
+			}	
+			
+			
+			try {
+				ImageExporter.export(diagramPE, dgf.getValueImageExporter(),
+						imageFile, false);
+				System.out.println("\tWrote to file "
+						+ imageFile.getName());
+			} catch (java.io.IOException ioe) {
+				//
+				System.out.println(ioe.toString() + lE + fileName);
+			}
+		}
+		content = prefix +content +postfix;
+		return content;
+	}
+	
+	private void scheduleImageFileForDeletion(File image) { 
+		imageFilesForDeletion.add(image);
+		System.out.println("Scheduled " + image.getName() + " for cleanup.");
+	}
+	
+	private static String cleanUpString4FileName(String str) {
+		String fn = str;
+		fn = fn.replaceAll(" ", "_")
+		  .replaceAll(":", "_")
+		  .replaceAll("/", "_")
+		  .replaceAll("%", "_")
+		  .replaceAll("\\?", "_")
+		  .replaceAll("\\.", "_")
+		  .replaceAll("\"", "")
+		  .replaceAll("\'", "");		
+		return fn;		
+	}
 	
 	protected String processPorts(NamedElement namedRefEl) throws NullPointerException { 
 		String tablePrefix= "";

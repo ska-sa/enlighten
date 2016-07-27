@@ -365,14 +365,12 @@ public class CommonGenerator implements RunnableWithProgress {
 			}
 			// insert refactored code here
 			Query theQuery = null;
-			if (Utilities.isGenericQuery(el)){
-				theQuery = new GenQuery(el, Debug);
-			} else {
-				theQuery = new Query(el, Debug);
-			}
+			
+
+			theQuery = new Query(el, Debug,theDestFile);
 				
-				content.append(theQuery.provideDocBookForQuery());
-				logDebugIndent(el," is Query ");
+			content.append(theQuery.provideDocBookForQuery());
+			logDebugIndent(el," is Query ");
 			
 		} else if (Utilities.isDiagramTable(el)) {
 			processDiagramTable(el,prefix,postfix,content,navigateDown);
