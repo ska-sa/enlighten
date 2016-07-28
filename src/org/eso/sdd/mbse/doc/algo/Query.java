@@ -210,7 +210,12 @@ public class Query {
 						if (additional != null) {
 							for (String additionalProperty : additional){
 								//assume the result is always a singleton list
-								content += Utilities.convertHTML2DocBook(((Collection<String>)((Element)refElement).refGetValue(additionalProperty)).iterator().next(), false) + lE;
+								String strAdditional = "";
+								Object strObject = ((Collection<?>)((Element)refElement).refGetValue(additionalProperty)).iterator().next();
+								if (strObject instanceof String){
+									strAdditional = (String) strObject;
+								}
+								content += Utilities.convertHTML2DocBook(strAdditional, false) + lE;
 							}
 						}
 						content += "</row>" + lE;
@@ -218,7 +223,14 @@ public class Query {
 					} else {
 						// GENERIC ELEMENT INFO
 						// representation attribute ignored in this case
-						content +=  "<emphasis role=\"bold\"><emphasis role=\"underline\">" + Utilities.replaceBracketCharacters(namedRefEl.getHumanName()) + "</emphasis></emphasis>";
+						//customised code to add ID
+						String ID = "";
+						//assume collection is a string
+						Object idObject = ((Collection<?>) ((Element)namedRefEl).refGetValue("idDoc")).iterator().next();
+						if (idObject instanceof String) {
+							ID = (String) idObject +": ";
+						}
+						content +=  "<emphasis role=\"bold\"><emphasis role=\"underline\">" + ID+ Utilities.replaceBracketCharacters(namedRefEl.getName()) + "</emphasis></emphasis>";
 						if(showQualifiedName) { 
 							content += "<emphasis> ( " + Utilities.replaceBracketCharacters(namedRefEl.getQualifiedName()) + " )  </emphasis>" + lE;
 						}
