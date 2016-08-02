@@ -359,9 +359,17 @@ public class CommonGenerator implements RunnableWithProgress {
 
 		} else if (Utilities.isQuery(el)) {
 			//GLR code to switch the elements to that pointed by the scopedElements derived property
-			Collection<Element> elements = (Collection<Element>) el.refGetValue("scopedElements");
-			if (elements != null){
-				StereotypesHelper.setStereotypePropertyValue(el, theUtilities.getTheQueryStereotype(),"element",elements);
+			Object elementObject = el.refGetValue("scopedElements");
+			if (elementObject != null) {
+				if (elementObject instanceof Collection<?>){
+					Collection<Element> elements = (Collection<Element>) elementObject;
+					if (elements != null){
+						if (!elements.isEmpty()){
+							logDebugIndent(el," will be replaced by what is inside the scopedElements field");
+							StereotypesHelper.setStereotypePropertyValue(el, theUtilities.getTheQueryStereotype(),"element",elements);
+						}
+					}
+				}
 			}
 			// insert refactored code here
 			Query theQuery = null;

@@ -109,7 +109,14 @@ public class Query {
 		showDefaultValue = isDefaultValueToBeShown(el);
 		showQualifiedName = isQualifiedNameToBeShown(el);
 		Debug = theDebug;
-		altText = (String) StereotypesHelper.getStereotypePropertyFirst(el,theUtilities.getTheQueryStereotype(),"altText");
+		Object altTextObject = StereotypesHelper.getStereotypePropertyFirst(el,theUtilities.getTheQueryStereotype(),"altText");
+		if (altTextObject != null) {
+			if (altTextObject instanceof Collection<?>){
+				Collection<String> altTextList = (Collection<String>) altTextObject; 
+				altText = altTextList.iterator().next();
+			}
+		}
+		
 		if(el == null) { 
 			Utilities.displayWarning("Empty query element!");
 		}
@@ -242,7 +249,16 @@ public class Query {
 						if (additional != null) {
 							for (String additionalProperty : additional){
 								//assume the result is always a singleton list
-								content += Utilities.convertHTML2DocBook(((Collection<String>)((Element)refElement).refGetValue(additionalProperty)).iterator().next(), false) + lE;
+								Object propAsObject = ((Element)refElement).refGetValue(additionalProperty);
+								if (propAsObject != null) {//i.e. the search was successful
+									Collection<?> propAsList = (Collection<?>) propAsObject;
+									if (!propAsList.isEmpty()){ //i.e. the search result was not empty
+										Object property = propAsList.iterator().next(); 
+										if (property instanceof String){ // i.e. the search result type was appropriate
+											content += Utilities.convertHTML2DocBook((String)(property),false)+lE;
+										}
+									}
+								}
 							}
 						}
 						content += "</para><para></para>" + lE;
@@ -897,7 +913,14 @@ public class Query {
 				content += "<emphasis role=\"underline\">" + reqId + " - " + reqName +":  "+ "</emphasis>" + reqText  + "<para></para><para></para>";
 			} else {
 				Collection<String>strAltText = (Collection<String>) namedRefEl.refGetValue(altText);
-				content += Utilities.convertHTML2DocBook(strAltText.iterator().next(), false);
+				if (strAltText != null){
+					if (!strAltText.isEmpty()){
+						content += Utilities.convertHTML2DocBook(strAltText.iterator().next(), false);
+					} else {
+						System.out.println("no altText found - not printing anything!");
+					}
+				}
+				
 			}
 		}
 		// here we assume that if it is a requirement other features like ports, constraints 
