@@ -1158,13 +1158,18 @@ public class CommonGenerator implements RunnableWithProgress {
 					sContent, captionText, theDiagram,width,useDocumentation); 
 			content.insert(0,sContent);
 			return;
-		}				
+		}	
+		
+		if(useDocumentation) { 
+			sContent +="<para>" + Utilities.getDocumentation(theDiagram) + "</para>"+lE;
+		}
 
 		if (captionTextObj != null) {
 			captionText += (String) captionTextObj;
 		} else {
 			captionText += theDiagram.getName();
 		}
+		
 
 		String tableHeader = "", tablePrefix = "", colspec = "";
 
@@ -1407,6 +1412,7 @@ public class CommonGenerator implements RunnableWithProgress {
 			} // loop over ObjectID
 		}
 		sContent += "</tbody></tgroup></table>" + lE;
+		
 		content.insert(0,sContent);
 	}
 
