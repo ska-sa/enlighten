@@ -233,8 +233,15 @@ public class Query {
 						//customised code to add ID
 						String ID = "";
 						//assume collection is a string
-						Object idObject = ((Collection<?>) ((Element)namedRefEl).refGetValue("idDoc")).iterator().next();
-						if (idObject instanceof String) {
+						boolean ID_exists = true;
+						Object idObject = null;
+						try {
+							idObject = ((Collection<?>) ((Element)namedRefEl).refGetValue("idDoc")).iterator().next();
+						}
+						catch (javax.jmi.reflect.InvalidCallException name) {
+							ID_exists = false;
+						}
+						if (ID_exists) {
 							ID = (String) idObject +": ";
 						}
 						content +=  "<emphasis role=\"bold\"><emphasis role=\"underline\">" + ID+ Utilities.replaceBracketCharacters(namedRefEl.getName()) + "</emphasis></emphasis>";
