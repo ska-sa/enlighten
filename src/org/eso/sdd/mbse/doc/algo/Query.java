@@ -303,10 +303,16 @@ public class Query {
 					if(namedRefEl.hasOwnedElement()) {
 						Collection<Element> elements = namedRefEl.getOwnedElement();
 						int count = 0;
+						int width = 100;
+						Object widthObj = StereotypesHelper.getStereotypePropertyFirst(
+								el, theUtilities.getTheQueryStereotype(),"width");
+						if (widthObj != null) {
+							width = (Integer) widthObj;
+						}
 						for (Element element : elements){
 							if (element instanceof Diagram){
 								count += 1;
-								content+= processDiagrams((Diagram)element,count);
+								content+= processDiagrams((Diagram)element,count,width);
 							}
 						}
 						
@@ -494,12 +500,12 @@ public class Query {
 		
 	}
 	
-	protected String processDiagrams(Diagram diagramObject,int count){
+	protected String processDiagrams(Diagram diagramObject,int count,int thewidth){
 		//GLR custom method to allow Query to also handle generation of diagrams
 		String content = "";
 		Diagram theDiagram = null;
 		int id = count;
-		int width = 100, contentdepth = 100;
+		int width = thewidth, contentdepth = 100;
 		String prefix = "";
 		String postfix = "";
 		
