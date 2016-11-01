@@ -238,7 +238,10 @@ public class Query {
 						try {
 							idObject = ((Collection<?>) ((Element)namedRefEl).refGetValue("idDoc")).iterator().next();
 						}
-						catch (javax.jmi.reflect.InvalidCallException name) {
+						catch (javax.jmi.reflect.InvalidCallException ex)  {
+							ID_exists = false;
+						}
+						catch (java.util.NoSuchElementException ex) {
 							ID_exists = false;
 						}
 						if (ID_exists) {
@@ -312,7 +315,7 @@ public class Query {
 						for (Element element : elements){
 							if (element instanceof Diagram){
 								count += 1;
-								content+= processDiagrams((Diagram)element,count,width);
+								content+= processDiagrams((Diagram)element,count,width,namedRefEl);
 							}
 						}
 						
@@ -500,7 +503,7 @@ public class Query {
 		
 	}
 	
-	protected String processDiagrams(Diagram diagramObject,int count,int thewidth){
+	protected String processDiagrams(Diagram diagramObject,int count,int thewidth,Element el_diagram){
 		//GLR custom method to allow Query to also handle generation of diagrams
 		String content = "";
 		Diagram theDiagram = null;
@@ -512,7 +515,7 @@ public class Query {
 		if (diagramObject instanceof Diagram) {
 			theDiagram = (Diagram) diagramObject;
 			String captionText = theDiagram.getName();
-			prefix += "<figure annotations=\"figure diagram\" xml:id=\"" + Utilities.uniqueID(el)
+			prefix += "<figure annotations=\"figure diagram\" xml:id=\"" + Utilities.uniqueID(el_diagram)
 					+"_"+count
 					+ "\">" + lE + "<title>" + captionText
 					+ "</title>" + lE + "<mediaobject>" + lE
