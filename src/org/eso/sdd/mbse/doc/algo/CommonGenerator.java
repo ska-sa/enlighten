@@ -1552,6 +1552,26 @@ public class CommonGenerator implements RunnableWithProgress {
 
 	}
 	
+	private static boolean isPropertySet(Element el, String theProperty) { 
+		Boolean rval = false;
+		List<?> list = StereotypesHelper.getStereotypePropertyValue(el ,theUtilities.getTheQueryStereotype(), theProperty);
+		if(list.size() > 0 ) {
+			Object eLit = null;
+			eLit =  list.get(0);
+			if(eLit instanceof Boolean) { 
+				rval = (Boolean)eLit;
+				return rval.booleanValue();
+			} else {
+				System.out.println("MBSE: isDocToBeShown: there is not a Boolean in the " + theProperty +
+						" parameter of the query" + el.getHumanName());
+			}
+		} else { 
+			System.out.println("\tWARNING: " + theProperty + " does not exist in Element " + el.getHumanName());
+		}
+		return false;
+	}
+
+	
 	
 	private void processFigureDiagram(Element el, StringBuffer prefix, StringBuffer postfix, StringBuffer content, List navigateDown) { 
 		Diagram theDiagram = null;

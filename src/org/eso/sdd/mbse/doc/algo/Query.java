@@ -39,6 +39,7 @@ import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdinterfaces.Interface;
 import com.nomagic.uml2.ext.magicdraw.classes.mdinterfaces.InterfaceRealization;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Classifier;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Constraint;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Diagram;
@@ -317,6 +318,42 @@ public class Query {
 								count += 1;
 								content+= processDiagrams((Diagram)element,count,width,namedRefEl);
 							}
+						}
+						
+					}
+					//code to check if its a smart package
+					Boolean isSmartPackage = false;
+					Collection<Classifier>  stereoTypes = namedRefEl.getAppliedStereotypeInstance().getClassifier();
+					if (stereoTypes != null) {
+						Iterator<Classifier> it = stereoTypes.iterator(); 
+						while (it.hasNext()){
+							Classifier x = it.next();
+							String Name = (String) x.getName();
+							if (Name.equals("SmartPackage")) {
+								isSmartPackage = true;
+							}
+
+						}
+					} //end of checking for smart package
+					if (isSmartPackage) {//if smart package then do it all over
+						System.out.println("This is a smart package; trying to see if there are additional drawings...");
+						Collection<Element> elements = (Collection<Element>) StereotypesHelper.getStereotypePropertyValue(namedRefEl,theUtilities.getTheSmartPackageStereotype(),"additionalElements");
+						if (elements != null) {
+							int count = 0;
+							int width = 100;
+							Object widthObj = StereotypesHelper.getStereotypePropertyFirst(
+									el, theUtilities.getTheQueryStereotype(),"width");
+							if (widthObj != null) {
+								width = (Integer) widthObj;
+							}
+							for (Element element : elements){
+								if (element instanceof Diagram){
+									count += 1;
+									content+= processDiagrams((Diagram)element,count,width,namedRefEl);
+								}
+							}
+						} else {
+							System.out.println("its a package but theres no drawings in it");
 						}
 						
 					}

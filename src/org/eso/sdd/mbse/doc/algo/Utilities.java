@@ -68,6 +68,7 @@ public class Utilities {
 	private Stereotype theRevisionHistoryStereotype = null;
 	
 	//Gerhard le Roux customisation
+	private Stereotype theSmartPackageStereotype = null;
 	private Stereotype theGenericQueryStereotype = null;
 	
 	// from MD
@@ -182,6 +183,10 @@ public class Utilities {
 			theStereoCollection.add(theGenericQueryStereotype);
 			
 		}
+		
+		//GLR adding Smartpackages as stereotypes
+		theSmartPackageStereotype = StereotypesHelper.getStereotype (Application
+				.getInstance().getProject(), "SmartPackage", UMLStandardProfile);
 
 		// SYSML 
 		if (SysMLProfile == null) {
@@ -276,6 +281,10 @@ public class Utilities {
 
 	public Stereotype getTheSectionStereotype() {
 		return theSectionStereotype;
+	}
+	
+	public Stereotype getTheSmartPackageStereotype() {
+		return theSmartPackageStereotype;
 	}
 
 	public Stereotype getTheQueryStereotype() {

@@ -27,6 +27,7 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Comment;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.mdprofiles.Stereotype;
 import com.nomagic.magicdraw.export.image.ImageExporter;
+
 import javax.swing.Icon;
 
 import org.eso.sdd.mbse.doc.actions.MBSEShowEditPanelAction;
@@ -1105,7 +1106,7 @@ public class TreeViewGenerator implements RunnableWithProgress {
 
 		return resize(bufImage, bufImage.getWidth(), bufImage.getHeight());
 	}
-
+	
 	public static String[] getFigureDiagramText(Element el, boolean imp) {
 		Diagram theDiagram = null;
 		String fileName = "";
