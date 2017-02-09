@@ -1481,7 +1481,13 @@ public class CommonGenerator implements RunnableWithProgress {
 		boolean HTML = false;
 
 		// enter here all required postprocessing of HTML
-		sContent = ((Comment) el).getBody();
+		//GLR allow for indirect text to be obtained from a property of an element
+		Element indirectElement =  (Element) StereotypesHelper.getStereotypePropertyFirst(el,theUtilities.getTheParagraphStereotype(),"indirect");
+		if (indirectElement != null){
+			sContent = (String) ((List<Object>) el.refGetValue("refProperty")).iterator().next();
+		} else {
+			sContent = ((Comment) el).getBody();
+		}
 
 		sContent = Utilities.transformSpecialCharacter(sContent);
 
