@@ -329,9 +329,9 @@ public class Query {
 						while (it.hasNext()){
 							Classifier x = it.next();
 							String Name = (String) x.getName();
-							if (Name.equals("SmartPackage")) {
+							if ((Name.equals("SmartPackage")) || (Name.equals("Flat Smart Package"))) {
 								isSmartPackage = true;
-							}
+							} 
 
 						}
 					} //end of checking for smart package
