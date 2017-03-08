@@ -1306,10 +1306,12 @@ public class CommonGenerator implements RunnableWithProgress {
 					//"Property is of type: " + theProp.getClass().getName()
 					//logDebugIndent(el,"Property is of type: " + theProp.getClass().getName());
 					if(theProp instanceof com.nomagic.magicdraw.properties.StringProperty ) { 
+						logDebugIndent(el,"cell is a string");
 						elementInfo = theProp.getValueStringRepresentation();
 						elementInfo = Utilities.convertHTML2DocBook(elementInfo, false);
 						elementInfo = "<entry align=\"left\" annotations=\"StringProperty\" >"	+ elementInfo + "</entry>" +lE;
 					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementListProperty ) {
+						logDebugIndent(el,"cell is a list");
 						com.nomagic.magicdraw.properties.ElementListProperty elp = (com.nomagic.magicdraw.properties.ElementListProperty)theProp;
 						Element[] theSubEle = elp.getValue();
 						String entryList = "";
@@ -1334,6 +1336,11 @@ public class CommonGenerator implements RunnableWithProgress {
 										} else {
 											theRep = "ERROR";
 										}
+									//GLR code to handle list containing elements with Names
+									} else if (theEle instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement) {
+										logDebugIndent(el,"cell is NamedElement");
+										theRep = ((NamedElement)theEle).getName();
+									//end of code to handle list containing elements with Names
 									} else {
 										logDebugIndent(el, ">>> UNKNOWN "+theEle.getClass().getName()+ " " + theEle.getHumanType());
 										String name = "";
