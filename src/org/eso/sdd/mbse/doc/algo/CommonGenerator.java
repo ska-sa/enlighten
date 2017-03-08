@@ -1338,8 +1338,8 @@ public class CommonGenerator implements RunnableWithProgress {
 										}
 									//GLR code to handle list containing elements with Names
 									} else if (theEle instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement) {
-										logDebugIndent(el,"cell is NamedElement");
 										theRep = ((NamedElement)theEle).getName();
+										logDebugIndent(el,"cell is NamedElement in a list: "+theRep);
 									//end of code to handle list containing elements with Names
 									} else {
 										logDebugIndent(el, ">>> UNKNOWN "+theEle.getClass().getName()+ " " + theEle.getHumanType());
@@ -1374,11 +1374,22 @@ public class CommonGenerator implements RunnableWithProgress {
 							elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
 									Utilities.convertHTML2DocBook(te.getType().getName(), false) 
 										+ "</entry>" +lE;
-						} else {
+						} 
+						else {
+							String val = theProp.getValueStringRepresentation();
+							val = val.replaceAll("\\[.*\\]", "");
+							logDebugIndent(el,"cell is something else"+ val);
 							elementInfo = "<entry align=\"left\" annotations=\"ElementProperty\" >"	+ 
-									Utilities.convertHTML2DocBook(theProp.getValueStringRepresentation(), false) 
+									Utilities.convertHTML2DocBook(val, false) 
 										+ "</entry>" +lE;
 						}
+						//GLR code to handle list containing elements with Names
+					}	else if (theProp instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.NamedElement) {
+						logDebugIndent(el,"cell is NamedElement");
+						elementInfo = "<entry align=\"left\" annotations=\"ElementProperty\" >"	+ 
+								Utilities.convertHTML2DocBook(((NamedElement)theProp).getName(), false) 
+									+ "</entry>" +lE;
+					//end of code to handle list containing elements with Names
 					} else {
 						logDebugIndent(el, " WARNING: unidentified type: " + theProp.getClass().getName() + " for column: " + colId);
 						Object theUnknown = theProp.getValue();
