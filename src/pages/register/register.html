@@ -1,0 +1,130 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header color="primary">
+  <ion-navbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary" class="respect">
+    <ion-segment [(ngModel)]="browse">
+      <ion-segment-button value="info" style="color: white">
+        Signup Info
+      </ion-segment-button>
+      <ion-segment-button value="details" style="color: white">
+        Student Details
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding [ngSwitch]="browse">
+  <!------------Signup Info---------->
+  <h2> Please fill in your details </h2>
+  <div *ngSwitchCase="'info'">
+    <ion-avatar>
+        <img src="assets/img/man.png">
+    </ion-avatar>
+
+    <ion-grid>
+      <!------------First & Surname---------->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>First Name</ion-label>
+            <ion-input type="text"[(ngModel)]="fname"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>Last Name</ion-label>
+            <ion-input type="text"[(ngModel)]="sname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!------------Cell number---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Cellphone Number</ion-label>
+          <ion-input type="text" [(ngModel)]="cell"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Password---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="pass"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button class="reduce" color="primary" (click)="next()">
+      Proceed
+    </button>
+
+  </div>
+  <!------------Student Details---------->
+  <div *ngSwitchCase="'details'">
+    <h2> Complete your registration </h2>
+    <ion-grid>
+      <!------------Grade---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Grade</ion-label>
+          <ion-select [(ngModel)]="grd">
+            <ion-option value="8">8</ion-option>
+            <ion-option value="9">9</ion-option>
+            <ion-option value="10">10</ion-option>
+            <ion-option value="11">11</ion-option>
+            <ion-option value="12">12</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-row>
+      <!------------School---------->
+      <ion-row>
+        <ion-item>
+            <ion-label stacked>School</ion-label>
+            <ion-select [(ngModel)]="sch">
+              <ion-option value="mer">THIS HIGH SCHOOL</ion-option>
+              <ion-option value="sax">THAT HIGH SCHOOL</ion-option>
+              <ion-option value="bis">OTHER HIGH SCHOOL</ion-option>
+              <ion-option value="dank">OTHER HIGH SCHOOL</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-row>
+      <!------------Email---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Email Address</ion-label>
+          <ion-input type="text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Subjects---------->
+      <ion-row>
+        <ion-item>
+            <ion-label stacked>Subject Requiring Tutoring</ion-label>
+            <ion-select  [(ngModel)]="sub">
+              <ion-option value="ion">Ionic</ion-option>
+              <ion-option value="chem">Chemistry</ion-option>
+              <ion-option value="phy">Physics</ion-option>
+              <ion-option value="math">Maths</ion-option>
+              <ion-option value="eng">English</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <button ion-button clear block color="dark">+ Add Subject for Tutoring</button>
+
+    <p text-center>Complete Signup Using</p>
+    <!------------Google---------->
+    <button class="reduce" ion-button icon-left color="gg" (click)="reg()">
+      <ion-icon name="logo-google"></ion-icon>
+      Google
+    </button>
+    
+  </div>
+
+</ion-content>

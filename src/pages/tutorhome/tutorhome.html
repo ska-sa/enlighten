@@ -1,0 +1,67 @@
+<!--
+  Generated template for the TutorhomePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-line text-center class="grey">
+      <p> UPCOMING LESSONS </p>
+      <ion-item class="item-borderless" class="grey">
+          <ion-card>
+            <ion-card-content>
+              <ion-card-title text-center>
+                Physics
+              </ion-card-title>
+              <p text-center> Single </p>
+              <ion-item item-start class="il left">
+                <p> Grade 12 </p>
+                <p> 25 minutes </p>
+                <p> Classic Mechanics </p>
+              </ion-item>
+              <ion-item item-end class="il">
+                <h2> R200 </h2>
+              </ion-item>
+
+              <ion-item item-left >
+                <p> Tues, Jun 20, 2017 13:00 </p>
+              </ion-item>
+
+              <ion-item text-wrap>
+                <ion-avatar item-left>
+                  <img src="assets/img/marty-avatar.png">
+                </ion-avatar>
+                <strong>Morty Smith</strong>
+                <p>School of Morties</p>
+                <p>Elementary Physics</p>      
+                <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+      </ion-item>
+
+      <div class="pending" color="notsodark" (click)="changePage(lessonPage)" (swipe)="changePage(lessonPage)"> 
+        <ion-item round color="notsodark" text-wrap>
+          <ion-avatar item-left class="avatar">
+            <ion-icon style="font-size: 2.5em" name="alarm" src="tutor.image"> </ion-icon>
+          </ion-avatar>
+          <strong>LESSON COMING UP</strong>
+          <p>15:45 Today</p>
+          <p><em>with</em> Morty Smith</p>      
+          <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
+        </ion-item>
+      </div>
+
+</ion-content>
+
+<ion-fab right bottom>
+  <button ion-fab color="primary" (click)="changePage(createclassPage)"><ion-icon name="add"></ion-icon></button>
+</ion-fab>

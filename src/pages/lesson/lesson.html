@@ -1,0 +1,41 @@
+<!--
+  Generated template for the LessonPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon> 
+    </button>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding style="background-color:#333333">
+  <p text-center class="pad">YOUR LESSON IS ABOUT TO BEGIN</p>
+  <ion-avatar text-center>
+      <ion-icon name="alarm" color="light" style="font-size: 4em" item-center> </ion-icon>
+  </ion-avatar>
+  <!------------Timer---------->
+  <p text-center>0:27</p>
+  <!------------Subject---------->
+  <h2 text-center style="color:white">MATHEMATICS</h2>
+  <p class="sec" style="font-size: 12px" text-center color="secondary">with</p>
+  <ion-list no-lines>
+    <ion-item *ngFor="let tutor of tutors let i = index" [hidden]="i!=len" class="center-align">
+      <ion-avatar item-left class="avatar">
+        <img [src]="tutor.image">
+      </ion-avatar>
+      <strong>{{tutor.name}}</strong>
+      <p class="desc" text-left>{{tutor.institution}}</p>
+      <p class="desc" text-left>{{tutor.subjects.join(', ')}}</p>
+    </ion-item>
+  </ion-list>
+
+   <button class="btn" ion-button color="primary" (click)="openPage(classroomPage)">
+    ENTER CLASSROOM
+  </button>
+
+</ion-content>

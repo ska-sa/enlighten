@@ -1,0 +1,24 @@
+page-profile {
+    ion-content{
+        img{
+            height: 80px;
+            width: auto;
+            margin: auto;
+            display: block;
+            border-radius: 50%;
+        }
+        ion-input{
+            font-size: 14px;
+            color: grey;
+        }
+        ion-select{
+            font-size: 14px;
+            color: grey;
+        }
+        .up-btn{
+            position: absolute;
+            left: calc(35%);
+        }
+
+    }
+}

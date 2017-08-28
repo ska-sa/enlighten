@@ -1,0 +1,49 @@
+<!--
+  Generated template for the LoginPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label floating><h2>Cellphone Number</h2></ion-label>
+        <ion-input type="text" [(ngModel)]="cellNo"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label floating><h2>Password</h2></ion-label>
+        <ion-input type="password" [(ngModel)]="pass"></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-grid>
+
+  <button ion-button class="reduce" color="primary" (click)="login(cellNo)">
+    Login
+  </button>
+
+  <p class="text">Or Login using</p>
+
+  <button class="reduce" ion-button icon-left color="gg" (click)="googleLogin()">
+    <ion-icon name="logo-google"></ion-icon>
+    Google
+  </button>
+  <!--<p class="text">Or Login using Firebase</p>
+  <button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
+  <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
+
+  <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="What is it that you do?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />
+  <div id="details-container">
+      <p *ngFor="let item of items | async"><img src="../assets/images/pin.svg">{{item.message}}</p>
+  </div>-->
+
+</ion-content>

@@ -1,0 +1,25 @@
+page-wallet {
+    h3 {
+        font-size: 1.2em;
+        text-transform: uppercase;
+        font-weight: lighter;
+    }
+    h2 {
+        font-size: 3em;
+        text-transform: uppercase;
+    }
+    .mid-text {
+        margin-top: 20%;
+    }
+    button.reduce {
+        display: inline-block;
+        margin-top: 15%;
+        width: 50%;
+    }
+
+    img {
+        width: 90%;
+        margin: 5%;
+
+    }
+}

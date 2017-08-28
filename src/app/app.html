@@ -1,0 +1,110 @@
+<ion-menu id="myMenu" [content]="content">
+
+  <ion-header style="background-color: #a02c35"> 
+    <ion-list color="primary">
+      <ion-item color="primary" text-center>
+        <ion-avatar style="width: 100%" text-center>
+          <img style="text-align: center; display:inline-block; height: 80px; width: 80px" [src]="profPic">
+        </ion-avatar>
+        <h2 style="font-size: 1.4em">{{displayName}}</h2>
+        <h3 style="font-size: 0.8em" > ----- SUMMARY -----</h3>
+        <p style="font-size: 0.8em" *ngIf="type == 'student'"> AVAIL BAL: R132.00</p>
+        <p style="font-size: 0.8em" *ngIf="type == 'tutor'"> NO. LESSONS: 19</p>
+      </ion-item>
+    </ion-list>
+  </ion-header>
+
+  <ion-content *ngIf="type == 'student'" class="dark">
+    <ion-list color="dark" class="dark">
+        <button ion-item menuClose (click)="openPage(tutorsPage)">
+            <ion-icon name="search" item-start></ion-icon>
+            Browse Tutors
+        </button>
+        <button ion-item menuClose (click)="openPage(profilePage)">
+            <ion-icon name="contact" item-start></ion-icon>
+            My Profile
+        </button>
+        <button ion-item menuClose (click)="openPage(appointmentsPage)">
+            <ion-icon name="alarm" item-start></ion-icon>
+            My Appointments
+        </button>
+        <button ion-item menuClose (click)="openPage(classmenuPage)">
+            <ion-icon name="chatbubbles" item-start></ion-icon>
+            Classes
+        </button>
+        <button ion-item menuClose (click)="openPage(walletPage)">
+            <ion-icon name="folder-open" item-start></ion-icon>
+            Wallet
+        </button>
+        <button ion-item menuClose (click)="openPage(settingsPage)">
+            <ion-icon name="build" item-start></ion-icon>
+            Settings
+        </button>
+        <button ion-item menuClose (click)="logout()">
+            <ion-icon name="undo" item-start></ion-icon>
+            Logout
+        </button>
+      </ion-list>
+    </ion-content>
+
+    <ion-content *ngIf="type == 'tutor'" class="dark">
+    <ion-list color="dark" class="dark">
+        <button ion-item menuClose (click)="openPage(tutorprofilePage)">
+            <ion-icon name="contact" item-start></ion-icon>
+            My Profile
+        </button>
+        <button ion-item menuClose (click)="openPage(appointmentsPage)">
+            <ion-icon name="alarm" item-start></ion-icon>
+            My Appointments
+        </button>
+        <button ion-item menuClose (click)="openPage(tutorclassmenuPage)">
+            <ion-icon name="chatbubbles" item-start></ion-icon>
+            Classes
+        </button>
+        <button ion-item menuClose (click)="openPage(tutorsettingsPage)">
+            <ion-icon name="build" item-start></ion-icon>
+            Settings
+        </button>
+        <button ion-item menuClose (click)="logout()">
+            <ion-icon name="undo" item-start></ion-icon>
+            Logout
+        </button>
+      </ion-list>
+    </ion-content>
+
+    <ion-content *ngIf="type == 'parent'" class="dark">
+    <ion-list color="dark" class="dark">
+        <button ion-item menuClose (click)="openPage(tutorsPage)">
+            <ion-icon name="search" item-start></ion-icon>
+            Browse Tutors
+        </button>
+        <button ion-item menuClose (click)="openPage(profilePage)">
+            <ion-icon name="contact" item-start></ion-icon>
+            My Profile
+        </button>
+        <button ion-item menuClose (click)="openPage(appointmentsPage)">
+            <ion-icon name="alarm" item-start></ion-icon>
+            My Appointments
+        </button>
+        <button ion-item menuClose (click)="openPage(classmenuPage)">
+            <ion-icon name="chatbubbles" item-start></ion-icon>
+            Classes
+        </button>
+        <button ion-item menuClose (click)="openPage(walletPage)">
+            <ion-icon name="folder-open" item-start></ion-icon>
+            Wallet
+        </button>
+        <button ion-item menuClose (click)="openPage(settingsPage)">
+            <ion-icon name="build" item-start></ion-icon>
+            Settings
+        </button>
+        <button ion-item menuClose (click)="logout()">
+            <ion-icon name="undo" item-start></ion-icon>
+            Logout
+        </button>
+      </ion-list>
+    </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

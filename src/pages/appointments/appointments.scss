@@ -1,0 +1,40 @@
+page-appointments {
+    ion-content p.small {
+        font-size: 0.75em;
+    }
+
+    .item-block.il {
+        max-width: 35%;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .item-block.il.left {
+        max-width: 60%;
+    }
+
+    .card-md {
+        border-radius: 7.5px;
+        border:1px solid #ccc;
+    }
+
+    b {
+        font-weight: bold;
+    }
+
+    .il {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .il.left.title {
+        max-width: none;
+        width: 80%;
+    }
+    .item-block.il.icon {
+        max-width: none;
+        width: 18%;
+        padding-left: 2%;
+    }
+    
+}

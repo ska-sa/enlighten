@@ -1,0 +1,39 @@
+<!--
+  Generated template for the TutorsettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="toggle-form" text-center>
+  <p> Change your preferences below</p>
+  <ion-item>
+    <ion-toggle checked="true"></ion-toggle>
+    <ion-label> Show my profile info to<br/> students </ion-label>
+    
+  </ion-item>
+
+  <ion-item>
+    <ion-label> Show profile when offline</ion-label>
+    <ion-toggle checked="false" item-end></ion-toggle>
+  </ion-item>
+
+  <ion-item>
+    <ion-label> Limit student requests to <br/>location</ion-label>
+    <ion-toggle checked="false"></ion-toggle>
+  </ion-item>
+
+  <button ion-button fab center padding text-center class="reduce" color="primary">
+    Save
+  </button>
+ 
+</ion-content>

@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Recommended Tutors</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="has-header" padding text-center class="vertical-align-content" [hidden]="tutors && tutors.length > 0">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="readjust">
+        No recommended tutors around you at the moment
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content class="has-header" padding [hidden]="!tutors || tutors.length <= 0">
+  <ion-list no-lines>
+    <ion-list-header no-lines text-center>
+      Recommended for you
+    </ion-list-header>
+    <ion-item *ngFor="let tutor of tutors" text-wrap (click)="showAlert()">
+      <ion-avatar item-left class="avatar">
+        <img [src]="tutor.image">
+        <div [class]="'status ' + tutor.status"> </div>
+      </ion-avatar>
+      <strong>{{tutor.name}}</strong>
+      <p>{{tutor.institution}}</p>
+      <p>{{tutor.subjects.join(', ')}}</p>      
+      <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
+      <ion-icon color="primary" item-right name="thumbs-up"></ion-icon> <p item-right> {{tutor.likes}}</p>
+    </ion-item>
+  </ion-list>
+
+  <div class="pending" color="notsodark" (click)="openPage(lessonPage)" (swipe)="openPage(lessonPage)"> 
+    <ion-item round color="notsodark" text-wrap>
+      <ion-avatar item-left class="avatar">
+        <ion-icon style="font-size: 2.5em" name="alarm" src="tutor.image"> </ion-icon>
+      </ion-avatar>
+      <strong>LESSON COMING UP</strong>
+      <p>15:45 Today</p>
+      <p><em>with</em> Rene Descartes</p>      
+      <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
+    </ion-item>
+  </div>
+</ion-content>
+
+

@@ -1,0 +1,146 @@
+<!--
+  Generated template for the TutorregisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header color="primary">
+  <ion-navbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary" class="respect">
+    <ion-segment [(ngModel)]="browse">
+      <ion-segment-button value="info" style="color: white">
+        Tutor Info
+      </ion-segment-button>
+      <ion-segment-button value="details" style="color: white">
+        Tutor Details
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding [ngSwitch]="browse">
+  <!------------Signup Info---------->
+  <h2> Please fill in your details </h2>
+  <div *ngSwitchCase="'info'">
+    <ion-avatar>
+        <img src="assets/img/man.png">
+    </ion-avatar>
+
+    <ion-grid>
+      <!------------First & Surname---------->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>First Name</ion-label>
+            <ion-input type="text"[(ngModel)]="fname"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>Last Name</ion-label>
+            <ion-input type="text"[(ngModel)]="sname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!------------Cell number---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Cellphone Number</ion-label>
+          <ion-input type="text" [(ngModel)]="cell"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Password---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="pass"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button class="reduce" color="primary" (click)="next()">
+      Proceed
+    </button>
+
+  </div>
+  <!------------Student Details---------->
+  <div *ngSwitchCase="'details'">
+    <h2> Complete your registration </h2>
+    <ion-grid>
+      <!------------HIGHEST QUALIFICATION---------->
+      <ion-row>
+        <ion-item>
+            <ion-label stacked>Highest Qualification</ion-label>
+            <ion-select [(ngModel)]="hq">
+              <ion-option value="nqf10" ngDefaultControl>DOCTOR'S DEGREE</ion-option>
+              <ion-option value="nqf9" ngDefaultControl>MASTER'S DEGREE</ion-option>
+              <ion-option value="nqf8" ngDefaultControl>HONOURS DEGREE</ion-option>
+              <ion-option value="nqf7" ngDefaultControl>BACHELORS DEGREE</ion-option>
+              <ion-option value="nqf6" ngDefaultControl>NATIONAL DIPLOMA</ion-option>
+              <ion-option value="nqf5" ngDefaultControl>HIGHER CERTIFICATE</ion-option>
+              <ion-option value="nqf4" ngDefaultControl>MATRIC</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-row>
+      <!------------YEAR OF STUDY---------->
+      <ion-row>
+        <ion-item *ngIf="hq == 'nqf7'">
+          <ion-label stacked>Year of Study</ion-label>
+          <ion-select [(ngModel)]="ayos"> <!-- YEAR OF STUDY ONLY IF THEY ARE UNDERGRADUATE -->
+            <ion-option value="8">1</ion-option>
+            <ion-option value="9">2</ion-option>
+            <ion-option value="10">3</ion-option>
+            <ion-option value="11">4</ion-option>
+            <ion-option value="12">5</ion-option>
+            <ion-option value="12">6</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-row>
+      <!------------INSTITUTE---------->
+      <ion-row>
+        <ion-item>
+            <ion-label stacked>Institute</ion-label>
+            <ion-select [(ngModel)]="ins" >
+              <ion-option *ngFor="let institution of institutions" (value) = "institution.abbrv">{{institution.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-row>
+      <!------------DEGREE OF STUDY---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Degree of Study</ion-label>
+          <ion-input type="text" [(ngModel)]="degree"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Email---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Email Address</ion-label>
+          <ion-input type="text" [(ngModel)]="email"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Subjects---------->
+      <ion-row>
+        <ion-item *ngFor="let subinterest of subinterests; let idx = index">
+            <ion-label stacked>Subjects to Tutor</ion-label>
+            <ion-select  (ngModel)="idx">
+              <ion-option *ngFor="let subject of subjects" (value) = "subject.abbrv">{{subject.name}}</ion-option>
+            </ion-select>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <button ion-button clear block color="dark" (click)="addsubinterest()">+ Add Subject for Tutoring</button>
+
+    <p text-center>Complete Signup Using</p>
+    <!------------Google---------->
+    <button class="reduce" ion-button icon-left color="gg" (click)="reg()">
+      <ion-icon name="logo-google"></ion-icon>
+      Google
+    </button>
+    
+  </div>
+
+</ion-content>

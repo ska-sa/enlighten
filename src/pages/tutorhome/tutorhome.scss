@@ -1,0 +1,44 @@
+page-tutorhome {
+    .item-md p {
+        font-size: 0.75em;
+    }
+
+    .item-block.il {
+        max-width: 35%;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .item-block.il.left {
+        max-width: 65%;
+    }
+
+    .item-md h2 {
+        font-weight: bold;
+    }
+
+    em {
+        color: #f8d650;
+        font-style: none;
+    }
+    .item-md.item-block div.item-inner {
+        border-bottom: none;
+    }
+
+    .label-md, .card-md {
+        margin-top: 1px;
+    }
+
+    .pending {
+        position:  fixed;
+        width: 80%;
+        bottom: 0%;
+        left: 10%;
+        padding: 2%;
+        border-radius: 7.5px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        color: #eee;
+        background: #333;
+    }
+}

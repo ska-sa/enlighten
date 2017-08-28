@@ -1,0 +1,93 @@
+<!--
+  Generated template for the ParentregisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header color="primary">
+  <ion-navbar color="primary">
+    <ion-title>Register</ion-title>
+  </ion-navbar>
+  <ion-toolbar no-border-top color="primary" class="respect">
+    <ion-segment [(ngModel)]="browse">
+      <ion-segment-button value="info" style="color: white">
+        Parent/Guardian Info
+      </ion-segment-button>
+      <ion-segment-button value="details" style="color: white">
+        Child Details
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding [ngSwitch]="browse">
+  <!------------Signup Info---------->
+  <div *ngSwitchCase="'info'">
+    <h2> Please fill in your details </h2>
+    <ion-avatar>
+        <img src="assets/img/man.png">
+    </ion-avatar>
+
+    <ion-grid>
+      <!------------First & Surname---------->
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>First Name</ion-label>
+            <ion-input type="text"[(ngModel)]="fname"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label stacked>Last Name</ion-label>
+            <ion-input type="text"[(ngModel)]="sname"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      
+      <!------------Cell number---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Cellphone Number</ion-label>
+          <ion-input type="text" [(ngModel)]="cell"></ion-input>
+        </ion-item>
+      </ion-row>
+      <!------------Password---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Password</ion-label>
+          <ion-input type="password" [(ngModel)]="pass"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+
+    <button ion-button class="reduce" color="primary" (click)="next()">
+      Proceed
+    </button>
+
+  </div>
+  <!------------Child Details---------->
+  <div *ngSwitchCase="'details'">
+    <h2> Enter the number of the student you wish to monitor </h2>
+    <ion-grid>
+      <!------------Grade---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Cellphone Number</ion-label>
+          <ion-input type="text" [(ngModel)]="cell"></ion-input>
+        </ion-item>
+      </ion-row>
+    </ion-grid>
+    <button ion-button clear block color="dark">+ Add Subject for Tutoring</button>
+
+    <p text-center>Complete Signup Using</p>
+    <!------------Google---------->
+    <button class="reduce" ion-button icon-left color="gg" (click)="reg()">
+      <ion-icon name="logo-google"></ion-icon>
+      Google
+    </button>
+    
+  </div>
+
+</ion-content>

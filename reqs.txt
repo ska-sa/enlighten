@@ -1,0 +1,50 @@
+Enlighten 2017/08/13
+
+APK
+[Google takes her back to login page]
+
+Students can request tutors - calendar; 
+
+LASTLY:
+Website info; 
+
+PNG of logo;
+
+Use school pass rates
+
+for every 3 disadvantaged learners, they get 2 paying learners;
+
+Chat system
+
+Send skype link to computer | 
+
+So, 
+
+Move from inactive to credits loaded
+
+grade changes affects credits_inactive and loaded; move ll PIDs to used; but concantenate all the PIDs
+
+accounts_credits_converted
+
+Feedback, length of session; credits_loaded - check for difference in figures, and compare with feedback length
+account_history_learner - latest node must match difference in credits_loaded
+
+accounts_history, last_transaction
+
+Write all the history
+
+Portal - verify
+
+Learner starts account: learner_profiles onCreate; create accounts_credits_loaded with 1 credit; do that for history_learner too; check onCreate for tutor
+
+check onCreate inactive, check credits_loaded is less than 0.75
+ROUNDING: thats for baseRateChange
+
+account_history_tutor with -1 credits
+
+if feedback not submitted (Adrian is doing this), deduct a credit - 
+
+type: payment from lesson or withdrawal
+
+
+

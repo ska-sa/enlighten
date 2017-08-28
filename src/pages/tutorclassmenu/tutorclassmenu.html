@@ -1,0 +1,35 @@
+<!--
+  Generated template for the TutorclassmenuPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon> 
+    </button>
+    <ion-title>CLASSES</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item text-wrap (click)="toPage(tutorclassesPage)" class="classes">
+      <ion-avatar item-left>
+        <img src="assets/img/man.png">
+      </ion-avatar>
+      <h3 style="font-weight: bold">MY CLASSES</h3>
+      <p>Create and view details <br/> about your classes</p>      
+    </ion-item>
+
+    <ion-item text-wrap (click)="toPage(createclassPage)" class="classes">
+      <ion-avatar item-left>
+        <img src="assets/img/man.png">
+      </ion-avatar>
+      <h3 style="font-weight: bold">CREATE LESSON</h3>
+      <p>Create a lesson to match <br/> your own schedule</p>      
+    </ion-item>
+  </ion-list>
+</ion-content>

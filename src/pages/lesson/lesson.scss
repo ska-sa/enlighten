@@ -1,0 +1,37 @@
+page-lesson {
+    p{
+        color: white;
+    }
+    ion-item{
+        strong{
+            color: white;
+        }
+        .desc{
+            color: white;
+            font-size: 10px;
+            font-weight: lighter;
+        }
+    }
+    .pad{
+        padding: 0 25%;
+    }
+    img{
+            height: 80px;
+            width: auto;
+            margin: auto;
+            display: block;
+    }
+    .sec{
+        color: #f8d64e
+    }
+    .btn{
+        position:relative;
+        width: 60%;
+        left: calc(18%);
+    }
+    .center-align{
+        position: relative;
+        left: calc(15%);
+        background-color: #333
+    }
+}

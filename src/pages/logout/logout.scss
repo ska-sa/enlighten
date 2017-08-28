@@ -1,0 +1,38 @@
+page-logout {
+    .display{
+        width: 100%;
+        padding-top: 20%;
+        height: auto;
+        background-color: #993333;
+    }
+    .bg {
+        background-color: #993333;
+        position: relative;
+    }
+    img{
+        margin-top: 10%;
+        position: relative;
+        width: auto;
+        margin: auto;
+        display: block;
+        margin-bottom: 10vh;
+    }
+    .btn{
+        position:relative;
+        width: 60%;
+    }
+    .text {
+        color: white;
+        text-align: center;
+        margin-top: 25%;
+        text-align:center;
+        width: 100%;
+        font-size: 14px;
+
+    }
+
+    .img-logout {
+        width: 60%; 
+        max-width: 175px;   
+    }
+}

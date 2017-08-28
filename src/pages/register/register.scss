@@ -1,0 +1,32 @@
+page-register {
+    ion-content{
+        img{
+            height: 80px;
+            width: auto;
+            margin: auto;
+            display: block;
+            border-radius: 50%;
+        }
+        ion-input{
+            font-size: 14px;
+            color: grey;
+        }
+        ion-select{
+            font-size: 14px;
+            color: grey;
+        }
+        .reduce{
+            width: 60%;
+            left: calc(20%);
+        }
+        .text {
+            text-align: center;
+            width: 95%;
+            font-size: 14px;
+        }
+
+        .col {
+            padding: 0;
+        }
+    }
+}

@@ -1,0 +1,93 @@
+<!--
+  Generated template for the ClassbrowsePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Browse Classes</ion-title>
+  </ion-navbar>
+  <!--><ion-toolbar no-border-top color="primary" class="respect">
+    <ion-segment [(ngModel)]="browse">
+      <ion-segment-button value="offers" style="color: white">
+        Class Offers
+      </ion-segment-button>
+      <ion-segment-button value="tutors" style="color: white">
+        Tutors
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>-->
+</ion-header>
+
+<ion-content class="grey">
+  <div [ngSwitch]="browse" >
+    <ion-list *ngSwitchCase="'offers'">
+      <ion-item class="grey">
+          <ion-card>
+            <ion-card-content>
+              <ion-card-title text-center>
+                Physics
+              </ion-card-title>
+              <p text-center> 2 accepts </p>
+              <ion-item item-start class="il left">
+                <p> Grade 12 </p>
+                <p> Created 19 Jun 2017 </p>
+                <p> 25 minutes </p>
+              </ion-item>
+              <ion-item item-end class="il">
+                <h2> R200 </h2>
+              </ion-item>
+
+              <ion-item item-left >
+                <p> Available: </p>
+                <p> Tues, Jun 20, 2017 13:00 <em color="secondary">(recurring)</em> </p>
+                <p> Sun, July 2, 2017 16:00 </p>
+              </ion-item>
+            </ion-card-content>
+
+            <ion-item text-wrap>
+              <ion-avatar item-left>
+                <img src="assets/img/avatar-albert.jpg">
+              </ion-avatar>
+              <strong>Albert Einstein</strong>
+              <p>University of Cape Town</p>
+              <p>Maths, Physics</p>      
+              <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
+              <ion-badge item-right>14</ion-badge>
+            </ion-item>
+            <div padding text-center>
+              <button text-center class="request-btn" ion-button bottom (click)="request()" medium>
+                Request
+              </button>
+            </div>
+            <ion-fab mini right top>
+              <button ion-fab color="primary"><ion-icon name="md-share"></ion-icon></button>
+             
+              <ion-fab-list side="bottom">
+                <button ion-fab color="primary"><ion-icon name="logo-facebook"></ion-icon></button>
+              </ion-fab-list>
+              <ion-fab-list side="left">
+                <button ion-fab color="primary"><ion-icon name="logo-googleplus"></ion-icon></button>
+              </ion-fab-list>
+       
+            </ion-fab>
+
+          </ion-card>
+      </ion-item>
+    </ion-list>
+
+    <!--<ion-list *ngSwitchCase="'tutors'">
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="assets/img/thumbnail-kitten-1.jpg">
+        </ion-thumbnail>
+        <h2>Luna's Classes</h2>
+        <p> Perhaps it doesn't make sense <br/> to have this tab</p>
+      </ion-item>
+    </ion-list>-->
+  </div>
+</ion-content>

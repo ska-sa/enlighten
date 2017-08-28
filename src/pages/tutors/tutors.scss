@@ -1,0 +1,44 @@
+page-tutors {
+    transition: all 1s;
+    /*ion-card{
+        position: absolute;
+        padding: 0px 5%;
+        top: 50px;
+    }*/
+    img{
+        
+        background-size: contain;
+    }
+    .info{
+        font-size: 12px;
+    }
+    .description{
+        font-size: 10px;
+    }
+    .info-sec{
+        width: 90%;
+        height: 20%;
+        margin: 0px 5%;
+    }
+    .no{
+        padding: 5px;
+    }
+    .request-btn{
+        width: 50%;
+        left: calc(25%);
+        margin-top: 5%;
+        margin-bottom: 7.5%;
+    }
+    h3{
+        text-align:center;
+        width: 100%;
+        padding: 0px 15%;
+        font-size: 14px;
+    }
+
+    .fab-md {
+        height: 45px;
+        width: 45px;
+    }
+
+}
