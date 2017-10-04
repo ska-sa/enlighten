@@ -29,55 +29,61 @@
 <ion-content class="grey">
   <div [ngSwitch]="my">
     <!-- --------THIS IS THE SAME AS APPOINTMENTS---------- -->
-    <ion-list *ngSwitchCase="'pending'"> 
-      <ion-item class="grey">
+    <ion-list *ngSwitchCase="'pending'" no-lines> 
+      <ion-item class="grey" *ngFor="let lesson of lessons_pending | async" no-lines>
         <ion-card>
             <ion-card-content>
               <ion-card-title text-center class="il left">
-                Mathematics
+                {{lesson.title}}
               </ion-card-title>
               <ion-item item-end class="il">
-                <ion-icon name="contacts" color="primary"></ion-icon>
+                <ion-icon [name]="name(lesson.type)" color="primary"></ion-icon>
               </ion-item>
-              <p> 2 (out of 5) accepted </p>
-              <p text-center> Jun 25, 2017 13:00 </p>
+              <p *ngIf="lesson.type == 'group'"> {{lesson.accepted}} (out of {{lesson.capacity}}) accepted </p>
+              <p text-center> {{lesson.start | date:'MMM dd, yyyy HH:mm'}}</p>
               <ion-item item-start class="il left">
-                <p> Algebra & Calculus </p>
-                <p> 25 minutes </p>
+                <p> {{lesson.subtitle}}</p>
+                <p> {{lesson.duration}} minutes </p>
               </ion-item>
               
               <ion-item text-wrap>
                 <ion-avatar item-left>
-                  <img src="assets/img/sarah-avatar.jpg">
+                  <img [src]="lesson.imageurl">
                 </ion-avatar>
-                <strong>Sarah Johnson</strong>
-                <p>University of Cape Town</p>  
+                <strong>{{lesson.learnername}}</strong>
+                <p>{{lesson.school}}</p>  
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
+
+              <div padding text-center>
+                <button text-center class="request-btn" ion-button bottom (click)="acceptLesson(lesson.$key, lesson.learnerid)" medium>
+                   Accept Request
+                </button>
+              </div>
             </ion-card-content>
           </ion-card>
       </ion-item>
     </ion-list>
     <!-- --------THESE ARE LESSONS REQUESTED BY THE LEARNER TO TUTORS---------- -->
-    <ion-list *ngSwitchCase="'upcoming'">
-      <ion-item class="grey">
+    <ion-list *ngSwitchCase="'upcoming'" no-lines>
+      <ion-item class="grey" *ngFor="let lesson of lessons_upcoming | async" no-lines>
         <ion-card>
             <ion-card-content>
               <ion-card-title text-center>
-                Physics
+                {{lesson.title}}
               </ion-card-title>
-              <p text-center> Jul 25, 2017 17:00 </p>
+              <p text-center> {{lesson.start | date:'MMM dd, yyyy HH:mm'}} </p>
               <ion-item item-start class="il left">
-                <p> Newtonian Mechanics </p>
-                <p> 15 minutes </p>
+                <p> {{lesson.subtitle}}</p>
+                <p> {{lesson.duration}} minutes </p>
               </ion-item>
               
               <ion-item text-wrap>
                 <ion-avatar item-left>
-                  <img src="assets/img/marty-avatar.png">
+                  <img [src]="lesson.imageurl">
                 </ion-avatar>
-                <strong>Morty Smith</strong>
-                <p>University of Cape Town</p>  
+                <strong>{{lesson.learnername}}</strong>
+                <p>{{lesson.school}}</p>  
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
               <div padding text-center>
@@ -90,12 +96,12 @@
       </ion-item>
     </ion-list>
 
-    <ion-list *ngSwitchCase="'history'">
-      <ion-item class="grey">
+    <ion-list *ngSwitchCase="'history'" no-lines>
+      <ion-item class="grey" *ngFor="let lesson of lessons_history | async" no-lines>
         <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-1.jpg">
+          <img [src]="lesson.imageurl">
         </ion-thumbnail>
-        <h2>Daffy's Past Class</h2>
+        <h2>{{lesson.title}}</h2>
       </ion-item>
     </ion-list>
   </div>

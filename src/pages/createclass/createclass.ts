@@ -42,25 +42,12 @@ yyyymmdd(date) {
 };
 
   createClass(date,duration,grd,sbj) {
-    alert(date)
     var startDate = new Date(Date.parse(date));
-    alert(Date.parse(date).toString());
     var endNum = parseInt(Date.parse(date).toString()) + parseInt(duration)*60000;
-
-    alert(endNum);
-    alert(startDate);
-    alert(this.yyyymmdd(startDate));
     var endDate = new Date(endNum);
-
-    alert(endDate);
-    alert(this.yyyymmdd(endDate));
-    alert(startDate.toString());
-    //var endDate = new Date(2015,2,15,19,30,0,0,0);
-    var title = `Grade ${grd} ${sbj} Tutoring Session`;
-    var eventLocation = "Enlighten App";
-    var notes = `This session lasts ${duration} minutes`;
-    var success = function(message) { alert("Success: " + JSON.stringify(message)); };
-    var error = function(message) { alert("Error: " + message); };
+    var title = `Grade ${grd} ${sbj}`;
+    var eventLocation = "Enlighten App: Class";
+    var notes = `class`;
 
     this.calendar.createEvent(title,eventLocation,notes,startDate,endDate).then(result => {
         //alert(result)

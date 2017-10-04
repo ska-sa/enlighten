@@ -65,23 +65,23 @@
     <!-- --------THESE ARE LESSONS REQUESTED BY THE LEARNER TO TUTORS---------- -->
     <ion-list *ngSwitchCase="'pending'">
       <ion-item class="grey">
-        <ion-card>
+        <ion-card *ngFor = "let lesson of lessons_pending | async">
             <ion-card-content>
               <ion-card-title text-center>
-                Physics
+                {{lesson.title}}
               </ion-card-title>
-              <p text-center> Jul 25, 2017 17:00 </p>
+              <p text-center>{{lesson.start | date:'MMM dd, yyyy HH:mm'}}</p>
               <ion-item item-start class="il left">
-                <p> Newtonian Mechanics </p>
-                <p> 15 minutes </p>
+                <p> {{lesson.subtitle}} </p>
+                <p> {{lesson.duration}} minutes </p>
               </ion-item>
               
               <ion-item text-wrap>
                 <ion-avatar item-left>
-                  <img src="assets/img/avatar-ben.png">
+                  <img [src]="lesson.imageurl">
                 </ion-avatar>
-                <strong>Rick Sanchez</strong>
-                <p>University of Cape Town</p>  
+                <strong>{{lesson.tutorname}}</strong>
+                <p>{{lesson.institution}}</p>  
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
             </ion-card-content>

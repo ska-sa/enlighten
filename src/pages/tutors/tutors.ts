@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
 
+import * as firebase from 'firebase/app';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the TutorsPage page.
  *
@@ -15,10 +19,13 @@ import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
 })
 export class TutorsPage {
   tutors: TutorAccess[];
+  private ftutors: FirebaseListObservable<any>;
   len: number = 0;
   name:string = "";
-  constructor(public navCtrl: NavController, public navParams: NavParams, private tutorAccess: TutorAccess, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private tutorAccess: TutorAccess, 
+    private af: AngularFireDatabase, public alertCtrl: AlertController) {
     this.tutors = this.tutorAccess.getTutors();
+    this.ftutors = af.list(`/users_tutors`);
   }
 
   ionViewDidLoad() {

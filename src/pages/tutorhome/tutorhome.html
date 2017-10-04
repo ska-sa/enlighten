@@ -15,33 +15,33 @@
 
 <ion-content no-line text-center class="grey">
       <p> UPCOMING LESSONS </p>
-      <ion-item class="item-borderless" class="grey">
-          <ion-card>
+      <ion-item class="item-borderless" class="grey" *ngFor="let lesson of lessons_upcoming | async" no-lines>
+          <ion-card  no-lines>
             <ion-card-content>
               <ion-card-title text-center>
-                Physics
+                {{lesson.title}}
               </ion-card-title>
-              <p text-center> Single </p>
+              <p text-center> {{lesson.type}} </p>
               <ion-item item-start class="il left">
-                <p> Grade 12 </p>
-                <p> 25 minutes </p>
-                <p> Classic Mechanics </p>
+                <p> Grade {{lesson.grade}} </p>
+                <p> {{lesson.duration}} minutes </p>
+                <p> {{lesson.subtitle}} </p>
               </ion-item>
               <ion-item item-end class="il">
-                <h2> R200 </h2>
+                <h2> R{{lesson.price}}</h2>
               </ion-item>
 
               <ion-item item-left >
-                <p> Tues, Jun 20, 2017 13:00 </p>
+                <p> {{lesson.start | date:'MMM dd, yyyy HH:mm'}}  </p>
               </ion-item>
 
               <ion-item text-wrap>
                 <ion-avatar item-left>
-                  <img src="assets/img/marty-avatar.png">
+                  <img [src]="lesson.imageurl">
                 </ion-avatar>
-                <strong>Morty Smith</strong>
-                <p>School of Morties</p>
-                <p>Elementary Physics</p>      
+                <strong>{{lesson.learnername}}</strong>
+                <p>{{lesson.school}}</p>
+                <p>{{lesson.subtitle}}</p>      
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
             </ion-card-content>

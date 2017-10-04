@@ -3,6 +3,68 @@ calendar {
   .center {
     text-align: center;
   }
+  .text {
+      font-size: 16px;
+      display:  inline-block;
+      vertical-align: middle;
+  }
+  .blok {
+    border-radius: 3px;
+    /*background-color: color($colors, tint);*/
+    border: 2px solid color($colors,primary);
+    width: 100%;
+    margin-top: 4%;
+    position: relative;
+  }
+  .class {
+    height: 12px;
+    width: 12px;
+    background-color: color($colors, secondary);
+    display:  inline-block;
+    vertical-align: middle;
+  }
+
+  .ilb {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 18px;
+    font-size: 16px;
+  }
+
+  .ilb.prim {
+    border-radius: 5px;
+    background-color: color($colors, primary);
+    height: 40px;
+    width: 40px;
+    color: white;
+    line-height: 40px;
+    position: absolute;
+    right: 4%;
+  }
+
+  .ilb.g {
+    color: #555;
+    padding-left: 4%;
+  }
+
+  .c-class {
+    color: black;/*color($colors, secondary);*/
+    display:  inline-block;
+  }
+
+  .session {
+    color: black; /*color($colors, openg);*/
+    display:  inline-block;
+  }
+
+  .one {
+    height: 12px;
+    width: 12px;
+    background-color: color($colors, openg);
+    display:  inline-block;
+    vertical-align: middle;
+  }
+
   .calendar-header-col {
     font-size: 1rem;
     color: #777;
@@ -34,11 +96,14 @@ calendar {
     .select, .select.event {
       box-shadow: none;
       color: #fff;
-      background: radial-gradient(#5c7eda, #5e89ec, #5e89ec)!important;
+      background: radial-gradient(#da5c5c, #df5f5f, #df5f5f)!important;
     }
-    .event {
-        background: color($colors,primary) !important;
+    .event, .event.today {
+        background: color($colors,primary);
         color: white;
+        box-shadow: none !important;
     }
+
+    
   }
 }

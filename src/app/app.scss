@@ -56,3 +56,15 @@
     .grey {
         background-color: #ddd;
     }
+
+    .no-scroll {
+        scroll-content {
+            overflow: hidden;
+        }
+    }
+
+    .scroll {
+        scroll-content {
+            overflow-y: scroll;
+        }
+    }

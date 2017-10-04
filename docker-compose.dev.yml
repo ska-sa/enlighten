@@ -1,0 +1,42 @@
+version: '2.1'
+services:
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
+
+  config-service:
+    build: config-service
+    ports:
+      - 8888:8888
+
+  service-discovery:
+    build: service-discovery
+
+  api-gateway-service:
+    build: api-gateway-service
+
+  auth-service:
+    build: auth-service
+    ports:
+      - 5000:5000
+
+  auth-postgres:
+    build: postgres
+    ports:
+      - 25000:5432
+
+  users-service:
+    build: users-service
+    ports:
+      - 9005:9005
+
+  users-postgres:
+    build: postgres
+    ports:
+      - 26000:5432
+
+
+  hystrix-dashboard:
+    build: hystrix-dashboard

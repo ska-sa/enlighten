@@ -4,9 +4,9 @@
     <ion-list color="primary">
       <ion-item color="primary" text-center>
         <ion-avatar style="width: 100%" text-center>
-          <img style="text-align: center; display:inline-block; height: 80px; width: 80px" [src]="profPic">
+          <img style="text-align: center; display:inline-block; height: 80px; width: 80px" [src]="user.photoURL">
         </ion-avatar>
-        <h2 style="font-size: 1.4em">{{displayName}}</h2>
+        <h2 style="font-size: 1.4em">{{user.displayName}}</h2>
         <h3 style="font-size: 0.8em" > ----- SUMMARY -----</h3>
         <p style="font-size: 0.8em" *ngIf="type == 'student'"> AVAIL BAL: R132.00</p>
         <p style="font-size: 0.8em" *ngIf="type == 'tutor'"> NO. LESSONS: 19</p>
@@ -14,7 +14,7 @@
     </ion-list>
   </ion-header>
 
-  <ion-content *ngIf="type == 'student'" class="dark">
+  <ion-content *ngIf="type == 'learner'" class="dark">
     <ion-list color="dark" class="dark">
         <button ion-item menuClose (click)="openPage(tutorsPage)">
             <ion-icon name="search" item-start></ion-icon>
@@ -35,6 +35,14 @@
         <button ion-item menuClose (click)="openPage(walletPage)">
             <ion-icon name="folder-open" item-start></ion-icon>
             Wallet
+        </button>
+        <button ion-item menuClose (click)="openPage(drawPage)">
+            <ion-icon name="color-palette" item-start></ion-icon>
+            Drawing Board
+        </button>
+        <button ion-item menuClose (click)="openPage(videocallPage)">
+            <ion-icon name="videocam" item-start></ion-icon>
+            Video Call
         </button>
         <button ion-item menuClose (click)="openPage(settingsPage)">
             <ion-icon name="build" item-start></ion-icon>
@@ -60,6 +68,14 @@
         <button ion-item menuClose (click)="openPage(tutorclassmenuPage)">
             <ion-icon name="chatbubbles" item-start></ion-icon>
             Classes
+        </button>
+        <button ion-item menuClose (click)="openPage(drawPage)">
+            <ion-icon name="color-palette" item-start></ion-icon>
+            Drawing Board
+        </button>
+        <button ion-item menuClose (click)="openPage(videocallPage)">
+            <ion-icon name="videocam" item-start></ion-icon>
+            Video Call
         </button>
         <button ion-item menuClose (click)="openPage(tutorsettingsPage)">
             <ion-icon name="build" item-start></ion-icon>

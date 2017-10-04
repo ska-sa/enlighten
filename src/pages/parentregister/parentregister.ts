@@ -2,7 +2,17 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { userAccess } from '../../app/services/users/users';
 import { HomePage } from '../home/home';
+
 import { Events } from 'ionic-angular';
+
+import { NativeStorage } from '@ionic-native/native-storage';
+
+import { GooglePlus } from '@ionic-native/google-plus';
+
+import * as firebase from 'firebase/app';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the ParentregisterPage page.
  *

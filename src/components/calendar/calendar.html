@@ -22,4 +22,25 @@
     </ion-col>
   </ion-row>
 
+  <ion-list no-lines [hidden]="events.length == 0">
+      <!--<ion-item text-center class="text"> <div class="class"> </div> CLASS &nbsp; &nbsp; <div class="one"> </div> UNBOOKED 1 on 1 SESSION</ion-item>-->
+
+      <ion-item text-left [class]="textclass(event.val.location)" *ngFor="let event of events">
+        <div class="ilb g">
+          {{event.val.start | date:'HH:mm'}} <br/> {{event.val.end | date:'HH:mm'}} 
+        </div> 
+
+        <div class="ilb"> 
+          {{event.val.title}} 
+        </div> 
+
+        <ion-fab>
+          <button ion-fab color="primary" (click)="bookSession(event.key, event.val.duration, event.val.start)"><ion-icon name="add"></ion-icon></button>
+        </ion-fab>
+        <!--<div class="ilb prim" (click)="alertTutor()" text-center> 
+          <ion-icon name="add" color="light"> </ion-icon> 
+        </div> -->
+      </ion-item>
+  </ion-list>
+
 </ion-grid>

@@ -4,6 +4,7 @@ import { userAccess } from '../../app/services/users/users';
 import { LoginPage } from '../login/login';
 import { SubjectsAccess } from '../../app/services/subjects/subjects';
 
+import * as firebase from 'firebase/app';
 /**
  * Generated class for the ProfilePage page.
  *
@@ -15,7 +16,7 @@ import { SubjectsAccess } from '../../app/services/subjects/subjects';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
-  users: userAccess;
+  user;
   login: LoginPage;
   private fname: string;
   private sname: string;
@@ -26,19 +27,28 @@ export class ProfilePage {
   private picture: string;
   private email: string;
   private userInfo;
-
+  private type: string = 'learner';
 
   //INFO FOR SUBJECT CHOICES
   subinterests: Array<any> = [];
   private subjects;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-    private subjectsAccess: SubjectsAccess, private user: userAccess) {
-    this.users = user;
-    this.cell = this.users.currentUserMobile;
-    this.userInfo = this.users.getDetails(this.cell);
-    this.subjects = this.subjectsAccess.getSubjects();
-    this.updateFields();
+    private subjectsAccess: SubjectsAccess) {
+    this.user = navParams.get('user');
+    //this.type = navParams.get('type');
+    let env = this;
+    firebase.database().ref(`/users_${this.type}s/${this.user.uid}`).once('value').then(res => {
+      var data = res.val();
+      env.cell = data.cellphone;
+      env.fname = data.name;
+      env.sname = data.lastname;
+      env.grd = data.grade;
+      env.sch = data.school;
+      env.sub = data.subjects;
+      env.picture = data.imageurl;
+      env.email = data.email;
+    })
     this.addsubinterest();
   }
 
@@ -49,18 +59,20 @@ export class ProfilePage {
     this.subinterests.push('');
   } 
   sendUserData(){
-    this.users.update(this.fname, this.sname, this.grd, this.sch, this.cell, this.sub);
-    this.showAlert();
-  }
-  updateFields(){
-    this.fname = this.userInfo.firstname;
-    this.sname = this.userInfo.lastname;
-    this.email= this.userInfo.email;
-    this.grd = "12";
-    this.sch = "School of Life";
-    this.cell = this.userInfo.mobile;
-    this.sub = "Subjects of Life";
-    this.picture = this.userInfo.picture;
+    let env = this;
+    firebase.database().ref(`/users_${this.type}s/${this.user.uid}`).update({
+      cellphone: env.cell,
+      name: env.fname,
+      lastname:env.sname,
+      grade: env.grd,
+      school: env.sch,
+      subjects: env.sub,
+      imageurl: env.picture,
+      email: env.email
+    }).then(res => {
+      env.showAlert();
+    })
+    
   }
   showAlert() {
     let alert = this.alertCtrl.create({
@@ -70,4 +82,6 @@ export class ProfilePage {
     });
     alert.present();
   }
+
+  
 }

@@ -49,7 +49,7 @@
       <ion-row>
         <ion-item>
           <ion-label stacked>Cellphone Number</ion-label>
-          <ion-input type="text" [(ngModel)]="cell"></ion-input>
+          <ion-input type="number" [(ngModel)]="cell"></ion-input>
         </ion-item>
       </ion-row>
       <!------------Password---------->
@@ -99,7 +99,7 @@
       <ion-row>
         <ion-item>
           <ion-label stacked>Email Address</ion-label>
-          <ion-input type="text" [(ngModel)]="email"></ion-input>
+          <ion-input type="email" [(ngModel)]="email" placeholder="leave empty to use gmail"></ion-input>
         </ion-item>
       </ion-row>
       <!------------Subjects---------->
@@ -120,7 +120,7 @@
 
     <p text-center>Complete Signup Using</p>
     <!------------Google---------->
-    <button class="reduce" ion-button icon-left color="gg" (click)="reg()">
+    <button class="reduce" ion-button icon-left color="gg" (click)="googleReg()">
       <ion-icon name="logo-google"></ion-icon>
       Google
     </button>

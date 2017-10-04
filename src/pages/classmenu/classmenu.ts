@@ -18,9 +18,11 @@ import {ClassbrowsePage} from '../classbrowse/classbrowse';
 export class ClassmenuPage {
   private myclassesPage;
   private classbrowsePage;
+  private user;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.myclassesPage = MyclassesPage;
     this.classbrowsePage = ClassbrowsePage;
+    this.user = navParams.get('user');
   }
 
   ionViewDidLoad() {
@@ -28,7 +30,7 @@ export class ClassmenuPage {
   }
 
   toPage(page) {
-    this.navCtrl.push(page);
+    this.navCtrl.push(page, {user: this.user});
   }
 
 }

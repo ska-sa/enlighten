@@ -1,0 +1,35 @@
+canvas-draw {
+    height: 100%;
+    width: 100%;
+    display: block;
+    .selected {
+        color: #fff;
+        border: 1px solid white;
+        border-radius: 2px;
+    }
+    .unsel {
+        color: #ccc;
+    }
+    #top-toolbar{
+        position: absolute;
+        top: 0;
+        border: 0px solid white;
+        border-radius: 0px;
+    }
+ 
+    #bottom-toolbar {
+        position: absolute;
+        bottom: 0;
+    }
+
+    .back {
+        font-size: 28px;
+        margin-left: 2%;
+    }
+
+
+    .content {
+        margin-top: 56px;
+        height: calc(100vh - 112px);
+    }
+}

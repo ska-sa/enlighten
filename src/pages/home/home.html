@@ -17,12 +17,12 @@
   </ion-grid>
 </ion-content>
 
-<ion-content class="has-header" padding [hidden]="!tutors || tutors.length <= 0">
+<ion-content class="has-header" [hidden]="!tutors || tutors.length <= 0">
   <ion-list no-lines>
     <ion-list-header no-lines text-center>
       Recommended for you
     </ion-list-header>
-    <ion-item *ngFor="let tutor of tutors" text-wrap (click)="showAlert()">
+    <!--<ion-item *ngFor="let tutor of tutors" text-wrap (click)="viewTutor(0)">
       <ion-avatar item-left class="avatar">
         <img [src]="tutor.image">
         <div [class]="'status ' + tutor.status"> </div>
@@ -30,6 +30,16 @@
       <strong>{{tutor.name}}</strong>
       <p>{{tutor.institution}}</p>
       <p>{{tutor.subjects.join(', ')}}</p>      
+      <ion-icon color="primary" item-right name="thumbs-up"></ion-icon> <p item-right> {{tutor.likes}}</p>
+    </ion-item>-->
+    <ion-item *ngFor="let tutor of ftutors | async" text-wrap (click)="viewTutor(tutor.$key)">
+      <ion-avatar item-left class="avatar">
+        <img [src]="tutor.imageurl">
+        <div [class]="'status ' + tutor.status"> </div>
+      </ion-avatar>
+      <strong>{{tutor.name}} {{tutor.lastname}}</strong>
+      <p>{{tutor.institution}}</p>
+      <p>Subjects</p>      
       <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
       <ion-icon color="primary" item-right name="thumbs-up"></ion-icon> <p item-right> {{tutor.likes}}</p>
     </ion-item>

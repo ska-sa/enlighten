@@ -18,15 +18,17 @@ import {CreateclassPage} from '../createclass/createclass';
 export class TutorclassmenuPage {
   private tutorclassesPage;
   private createclassPage;
+  private user;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tutorclassesPage = TutorclassesPage;
     this.createclassPage = CreateclassPage;
+    this.user = navParams.get('user');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TutorclassmenuPage');
   }
   toPage(page) {
-    this.navCtrl.push(page);
+    this.navCtrl.push(page, {user: this.user});
   }
 }

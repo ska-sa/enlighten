@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { Events } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
-
+import * as firebase from 'firebase/app';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the MessagesPage page.
  *
@@ -13,7 +16,12 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'messages.html',
 })
 export class MessagesPage {
-  private myId = 'abc';
+  private user;
+  private user1;
+  private user2;
+  private recipientId: string = '';
+  private lessons_pending: FirebaseListObservable<any>;
+  private pending_lessons: FirebaseListObservable<any>;
   private hideTime = false;
   private messageBox;
   private messages = [{
@@ -32,7 +40,24 @@ export class MessagesPage {
                       }
                       ]
  
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public events: Events, 
+    private af: AngularFireDatabase) {
+    this.user = navParams.get('user');
+    this.recipientId = navParams.get('id');
+    let env = this;
+    this.lessons_pending = af.list(`/lessons_pending_learners/${this.user.uid}`);
+    this.pending_lessons = af.list(`/lessons_pending_tutors_learners/${this.recipientId}/${this.user.uid}`);
+    firebase.database().ref(`/users_learners/${this.user.uid}`).once('value').then(res => {
+      env.user1 = res.val();
+    }).catch(err => {
+      alert(err);
+      alert(JSON.stringify(err));
+    })
+    firebase.database().ref(`/users_tutors/${this.recipientId}`).once('value').then(res => {
+      env.user2 = res.val();
+    })
+    this.events.publish('globals:update', this.user, 'learner');
   }
 
   sendMessage(text) {

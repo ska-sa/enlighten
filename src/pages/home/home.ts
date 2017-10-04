@@ -7,6 +7,10 @@ import { Events } from 'ionic-angular';
 import { LessonPage } from '../lesson/lesson';
 import { MessagesPage } from '../messages/messages';
 
+import * as firebase from 'firebase/app';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 //Importing pages
 
 @Component({
@@ -17,8 +21,10 @@ export class HomePage {
   loader: Loading;
   todos: Todo[];
   tutors: TutorAccess[];
+  private ftutors: FirebaseListObservable<any>;
   private lessonPage;
   private messagesPage;
+  private user;
   constructor(
     public navCtrl: NavController,
     private todoService: TodoService,
@@ -27,8 +33,11 @@ export class HomePage {
     private tutorAccess: TutorAccess,
     private menuController: MenuController,
     public loadingCtrl: LoadingController,
-    public events: Events) {
-      this.tutors = this.tutorAccess.getTutors()
+    public events: Events, private navParams: NavParams, 
+    private af: AngularFireDatabase) {
+      this.user = navParams.get('user');
+      this.tutors = this.tutorAccess.getTutors();
+      this.ftutors = af.list(`/users_tutors`);
       this.menuController.enable(true, 'myMenu')
       this.lessonPage = LessonPage;
       this.messagesPage = MessagesPage;
@@ -43,11 +52,12 @@ export class HomePage {
     this.navCtrl.push(p)
   }
   ionViewDidLoad() {
+    this.menuController.enable(true, 'myMenu');
     console.log('ionViewDidLoad ProfilePage');
   }
 
-  showAlert() {
-    let alert = this.alertCtrl.create({
+  viewTutor(id) {
+    /*let alert = this.alertCtrl.create({
       title: 'New Conversation',
       subTitle: 'You are about to request a tutor and begin a conversation. You will be charged a request fee. Proceed?',
       buttons: [{text:'OK',
@@ -55,7 +65,9 @@ export class HomePage {
                   this.openPage(this.messagesPage)
                 } }, {text: 'Cancel'}]
     });
-    alert.present();
+    alert.present();*/
+
+    this.navCtrl.push(this.messagesPage, {user: this.user,id: id});
   }
 
   showInputAlert() {

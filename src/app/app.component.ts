@@ -14,7 +14,7 @@ import { WalletPage } from '../pages/wallet/wallet';
 import { SettingsPage } from '../pages/settings/settings';
 import { UserselectionPage } from '../pages/userselection/userselection';
 import { LessonPage } from '../pages/lesson/lesson';
-
+import { VideocallPage } from '../pages/videocall/videocall';
 /* THESE ARE ALL THE TUTOR PAGES */
 import { TutorhomePage } from '../pages/tutorhome/tutorhome';
 import { TutorprofilePage } from '../pages/tutorprofile/tutorprofile';
@@ -22,18 +22,19 @@ import { TutorsettingsPage } from '../pages/tutorsettings/tutorsettings';
 import { CreateclassPage } from '../pages/createclass/createclass';
 import { TutorclassesPage } from '../pages/tutorclasses/tutorclasses';
 import { TutorclassmenuPage } from '../pages/tutorclassmenu/tutorclassmenu';
-
+import { DrawPage } from '../pages/draw/draw';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
-  rootPage = LogoutPage;
+  rootPage = VideocallPage;
+  //rootPage = LogoutPage;
   tutorsPage;                             
   profilePage;
   appointmentsPage;
@@ -48,32 +49,34 @@ export class MyApp {
   tutorclassesPage;
   tutorclassmenuPage;
   lessonPage;
+  drawPage;
+  videocallPage;
 
   private displayName: string;
   private type: string;
   private profPic: string;
   private page: string;
-
+  private user = {photoURL: '', displayName: ''};
   constructor(
     public platform: Platform,
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public events: Events
+    public events: Events, public nativeStorage: NativeStorage
   ) {
     this.initializeApp();
     this.userselectionPage = UserselectionPage;
+
     
-    events.subscribe('globals:update', (type,name,picture="assets/img/man.png",page="nomenu") => {
-      this.setGlobals(type,name,picture,page);
+    
+    events.subscribe('globals:update', (user, type) => {
+        this.setGlobals(user, type);
     });
   }
 
-  setGlobals(type=this.type,name=this.displayName,picture = "assets/img/man.png",page= "nomenu") {
+  setGlobals(user, type) {
+    this.user = user;
     this.type = type;
-    this.page = page;
-    this.displayName = name;
-    this.profPic = picture;
   }
 
 
@@ -89,14 +92,20 @@ export class MyApp {
       this.appointmentsPage = AppointmentsPage;
       this.walletPage = WalletPage;
       this.settingsPage = SettingsPage;
+      this.drawPage = DrawPage;
       this.statusBar.styleDefault();
-      
+      this.videocallPage = VideocallPage;
       this.tutorsettingsPage = TutorsettingsPage;
       this.tutorprofilePage = TutorprofilePage;
       this.createclassPage = CreateclassPage;
       this.tutorclassesPage = TutorclassesPage;
       this.tutorclassmenuPage = TutorclassmenuPage;
       this.lessonPage = LessonPage;
+
+      this.nativeStorage.getItem('user-info').then(data => {
+        this.type = data.type;
+        this.user = data.user;
+      });
     });
   }
 
@@ -120,7 +129,7 @@ export class MyApp {
     this.menu.close();
     
     // navigate to the new page if it is not the current page
-    this.nav.push(page,{},{animate: true});
+    this.nav.push(page,{user: this.user, type: this.type},{animate: true});
   }
 
 }

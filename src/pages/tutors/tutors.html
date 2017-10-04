@@ -14,43 +14,84 @@
 </ion-header>
 
 
-<ion-content padding *ngFor="let tutor of tutors; let i = index" [hidden]="i!=len">
-  <h3>Find Tutors that match your profile</h3>
-  <ion-card>
-    <!------------Profile Image---------->
-    <ion-avatar>
-      <img [src]="tutor.image">
-    </ion-avatar>
-    <!------------Tutor Qualification & Likes---------->
-    <ion-item>
-      <ion-icon name="ios-thumbs-up" color="like" item-end medium></ion-icon>
-      <ion-badge class="no" item-end color="like" small>{{tutor.likes}}</ion-badge>
-      <ion-icon name="star-outline" item-end medium></ion-icon>
-      <h2>{{tutor.name}}</h2>
-      <h2 class="info">{{tutor.institution}}</h2>
-      <p class="info">{{tutor.subjects.join(', ')}}</p>
-    </ion-item>
-    <!------------Tutor Bio & Location---------->
-    <div class="info-sec">
-      <p class="info">Rosebank, Cape Town</p>
-      <p class="description" *ngIf="i != 0">Additional info not available at the moment</p>
-      <p class="description" *ngIf="i == 0">Albert developed the theory of relativity, one of the two pillars of modern physics. Einstein's Work is also known for its influence on the philosophy of science</p>
-    </div>
-    <button class="request-btn" ion-button bottom (click)="request()" medium>
-      Request
-    </button>  
-  </ion-card>
-  <!------------Navigate Tutors---------->
-  
+<!--<ion-content padding *ngFor="let tutor of tutors; let i = index" [hidden]="i!=len">
+  <ion-item  no-padding> 
+    <h3>Find Tutors that match your profile</h3>
+    <ion-card>
+      <!------------Profile Image--------
+      <ion-avatar>
+        <img [src]="tutor.image">
+      </ion-avatar>
+      <!------------Tutor Qualification & Likes---------
+      <ion-item>
+        <ion-icon name="ios-thumbs-up" color="like" item-end medium></ion-icon>
+        <ion-badge class="no" item-end color="like" small>{{tutor.likes}}</ion-badge>
+        <ion-icon name="star-outline" item-end medium></ion-icon>
+        <h2>{{tutor.name}}</h2>
+        <h2 class="info">{{tutor.institution}}</h2>
+        <p class="info">{{tutor.subjects.join(', ')}}</p>
+      </ion-item>
+      <!------------Tutor Bio & Location--------
+      <div class="info-sec">
+        <p class="info">Rosebank, Cape Town</p>
+        <p class="description" *ngIf="i != 0">Additional info not available at the moment</p>
+        <p class="description" *ngIf="i == 0">Albert developed the theory of relativity, one of the two pillars of modern physics. Einstein's Work is also known for its influence on the philosophy of science</p>
+      </div>
+      <button class="request-btn" ion-button bottom (click)="request()" medium>
+        Request
+      </button>  
+    </ion-card>
+    <!------------Navigate Tutors--------
+    
 
-  <ion-fab left middle>
-      <button ion-fab color="primary" (click)="prev()">
-        <ion-icon color="light" name="md-arrow-dropleft" large></ion-icon>
-      </button>
-  </ion-fab>
-  <ion-fab right middle>
-      <button ion-fab color="primary" (click)="next()">
-        <ion-icon color="light" name="md-arrow-dropright" large></ion-icon>
-      </button>
-  </ion-fab>
-</ion-content>
+    <ion-fab left middle>
+        <button ion-fab color="primary" (click)="prev()">
+          <ion-icon color="light" name="md-arrow-dropleft" large></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab right middle>
+        <button ion-fab color="primary" (click)="next()">
+          <ion-icon color="light" name="md-arrow-dropright" large></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content> -->
+
+<ion-content *ngFor="let tutor of ftutors | async; let i = index" [hidden]="i!=len" no-padding> 
+    <h3>Find Tutors that match your profile</h3>
+    <ion-card>
+      <!------------Profile Image---------->
+      <ion-avatar>
+        <img [src]="tutor.imageurl">
+      </ion-avatar>
+      <!------------Tutor Qualification & Likes---------->
+      <ion-item>
+        <ion-icon name="ios-thumbs-up" color="like" item-end medium></ion-icon>
+        <ion-badge class="no" item-end color="like" small>{{tutor.likes}}</ion-badge>
+        <ion-icon name="star-outline" item-end medium></ion-icon>
+        <h2>{{tutor.name}} {{tutor.lastname}}</h2>
+        <h2 class="info">{{tutor.institution}}</h2>
+        <p class="info">{{subjects}}</p>
+      </ion-item>
+      <!------------Tutor Bio & Location---------->
+      <div class="info-sec">
+        <p class="info">Rosebank, Cape Town</p>
+        <p class="description" *ngIf="i != 0">{{tutor.bio}}</p>
+      </div>
+      <button class="request-btn" ion-button bottom (click)="request()" medium>
+        Request
+      </button>  
+    </ion-card>
+    <!------------Navigate Tutors---------->
+    
+
+    <ion-fab left middle>
+        <button ion-fab color="primary" (click)="prev()">
+          <ion-icon color="light" name="md-arrow-dropleft" large></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab right middle>
+        <button ion-fab color="primary" (click)="next()">
+          <ion-icon color="light" name="md-arrow-dropright" large></ion-icon>
+        </button>
+    </ion-fab>
+  </ion-content>

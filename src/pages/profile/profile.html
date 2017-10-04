@@ -89,10 +89,15 @@
               <ion-option *ngFor="let subject of subjects" (value) = "subject.abbrv">{{subject.name}}</ion-option>
             </ion-select>
         </ion-item>
-      </ion-row>
+        <!------------Add Subject---------->
+        <button ion-button clear block color="dark" (click)="addsubinterest()">+ Add Subject for Tutoring</button>
+    </ion-row>
+
+    
+    
     </ion-grid>
-    <button ion-button clear block color="dark" (click)="addsubinterest()">+ Add Subject for Tutoring</button>
-  <!------------Add Subject---------->
+    
+  
 
   <button class="up-btn" ion-button color="primary" medium (click)="sendUserData()">Update</button>
 

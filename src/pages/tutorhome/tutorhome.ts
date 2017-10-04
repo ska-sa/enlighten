@@ -3,6 +3,10 @@ import { NavController, NavParams, MenuController } from 'ionic-angular';
 import {CreateclassPage} from '../createclass/createclass';
 import { LessonPage } from '../lesson/lesson';
 
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
+
 /**
  * Generated class for the TutorhomePage page.
  *
@@ -16,11 +20,18 @@ import { LessonPage } from '../lesson/lesson';
 })
 export class TutorhomePage {
   createclassPage;
+  private lessons_upcoming: FirebaseListObservable<any>
   private lessonPage;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public menuController: MenuController) {
+  private user;
+  constructor(public navCtrl: NavController, 
+    private af: AngularFireDatabase, public navParams: NavParams, public menuController: MenuController) {
     this.createclassPage = CreateclassPage;
     this.menuController.enable(true, 'myMenu')
     this.lessonPage = LessonPage;
+    this.user = navParams.get('user');
+    this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`);
+    //keep in mind, through node - we can make the calendar rewrite itself or delete itself weekly
+    //UPDATE CALENDAR TO FIT THIS WEEK!
   }
 
   ionViewDidLoad() {

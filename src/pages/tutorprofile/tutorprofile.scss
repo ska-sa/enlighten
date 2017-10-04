@@ -1,5 +1,9 @@
 page-tutorprofile {
     ion-content{
+
+        .select-md {
+            padding: 13px 8px 13px 16px !important;
+        }
         img{
             height: 80px;
             width: auto;
@@ -7,7 +11,18 @@ page-tutorprofile {
             display: block;
             border-radius: 50%;
         }
-        ion-input{
+
+        .header {
+            min-width: 35%;
+            text-align: left;
+        }
+
+        .select-text, .datetime-text {
+            line-height: 1.2!important;
+            min-height: 1.2em!important;
+            height: 20px !important;
+        }
+        ion-input, ion-datetime{
             font-size: 14px;
             color: grey;
         }
@@ -22,6 +37,18 @@ page-tutorprofile {
 
         .col {
             padding: 0;
+        }
+
+        .column {
+            max-width: 10% !important;
+        }
+
+        ion-icon {
+            align-self: center !important;
+            margin-left: 10%;
+            line-height: 100%;
+            vertical-align: middle;
+            display: flex !important;
         }
 
     }

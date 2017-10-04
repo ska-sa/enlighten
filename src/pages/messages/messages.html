@@ -16,7 +16,9 @@
   <ion-content class="content-stable"
                 on-swipe-left="hideTime = false"
                 on-swipe-right="hideTime = true">
-    <calendar> </calendar>
+    <calendar [user1]="user1" [user2]="user2" [user1id]="user.uid" [user2id]="recipientId" *ngIf="(pending_lessons | async)?.length == 0"> </calendar>
+    
+    <ion-item no-padding *ngIf="(pending_pending | async)?.length > 0">
     <div *ngFor="let message of messages"
           [ngClass]="{'other': message.userId != myId}" class="messages">
 
@@ -27,10 +29,11 @@
 
 
     </div>
+    </ion-item>
 
   </ion-content>
 
-  <ion-footer keyboard-attach class="bar-stable item-input-inset">
+  <ion-footer keyboard-attach class="bar-stable item-input-inset" *ngIf="(pending_lessons | async)?.length > 0">
     <label class="item-input-wrapper">
       <input type="text" placeholder="Type your message" [(ngModel)]="messageBox"/>
     </label>

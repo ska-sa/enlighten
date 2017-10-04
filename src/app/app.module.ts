@@ -23,6 +23,7 @@ import { UserselectionPage } from '../pages/userselection/userselection';
 import { TutorregisterPage } from '../pages/tutorregister/tutorregister';
 import { ParentregisterPage } from '../pages/parentregister/parentregister';
 
+import { VideocallPage } from '../pages/videocall/videocall';
 /* THESE ARE ALL THE TUTOR PAGES */
 import { TutorhomePage } from '../pages/tutorhome/tutorhome';
 import { TutorprofilePage } from '../pages/tutorprofile/tutorprofile';
@@ -31,11 +32,18 @@ import { CreateclassPage } from '../pages/createclass/createclass';
 import { TutorclassesPage } from '../pages/tutorclasses/tutorclasses';
 import { RequestsPage } from '../pages/requests/requests';
 import { TutorclassmenuPage } from '../pages/tutorclassmenu/tutorclassmenu';
+import { DrawPage } from '../pages/draw/draw';
 
 import { LessonPage } from '../pages/lesson/lesson';
 import { ClassroomPage } from '../pages/classroom/classroom';
 import { MessagesPage } from '../pages/messages/messages';
 
+import { NativeStorage } from '@ionic-native/native-storage';
+import { GooglePlus } from '@ionic-native/google-plus';
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { TodoService, TodoLocalStorageService } from "./services/todo/todo";
 import { TutorAccess } from './services/tutor-data/tutor.data';
@@ -47,7 +55,23 @@ import { AppointmentAccess } from './services/appointment-data/appointment-data'
 
 import { Calendar } from '@ionic-native/calendar';
 import { CalendarComponent } from '../components/calendar/calendar';
+import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 
+import { HttpModule } from '@angular/http';
+
+import { NativeAudio } from '@ionic-native/native-audio';
+
+export const environment = {
+  production: false, 
+  firebase: {
+    apiKey: "AIzaSyD2no81K7g1u8W9_X4GQP3SRt24ScH_St0",
+    authDomain: "enlighten-175514.firebaseapp.com",
+    databaseURL: "https://enlighten-175514.firebaseio.com",
+    projectId: "enlighten-175514",
+    storageBucket: "enlighten-175514.appspot.com",
+    messagingSenderId: "745996686081"
+  }
+}
 
 @NgModule({
   declarations: [
@@ -78,11 +102,18 @@ import { CalendarComponent } from '../components/calendar/calendar';
     LessonPage,
     ClassroomPage,
     MessagesPage,
-    CalendarComponent
+    CalendarComponent,
+    CanvasDrawComponent,
+    DrawPage,
+    VideocallPage
   ],
   imports: [
+    HttpModule,
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -112,7 +143,9 @@ import { CalendarComponent } from '../components/calendar/calendar';
     TutorclassmenuPage,
     LessonPage,
     ClassroomPage,
-    MessagesPage
+    MessagesPage,
+    DrawPage,
+    VideocallPage
   ],
   providers: [
     StatusBar,
@@ -127,6 +160,9 @@ import { CalendarComponent } from '../components/calendar/calendar';
     SubjectsAccess,
     ScreenOrientation,
     Calendar,
+    NativeStorage,
+    NativeAudio,
+    GooglePlus,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

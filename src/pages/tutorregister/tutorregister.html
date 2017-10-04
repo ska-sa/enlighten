@@ -90,12 +90,12 @@
         <ion-item *ngIf="hq == 'nqf7'">
           <ion-label stacked>Year of Study</ion-label>
           <ion-select [(ngModel)]="ayos"> <!-- YEAR OF STUDY ONLY IF THEY ARE UNDERGRADUATE -->
-            <ion-option value="8">1</ion-option>
-            <ion-option value="9">2</ion-option>
-            <ion-option value="10">3</ion-option>
-            <ion-option value="11">4</ion-option>
-            <ion-option value="12">5</ion-option>
-            <ion-option value="12">6</ion-option>
+            <ion-option value="1">1</ion-option>
+            <ion-option value="2">2</ion-option>
+            <ion-option value="3">3</ion-option>
+            <ion-option value="4">4</ion-option>
+            <ion-option value="5">5</ion-option>
+            <ion-option value="6">6</ion-option>
           </ion-select>
         </ion-item>
       </ion-row>
@@ -118,8 +118,8 @@
       <!------------Email---------->
       <ion-row>
         <ion-item>
-          <ion-label stacked>Email Address</ion-label>
-          <ion-input type="text" [(ngModel)]="email"></ion-input>
+          <ion-label stacked>Email Address (leave out to use google email address)</ion-label>
+          <ion-input type="email" [(ngModel)]="email"></ion-input>
         </ion-item>
       </ion-row>
       <!------------Subjects---------->
@@ -136,7 +136,7 @@
 
     <p text-center>Complete Signup Using</p>
     <!------------Google---------->
-    <button class="reduce" ion-button icon-left color="gg" (click)="reg()">
+    <button class="reduce" ion-button icon-left color="gg" (click)="googleReg()">
       <ion-icon name="logo-google"></ion-icon>
       Google
     </button>
