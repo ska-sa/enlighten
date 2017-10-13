@@ -76,9 +76,9 @@ export class VideocallPage {
     this.webRTCClient = apiRTC.session.createWebRTCClient({
       status: "status" //Optionnal
     });
-    /*    this.webRTCClient.setAllowMultipleCalls(true);
+        this.webRTCClient.setAllowMultipleCalls(true);
         this.webRTCClient.setVideoBandwidth(300);
-        this.webRTCClient.setUserAcceptOnIncomingCall(true);*/
+        this.webRTCClient.setUserAcceptOnIncomingCall(true);
   }
 
   InitializeControls() {
@@ -181,6 +181,7 @@ export class VideocallPage {
     });
 
     apiRTC.addEventListener("remoteStreamAdded", (e) => {
+      alert('The dank should be added!');
       this.webRTCClient.addStreamInDiv(e.detail.stream, e.detail.callType, "remote", 'remoteElt-' + e.detail.callId, {
         width: "300px",
         height: "225px"
@@ -202,10 +203,12 @@ export class VideocallPage {
   }
 
   MakeCall(calleeId) {
+    alert(this.webRTCClient);
     var callId = this.webRTCClient.call(calleeId);
     if (callId != null) {
       this.incomingCallId = callId;
       this.showHangup = true;
+      alert(callId)
     }
   }
 
