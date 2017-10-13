@@ -52,7 +52,7 @@ export class VideocallPage {
       // apiCCId : "2",
       onReady: (e) => {
         this.sessionReadyHandler(e);
-        alert(apiRTC);
+        alert(JSON.stringify(apiRTC));
       }
     });
     
