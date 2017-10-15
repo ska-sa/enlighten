@@ -7,7 +7,7 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>
-            Call Demo - {{myCallId}}
+            Call Demo - {{myId}}
         </ion-title>
     </ion-navbar>
 </ion-header>
@@ -22,7 +22,7 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <button ion-button block (click)='MakeCall(calleeId)'>Call</button>
+                <button ion-button block (click)='call()'>Call</button>
             </ion-col>
             <ion-col>
                 <button *ngIf="showHangup" ion-button block color="danger" (click)='HangUp()'>Hangup</button>
@@ -41,16 +41,20 @@
                 <!--<p *ngIf="showStatus" [innerHtml]="status"></p>-->
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="showRemoteVideo">
+        <ion-row>
             <ion-col>
-                <p>Remote Stream</p>
-                <div id="remote" style="width:100%;"></div>
+                <ion-card>
+                    <p>Remote Stream</p>
+                    <video #remotevideo autoplay></video>
+                </ion-card>
             </ion-col>
         </ion-row>
-        <ion-row *ngIf="showMyVideo">
+        <ion-row>
             <ion-col>
-                <p>My Stream</p>
-                <div id="mini"></div>
+                <ion-card>
+                    <p>My Stream</p>
+                    <video #myvideo autoplay></video>
+                </ion-card>
             </ion-col>
         </ion-row>
     </ion-grid>

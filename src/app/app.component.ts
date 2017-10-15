@@ -27,6 +27,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { NativeStorage } from '@ionic-native/native-storage';
+import {WebRTCConfig} from './common/webrtc.config';
+import {WebRTCService} from './common/webrtc.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -62,7 +64,8 @@ export class MyApp {
     public menu: MenuController,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    public events: Events, public nativeStorage: NativeStorage
+    public events: Events, public nativeStorage: NativeStorage,
+    public webRTC: WebRTCService
   ) {
     this.initializeApp();
     this.userselectionPage = UserselectionPage;
@@ -105,6 +108,8 @@ export class MyApp {
       this.nativeStorage.getItem('user-info').then(data => {
         this.type = data.type;
         this.user = data.user;
+        //alert(data.user.uid);
+        
       });
     });
   }
@@ -131,5 +136,6 @@ export class MyApp {
     // navigate to the new page if it is not the current page
     this.nav.push(page,{user: this.user, type: this.type},{animate: true});
   }
+
 
 }

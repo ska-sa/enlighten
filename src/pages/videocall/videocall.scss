@@ -1,3 +1,11 @@
 page-videocall {
-
+    #credentials, #dialler, #messages {
+      clear: both;
+    }
+    #remote {
+      max-width: 300px;
+    }
+    #mini {
+      max-width: 150px;
+    }
 }

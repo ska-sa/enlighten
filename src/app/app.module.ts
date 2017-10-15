@@ -60,6 +60,8 @@ import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 import { HttpModule } from '@angular/http';
 
 import { NativeAudio } from '@ionic-native/native-audio';
+import {WebRTCConfig} from './common/webrtc.config';
+import {WebRTCService} from './common/webrtc.service';
 
 export const environment = {
   production: false, 
@@ -163,6 +165,8 @@ export const environment = {
     NativeStorage,
     NativeAudio,
     GooglePlus,
+    WebRTCConfig,
+    WebRTCService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
