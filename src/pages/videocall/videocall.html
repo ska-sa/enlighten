@@ -16,13 +16,14 @@
     <ion-list>
         <ion-item>
             <ion-label floating>Call ID:</ion-label>
-            <ion-input type="text" [(ngModel)]="calleeId"></ion-input>
+            <ion-input type="text" [(ngModel)]="targetpeer"></ion-input>
         </ion-item>
     </ion-list>
     <ion-grid>
         <ion-row>
             <ion-col>
-                <button ion-button block (click)='call()'>Call</button>
+                <button ion-button block (click)='connect()'>Call</button>
+                <button ion-button block (click)='message()'>Message</button>
             </ion-col>
             <ion-col>
                 <button *ngIf="showHangup" ion-button block color="danger" (click)='HangUp()'>Hangup</button>

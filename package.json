@@ -31,6 +31,7 @@
         "@ionic/storage": "2.0.1",
         "android-camera-permission": "^1.0.0",
         "angularfire2": "^4.0.0-rc.1",
+        "com.dooble.phonertc": "https://github.com/alongubkin/phonertc.git",
         "com.telerik.plugins.nativepagetransitions": "^0.6.5",
         "cordova-android": "^6.2.3",
         "cordova-custom-config": "^4.0.2",
@@ -47,6 +48,7 @@
         "cordova-plugin-inappbrowser": "^1.7.1",
         "cordova-plugin-media": "^3.0.1",
         "cordova-plugin-nativeaudio": "^3.0.9",
+        "cordova-plugin-phonertc": "git+https://github.com/alongubkin/phonertc.git",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
         "cordova-plugin-webrtc": "^0.1.1",
@@ -62,6 +64,8 @@
         "peer": "^0.2.8",
         "promise-polyfill": "6.0.2",
         "rxjs": "5.4.0",
+        "simple-peer": "^8.1.1",
+        "socket.io": "^2.0.3",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.12"
     },
@@ -100,7 +104,8 @@
                 "XWALK_MODE": "embedded",
                 "XWALK_MULTIPLEAPK": "true"
             },
-            "cordova-plugin-audiotoggle": {}
+            "cordova-plugin-audiotoggle": {},
+            "com.dooble.phonertc": {}
         },
         "platforms": [
             "android"

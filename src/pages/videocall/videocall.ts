@@ -11,7 +11,6 @@ import * as firebase from 'firebase/app';
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
-declare var apiRTC: any
 @Component({
   selector: 'page-videocall',
   templateUrl: 'videocall.html',
@@ -21,32 +20,16 @@ export class VideocallPage implements OnInit {
   @ViewChild('remotevideo') remotevideo: any;
 
   private user;
-  peer;
-  myId;
-  calleeId;
-
-  showCall: boolean;
-  showHangup: boolean;
-  showAnswer: boolean;
-  showReject: boolean;
-  showStatus: boolean;
-  showRemoteVideo: boolean = true;
-  showMyVideo: boolean = true;
-
-  session;
-  webRTCClient;
-  incomingCallId = 0;
-
-  status;
+  private peer: any;
+  private targetpeer: any;
+  private myId;
+  private calleeId;
   private myVideo;
   private remoteVideo;
-  
   private type;
-  private SERVER_IP = '192.168.56.1';
-  private SERVER_PORT = 9000;
 
   constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, 
-    private navParams: NavParams, public webRTCService: WebRTCService ) {
+    private navParams: NavParams/*, public webRTCService: WebRTCService*/ ) {
     this.user = navParams.get('user');
     this.type = navParams.get('type');
     //var peer = new Peer({key: 'iu6qotrrnfm9529'});
@@ -58,21 +41,64 @@ export class VideocallPage implements OnInit {
   }
 
   ngOnInit() {
+    var n = <any>navigator;
     this.remoteVideo = this.remotevideo.nativeElement;
     this.myVideo = this.myvideo.nativeElement;
+    let peerx: any;
+    n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia || n.msGetUserMedia;
+    n.getUserMedia({video: true, audio: true}, stream => {
+      peerx = new SimplePeer({
+        initiator: location.hash === '#init', //boolean, if the hash is init, then we are initiator
+        trickle: false,
+        steam: stream
+      })
+
+      peerx.on('signal', data => {
+        console.log(JSON.stringify(data));
+
+        this.targetpeer = data;
+      })
+
+      peerx.on('data', data => {
+        console.log('Received message: ', data)
+      })
+
+      peerx.on('stream', localStream => {
+        this.myVideo.src = URL.createObjectURL(localStream);
+        this.myVideo.play();
+      })
+
+      setTimeout(()=> {
+        this.peer = peerx;
+        console.log(this.peer)
+      }, 5000);
+    }, err => {
+      console.log("Connection error: ", err)
+    })
+    
+    
     console.log('initializing...');
-    this.webRTCService.createPeer();
+    /*this.webRTCService.createPeer();
     setTimeout(()=> {
       this.myId = this.webRTCService.myCallId();
     }, 4000)
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
-    });
+    });*/
+  }
+
+  connect() {
+    this.peer.signal(JSON.parse(this.targetpeer));
+  }
+
+  message() {
+    console.log(this.peer);
+    this.peer.send('Hi targetpeer')
   }
 
   call() {
-    this.webRTCService.call(this.calleeId);
+    //this.webRTCService.call(this.calleeId);
   }
 
 

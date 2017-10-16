@@ -8,8 +8,8 @@ export class WebRTCConfig {
     key:string = 'iu6qotrrnfm9529';
 
     stun: string = 'stun.l.google.com:19302';
-    // turn: string = 'homeo@turn.bistri.com:80';
-    // turnCredentials: string = 'homeo';
+    turn: string = 'homeo@turn.bistri.com:80';
+    turnCredentials: string = 'homeo';
 
     /*stunServer:RTCIceServer = {
         urls: 'stun:' + this.stun
@@ -18,10 +18,12 @@ export class WebRTCConfig {
         url: 'stun:' + this.stun
     };
 
-    // turnServer: RTCIceServer = {
-    //     urls: 'turn:' + this.turn,
-    //     credential: this.turnCredentials
-    // };
+    turnServer = {
+        host: 'turn:' + this.turn,
+        credential: this.turnCredentials,
+        username: this.turnCredentials,
+        password: ''
+    };
 
     getPeerJSOption() {
         return {
@@ -44,10 +46,21 @@ export class WebRTCConfig {
         };
     }
 
+    getConfigOption() {
+        return {
+            isInitiator: true,
+            turn: this.turnServer,
+            streams: {
+                audio: true,
+                video: true
+            }
+        }
+    }
+
     /**********************/
 
     audio: boolean = true;
-    video: boolean = false;
+    video: boolean = true;
 
     getMediaStreamConstraints(): MediaStreamConstraints {
         return <MediaStreamConstraints> {
