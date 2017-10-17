@@ -8,24 +8,18 @@ export class WebRTCConfig {
     key:string = 'iu6qotrrnfm9529';
 
     stun: string = 'stun.l.google.com:19302';
-    turn: string = 'homeo@turn.bistri.com:80';
+    /*turn: string = 'homeo@turn.bistri.com:80';
     turnCredentials: string = 'homeo';
 
     /*stunServer:RTCIceServer = {
         urls: 'stun:' + this.stun
     };*/
-    stunServer = {
-        url: 'stun:' + this.stun
+    stunServer: RTCIceServer = {
+        urls: 'stun:' + this.stun
     };
 
-    turnServer = {
-        host: 'turn:' + this.turn,
-        credential: this.turnCredentials,
-        username: this.turnCredentials,
-        password: ''
-    };
-
-    getPeerJSOption() {
+    getPeerJSOption(): PeerJS.PeerJSOption {
+        console.log("options being got")
         return {
             // Set API key for cloud server (you don't need this if you're running your own.
             key: this.key,
@@ -44,17 +38,6 @@ export class WebRTCConfig {
                 ]
             }
         };
-    }
-
-    getConfig() {
-        return {
-            isInitiator: true,
-            turn: this.turnServer,
-            streams: {
-                audio: true,
-                video: true
-            }
-        }
     }
 
     /**********************/

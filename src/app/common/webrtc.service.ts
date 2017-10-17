@@ -1,7 +1,7 @@
 import {Injectable, EventEmitter} from '@angular/core';
 
 import {WebRTCConfig} from './webrtc.config';
-
+import { Diagnostic } from 'ionic-native';
 
 @Injectable()
 export class WebRTCService {
@@ -15,8 +15,7 @@ export class WebRTCService {
     onCalling: Function;
 
     constructor(private config: WebRTCConfig) {
-        var n = <any>navigator;
-        n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
+        
     }
 
     /**
@@ -78,20 +77,56 @@ export class WebRTCService {
         }
     }
 
+    _getRuntimePermission() {
+        return Diagnostic.requestRuntimePermissions([
+        Diagnostic.permission.CAMERA,
+        Diagnostic.permission.RECORD_AUDIO
+        ]);
+    }
+
     private _step1() {
         // Get audio/video stream
-        navigator.getUserMedia({ audio: true, video: true }, (stream) => {
-            // Set your video displays
-            this.myEl.src = URL.createObjectURL(stream);
+        var permission = false;
+        var n = <any>navigator;
+        n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
+        this._getRuntimePermission().then(status => {
+            permission = true;
+            console.log("Permission status, ", status)
+            n.getUserMedia({ audio: true, video: true }, (stream) => {
+                // Set your video displays
+                this.myEl.src = URL.createObjectURL(stream);
 
-            this._localStream = stream;
-            // this._step2();
-            if (this.onCalling) {
-                this.onCalling();
+                this._localStream = stream;
+                // this._step2();
+                if (this.onCalling) {
+                    this.onCalling();
+                }
+            }, (error) => { 
+                console.log(error);
+            });
+        }).catch(err=> {
+            console.log("Error: ", err);
+        })
+
+        setTimeout(()=>{
+            if(permission == false) {
+                console.log("No permission required")
+                n.getUserMedia({ audio: true, video: true }, (stream) => {
+                    // Set your video displays
+                    this.myEl.src = URL.createObjectURL(stream);
+
+                    this._localStream = stream;
+                    // this._step2();
+                    if (this.onCalling) {
+                        this.onCalling();
+                    }
+                }, (error) => { 
+                    console.log(error);
+                });
             }
-        }, (error) => { 
-            console.log(error);
-        });
+            
+        }, 4000)
+        
     }
 
     private _step2(call) {
