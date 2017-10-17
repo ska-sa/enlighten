@@ -22,8 +22,7 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <button ion-button block (click)='connect()'>Call</button>
-                <button ion-button block (click)='message()'>Message</button>
+                <button ion-button block (click)='call()'>Call</button>
             </ion-col>
             <ion-col>
                 <button *ngIf="showHangup" ion-button block color="danger" (click)='HangUp()'>Hangup</button>

@@ -27,9 +27,32 @@ export class VideocallPage implements OnInit {
   private myVideo;
   private remoteVideo;
   private type;
+  private session;
+
+  turn: string = 'homeo@turn.bistri.com:80';
+    turnCredentials: string = 'homeo';
+
+    /*stunServer:RTCIceServer = {
+        urls: 'stun:' + this.stun
+    };*/
+
+    turnServer = {
+        host: 'turn:' + this.turn,
+        credential: this.turnCredentials,
+        username: this.turnCredentials,
+        password: ''
+    };
+  private config = {
+    isInitiator: true,
+    turn: this.turnServer,
+    streams: {
+      audio: true,
+      video: false
+    }
+  }
 
   constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, 
-    private navParams: NavParams/*, public webRTCService: WebRTCService*/ ) {
+    private navParams: NavParams, public webRTCService: WebRTCService ) {
     this.user = navParams.get('user');
     this.type = navParams.get('type');
     //var peer = new Peer({key: 'iu6qotrrnfm9529'});
@@ -41,9 +64,13 @@ export class VideocallPage implements OnInit {
   }
 
   ngOnInit() {
-    var n = <any>navigator;
     this.remoteVideo = this.remotevideo.nativeElement;
     this.myVideo = this.myvideo.nativeElement;
+    /*this.session = new cordova.plugins.phonertc.Session(this.config);
+    alert(this.session);
+    alert(this.session)
+    var n = <any>navigator;
+    
     let peerx: any;
     n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia || n.msGetUserMedia;
     n.getUserMedia({video: true, audio: true}, stream => {
@@ -74,18 +101,18 @@ export class VideocallPage implements OnInit {
       }, 5000);
     }, err => {
       console.log("Connection error: ", err)
-    })
+    })*/
     
     
     console.log('initializing...');
-    /*this.webRTCService.createPeer();
+    this.webRTCService.createPeer();
     setTimeout(()=> {
       this.myId = this.webRTCService.myCallId();
     }, 4000)
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
-    });*/
+    });
   }
 
   connect() {
@@ -98,7 +125,7 @@ export class VideocallPage implements OnInit {
   }
 
   call() {
-    //this.webRTCService.call(this.calleeId);
+    this.webRTCService.call(this.calleeId);
   }
 
 

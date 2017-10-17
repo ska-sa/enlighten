@@ -24,7 +24,7 @@ export class WebRTCService {
      */
     createPeer(userId: string = '') {
         // Create the Peer object where we create and receive connections.
-        //this._peer = new Peer(/*userId,*/ this.config.getPeerJSOption());
+        this._peer = new Peer(/*userId,*/ this.config.getPeerJSOption());
         setTimeout(()=> {
             console.log(this._peer.id);
             this.myid = this._peer.id;

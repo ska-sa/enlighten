@@ -46,7 +46,7 @@ export class WebRTCConfig {
         };
     }
 
-    getConfigOption() {
+    getConfig() {
         return {
             isInitiator: true,
             turn: this.turnServer,
