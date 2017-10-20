@@ -8,17 +8,21 @@ export class WebRTCConfig {
     key:string = 'iu6qotrrnfm9529';
 
     stun: string = 'stun.l.google.com:19302';
-    /*turn: string = 'homeo@turn.bistri.com:80';
+    turn: string = 'numb.viagenie.ca';
     turnCredentials: string = 'homeo';
+    user = 'wshilumani@gmail.com';
+    c = 'Bluevenom1'
 
-    /*stunServer:RTCIceServer = {
-        urls: 'stun:' + this.stun
-    };*/
-    stunServer: RTCIceServer = {
-        urls: 'stun:' + this.stun
+    turnServer = {
+        url: 'turn:' + this.turn,
+        username: this.user,
+        credential: this.c
+    };
+    stunServer = {
+        url: 'stun:' + this.stun
     };
 
-    getPeerJSOption(): PeerJS.PeerJSOption {
+    getPeerJSOption()/*: PeerJS.PeerJSOption*/ {
         console.log("options being got")
         return {
             // Set API key for cloud server (you don't need this if you're running your own.
@@ -33,8 +37,8 @@ export class WebRTCConfig {
 
             config: {
                 iceServers: [
-                    this.stunServer/*,
-                    this.turnServer*/
+                    this.stunServer,
+                    this.turnServer
                 ]
             }
         };

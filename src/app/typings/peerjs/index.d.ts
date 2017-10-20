@@ -13,7 +13,7 @@ declare namespace PeerJs{
         port?: number;
         path?: string;
         secure?: boolean;
-        config?: RTCPeerConnectionConfig;
+        config?/*: RTCPeerConnectionConfig*/;
         debug?: number;
     }
 
@@ -34,13 +34,13 @@ declare namespace PeerJs{
         on(event: 'close', cb: ()=>void): void;
         on(event: 'error', cb: (err: any)=>void): void;
         off(event: string, fn: Function, once?: boolean): void;
-        dataChannel: RTCDataChannel;
+        dataChannel/*: RTCDataChannel*/;
         label: string;
         metadata: any;
         open: boolean;
         peerConnection: any;
         peer: string;
-        reliable: boolean;
+        //reliable: boolean;
         serialization: string;
         type: string;
         buffSize: number;

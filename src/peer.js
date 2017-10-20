@@ -1474,8 +1474,7 @@ var util = {
       }
     }
     err ? console.error.apply(console, copy) : console.log.apply(console, copy);
-    alert(copy);
-    alert(JSON.stringify(copy));
+    alert("Print with: "+copy);
   },
   //
 
@@ -1634,8 +1633,7 @@ var util = {
         }
       }
       err ? console.error.apply(console, copy) : console.log.apply(console, copy);
-      alert(copy);
-    alert(JSON.stringify(copy));
+      alert("Log:" + copy);
     }
   },
 
@@ -2879,8 +2877,7 @@ var util = {
       }
       copy.unshift('Reliable: ');
       console.log.apply(console, copy);
-      alert(copy);
-    alert(JSON.stringify(copy));
+      alert("Util log:" + copy);
     }
   },
 

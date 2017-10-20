@@ -51,6 +51,7 @@
         "cordova-plugin-phonertc": "git+https://github.com/alongubkin/phonertc.git",
         "cordova-plugin-splashscreen": "^4.0.3",
         "cordova-plugin-statusbar": "^2.2.2",
+        "cordova-plugin-streaming-media": "^1.0.2",
         "cordova-plugin-webrtc": "^0.1.1",
         "cordova-plugin-whitelist": "^1.3.1",
         "cordova.plugins.diagnostic": "^3.7.1",
@@ -68,7 +69,8 @@
         "simple-peer": "^8.1.1",
         "socket.io": "^2.0.3",
         "sw-toolbox": "3.6.0",
-        "zone.js": "0.8.12"
+        "zone.js": "0.8.12",
+        "com.hutchind.cordova.plugins.streamingmedia": "~0.1.4"
     },
     "devDependencies": {
         "@ionic/app-scripts": "2.0.2",
@@ -107,7 +109,8 @@
             },
             "cordova-plugin-audiotoggle": {},
             "com.dooble.phonertc": {},
-            "cordova.plugins.diagnostic": {}
+            "cordova.plugins.diagnostic": {},
+            "com.hutchind.cordova.plugins.streamingmedia": {}
         },
         "platforms": [
             "android"

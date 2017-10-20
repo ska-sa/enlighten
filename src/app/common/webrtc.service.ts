@@ -91,7 +91,8 @@ export class WebRTCService {
         n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
         this._getRuntimePermission().then(status => {
             permission = true;
-            console.log("Permission status, ", status)
+            alert("Permission got")
+            alert("Permission status: " + status)
             n.getUserMedia({ audio: true, video: true }, (stream) => {
                 // Set your video displays
                 this.myEl.src = URL.createObjectURL(stream);
