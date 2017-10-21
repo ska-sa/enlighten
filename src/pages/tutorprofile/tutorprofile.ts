@@ -89,7 +89,8 @@ export class TutorprofilePage {
     var day = moment().startOf('week').add(idx+1,'days').add(val.hour,'hours').add(val.minute, 'minutes').toDate();
     this.lastDay = day.getTime();
     firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).update({
-      start: day.toISOString()
+      start: day.toISOString(),
+      booked: false //how to do this better
     })
     this.weekDays[idx].slots[k].start = day.getTime();
   }
@@ -99,7 +100,8 @@ export class TutorprofilePage {
     var endDate = (new Date(end)).toISOString(); //FIRST CHECK IF IT CLASHES WITH OTHER DATES
     firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).update({
       duration: val, //miliseconds
-      end: endDate
+      end: endDate,
+      booked: false //how to do this better
     })
   }
 
