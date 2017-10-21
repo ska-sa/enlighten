@@ -231,8 +231,10 @@ export class CalendarComponent {
         this.af.list(`/calendar_tutors/${this.user2id}`, {preserveSnapshot: true})
         .subscribe(snapshots => {
             snapshots.forEach(snapshot => {
+                alert(snapshot.val());
                 var thisStart = (new Date(snapshot.val().start)).getTime();
                 if( thisStart >= startDate.getTime() && thisStart <= endDate.getTime()) {
+                    alert("Pushing it in - coz it exists")
                     env.firebaseEvents.push(snapshot.val());
                     var thisDay = new Date(snapshot.val().start);
                     let dayIndex = _.findIndex(env.dateArray, {

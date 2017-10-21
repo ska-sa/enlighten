@@ -21,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 export class TutorhomePage {
   createclassPage;
   private lessons_upcoming: FirebaseListObservable<any>
+  private lessons_upcoming_now: FirebaseListObservable<any>
   private lessonPage;
   private user;
   constructor(public navCtrl: NavController, 
@@ -30,6 +31,7 @@ export class TutorhomePage {
     this.lessonPage = LessonPage;
     this.user = navParams.get('user');
     this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`);
+    this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_tutors/${this.user.uid}`, {query: {limitToFirst: 1}});
     //keep in mind, through node - we can make the calendar rewrite itself or delete itself weekly
     //UPDATE CALENDAR TO FIT THIS WEEK!
   }

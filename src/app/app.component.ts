@@ -134,7 +134,7 @@ export class MyApp {
     this.menu.close();
     
     // navigate to the new page if it is not the current page
-    this.nav.push(page,{user: this.user, type: this.type},{animate: true});
+    this.nav.push(page,{user: this.user, type: this.type});
   }
 
 

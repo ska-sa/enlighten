@@ -51,12 +51,15 @@ export class TutorclassesPage {
     firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).once('value').then(res => {
       firebase.database().ref(`/lessons_upcoming_learners/${learnerid}/${lessonid}`).update(res.val());
       firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).remove();
+
+      firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).once('value').then(res2 => {
+        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update(res2.val());
+        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update({tutorname: res.val().tutorname});
+        firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).remove();
+      })
     })
 
-    firebase.database().ref(`/lessons_pending_tutors/${this.user.uid}/${lessonid}`).once('value').then(res => {
-      firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update(res.val());
-      firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).remove();
-    })
+    
 
     firebase.database().ref(`/lessons_pending_tutors_learners/${this.user.uid}/${learnerid}/${lessonid}`).remove();
     this.my = 'upcoming';

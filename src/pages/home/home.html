@@ -46,7 +46,7 @@
   </ion-list>
 
   <div class="pending" color="notsodark" (click)="openPage(lessonPage)" (swipe)="openPage(lessonPage)"> 
-    <ion-item round color="notsodark" text-wrap>
+    <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async">
       <ion-avatar item-left class="avatar">
         <ion-icon style="font-size: 2.5em" name="alarm" src="tutor.image"> </ion-icon>
       </ion-avatar>

@@ -48,14 +48,14 @@
           </ion-card>
       </ion-item>
 
-      <div class="pending" color="notsodark" (click)="changePage(lessonPage)" (swipe)="changePage(lessonPage)"> 
-        <ion-item round color="notsodark" text-wrap>
+      <div *ngIf="(lessons_upcoming_now | async)?.length > 0"class="pending" color="notsodark" (click)="changePage(lessonPage)" (swipe)="changePage(lessonPage)"> 
+        <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async">
           <ion-avatar item-left class="avatar">
             <ion-icon style="font-size: 2.5em" name="alarm" src="tutor.image"> </ion-icon>
           </ion-avatar>
           <strong>LESSON COMING UP</strong>
-          <p>15:45 Today</p>
-          <p><em>with</em> Morty Smith</p>      
+          <p>{{lesson.start | date:'HH:mm'}} Today</p>
+          <p><em>with</em> {{lesson.learnername}}</p>     <!-- GET THE LAST DANK - or use cloud function place lesson 1 hour before--> 
           <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
         </ion-item>
       </div>

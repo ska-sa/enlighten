@@ -22,6 +22,7 @@ export class HomePage {
   todos: Todo[];
   tutors: TutorAccess[];
   private ftutors: FirebaseListObservable<any>;
+  private lessons_upcoming_now: FirebaseListObservable<any>;
   private lessonPage;
   private messagesPage;
   private user;
@@ -37,6 +38,7 @@ export class HomePage {
     private af: AngularFireDatabase) {
       this.user = navParams.get('user');
       this.tutors = this.tutorAccess.getTutors();
+      this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
       this.ftutors = af.list(`/users_tutors`);
       this.menuController.enable(true, 'myMenu')
       this.lessonPage = LessonPage;

@@ -15,34 +15,34 @@
 
 
 <ion-content padding class="grey">
-  <ion-card *ngFor="let appointment of appointments">
+  <ion-card *ngFor="let appointment of lessons_upcoming | async">
     <ion-card-content>
       <ion-card-title text-center class="il left title">
-        {{appointment.subject}}
+        {{appointment.title}}
       </ion-card-title>
       <ion-item item-end class="il icon">
                 <ion-icon [name]="appointment.type" color="primary"></ion-icon>
       </ion-item>
       <ion-item item-start class="il left">
         <p class="small"> {{appointment.duration}} </p>
-        <p class="small"> {{appointment.module}} </p>
+        <p class="small"> {{appointment.subtitle}} </p>
       </ion-item>
       <ion-item item-end class="il">
         <h2> {{appointment.price}} </h2>
       </ion-item>
 
       <ion-item item-left >
-        <p class="small"> <b>{{appointment.date}}</b></p>
+        <p class="small"> <b>{{appointment.start | date:'MMM dd, yyyy HH:mm'}}</b></p>
       </ion-item>
     </ion-card-content>
 
     <ion-item text-wrap>
       <ion-avatar item-left>
-        <img [src]="getTutor(appointment.tutorid)[0].image">
+        <img [src]="appointment.imageurl">
       </ion-avatar>
-      <strong>{{getTutor(appointment.tutorid)[0].name}}</strong>
-      <p class="small">{{getTutor(appointment.tutorid)[0].institution}}</p>
-      <p class="small">{{getTutor(appointment.tutorid)[0].subjects.join(', ')}}</p>      
+      <strong>{{appointment.learnername}}</strong>
+      <p class="small">{{appointment.institution}}</p> <!-- ---- This looks like I'm trying to return tutor based on id ---- -->
+      <p class="small">{{appointment.type}}</p>      
       <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
     </ion-item>
 

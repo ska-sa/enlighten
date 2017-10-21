@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AppointmentAccess } from '../../app/services/appointment-data/appointment-data';
-import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
+
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the AppointmentsPage page.
  *
@@ -14,20 +16,17 @@ import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
   templateUrl: 'appointments.html',
 })
 export class AppointmentsPage {
-  appointments: AppointmentAccess[];
+  private user;
+  private lessons_upcoming: FirebaseListObservable<any>
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
-              private appointmentAcess: AppointmentAccess,
-              private tutorAccess: TutorAccess) {
-    this.appointments = this.appointmentAcess.getAppointments();
+              public navParams: NavParams,
+    private af: AngularFireDatabase) {
+    this.user = navParams.get('user');
+    this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AppointmentsPage');
-  }
-
-  getTutor(id) {
-    return this.tutorAccess.getTutor(id);
   }
 
 }
