@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { NativeAudio } from '@ionic-native/native-audio';
-//import { WebRTCService } from '../../common/webrtc.service';
+
+
 import { WebRTCService } from '../../app/common/webrtc.service';
 import * as firebase from 'firebase/app';
 import { Diagnostic } from 'ionic-native';

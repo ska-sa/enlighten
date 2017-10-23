@@ -2,5 +2,22 @@ page-draw {
     .no-scroll {
         overflow: hidden;
     }
+
+    .videos {
+        height: 20vh;
+        position: fixed;
+        z-index: 100;
+        bottom: 0;
+        left: 0;
+    }
+    #credentials, #dialler, #messages {
+      clear: both;
+    }
+    #remote {
+      max-width: 300px;
+    }
+    #mini {
+      max-width: 150px;
+    }
     
 }

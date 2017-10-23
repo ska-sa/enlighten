@@ -19,22 +19,22 @@
       <ion-icon name="alarm" color="light" style="font-size: 4em" item-center> </ion-icon>
   </ion-avatar>
   <!------------Timer---------->
-  <p text-center>0:27</p>
-  <!------------Subject---------->
+  <p text-center>{{start | date:'HH:mm'}}</p>
+  <------------Subject---------->
   <h2 text-center style="color:white">MATHEMATICS</h2>
   <p class="sec" style="font-size: 12px" text-center color="secondary">with</p>
   <ion-list no-lines>
-    <ion-item *ngFor="let tutor of tutors let i = index" [hidden]="i!=len" class="center-align">
+    <ion-item *ngFor="let lesson of lessons | async" class="center-align">
       <ion-avatar item-left class="avatar">
-        <img [src]="tutor.image">
+        <img [src]="lesson.imageurl">
       </ion-avatar>
-      <strong>{{tutor.name}}</strong>
-      <p class="desc" text-left>{{tutor.institution}}</p>
-      <p class="desc" text-left>{{tutor.subjects.join(', ')}}</p>
+      <strong>{{lesson.tutorname}}</strong>
+      <p class="desc" text-left>{{lesson.institution}}</p>
+      <p class="desc" text-left>{{lesson.subjects.join(', ')}}</p>
     </ion-item>
   </ion-list>
 
-   <button class="btn" ion-button color="primary" (click)="openPage(classroomPage)">
+   <button class="btn" ion-button color="primary" (click)="openPage(drawPage)">
     ENTER CLASSROOM
   </button>
 

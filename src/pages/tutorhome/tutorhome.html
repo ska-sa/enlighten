@@ -48,10 +48,10 @@
           </ion-card>
       </ion-item>
 
-      <div *ngIf="(lessons_upcoming_now | async)?.length > 0"class="pending" color="notsodark" (click)="changePage(lessonPage)" (swipe)="changePage(lessonPage)"> 
-        <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async">
+      <div *ngIf="(lessons_upcoming_now | async)?.length > 0" class="pending" color="notsodark"> 
+        <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async" (click)="changePage(lessonPage,lesson.learnerid, lesson.start)" (swipe)="changePage(lessonPage,lesson.learnerid, lesson.start)">
           <ion-avatar item-left class="avatar">
-            <ion-icon style="font-size: 2.5em" name="alarm" src="tutor.image"> </ion-icon>
+            <ion-icon style="font-size: 2.5em" name="alarm"> </ion-icon>
           </ion-avatar>
           <strong>LESSON COMING UP</strong>
           <p>{{lesson.start | date:'HH:mm'}} Today</p>

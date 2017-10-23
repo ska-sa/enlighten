@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "745996686081",
+    "firebase_url": "https://enlighten-175514.firebaseio.com",
+    "project_id": "enlighten-175514",
+    "storage_bucket": "enlighten-175514.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:745996686081:android:b88c7b80fc5c3028",
+        "android_client_info": {
+          "package_name": "com.enlighten.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "745996686081-m7ennpb44vmeu5dpt6c4ha85j9dvbh9a.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "745996686081-40ar6il00j6dv417gjguco5d8p9t6bjg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.enlighten.app",
+            "certificate_hash": "4be537828228b45a76323ac0b78413a75188c94e"
+          }
+        },
+        {
+          "client_id": "745996686081-ta15tog2jhd7v3832l95874i2ng8c3m6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCovxe0MuxtqQnGcaZ-bCmXOMH7haPM0ZA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "745996686081-m7ennpb44vmeu5dpt6c4ha85j9dvbh9a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

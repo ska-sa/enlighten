@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormsModule } from '@angular/forms';
 import { InstitutionsAccess } from '../../app/services/institutions/institutions';
@@ -17,9 +17,12 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import * as firebase from 'firebase/app';
+import 'firebase/messaging';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
+import { FirebaseApp } from 'angularfire2'
+import { Firebase } from '@ionic-native/firebase'
 /**
  * Generated class for the TutorregisterPage page.
  *
@@ -36,14 +39,13 @@ export class TutorregisterPage {
   users: userAccess;
   subinterests: Array<any> = [];
 
-  private fname: string = 'Wisani';
-  private sname: string = 'Shilumani';
-  private grd: string = '4';
+  private fname: string = '';
+  private sname: string = '';
+  private grd: string = '';
   private sch: string = '';
-  private cell: string = '0791157497';
+  private cell: string = '';
   private sub: string = '';
-  private email: string = 'wshilumani@gmail.com';
-  private pass: string = 'pass';
+  private email: string = '';
 
   private user;
   private gUser;
@@ -52,10 +54,10 @@ export class TutorregisterPage {
   private type = "tutor";
   private institutions;
   private subjects;
-  private ayos: string = '8';
-  private ins: string = 'University of Cape Town';
-  private hq: string = '4';
-  private degree: string = 'BSc in Mechanical Engineering';
+  private ayos: string = '';
+  private ins: string = '';
+  private hq: string = '';
+  private degree: string = '';
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertCtrl: AlertController,
@@ -66,7 +68,7 @@ export class TutorregisterPage {
     private googlePlus: GooglePlus,
     public afAuth: AngularFireAuth, 
     private af: AngularFireDatabase,
-    private nativeStorage: NativeStorage) {
+    private nativeStorage: NativeStorage, private fcm: Firebase) {
       this.institutions = this.institutionsAccess.getUniversities();
       this.subjects = this.subjectsAccess.getSubjects();
       this.addsubinterest();
@@ -119,13 +121,25 @@ export class TutorregisterPage {
               successuser.idToken); //WE NEED TO SAVE THIS TO CACHE FOR SILENT LOGIN
       let env = this;
       firebase.auth().signInWithCredential(credential).then((result) => {
+        
         var user = result;
         env.user = result;
         env.completing.present();
         env.authState = env.afAuth.authState;
         env.authState.subscribe(user => {
           if (user) {
-            env.events.publish('globals:update', user, 'tutor'); 
+            env.fcm.getToken().then(token => {
+                firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
+            })
+
+            env.fcm.onTokenRefresh()
+              .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) );
+              
+            
+            env.events.publish('globals:update', user, 'tutor');
+            if(env.email.length < 1) {
+              env.email = user.email;
+            } 
             env.reg();
           } else {
             alert('Please check your internet connection and try again')
@@ -151,7 +165,6 @@ export class TutorregisterPage {
       imageurl: env.user.photoURL,
       coverurl: '',
       cellphone: env.cell,
-      password: env.pass,
       email: env.email,
       bio: '...',
       nickname: '...',

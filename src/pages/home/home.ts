@@ -50,8 +50,8 @@ export class HomePage {
     this.initLoader();
     this.loadTodos();
   }
-  openPage(p) {
-    this.navCtrl.push(p)
+  changePage(page,lid,start) {
+    this.navCtrl.push(page, {user: this.user, target: lid, start: start, type:'tutor'});
   }
   ionViewDidLoad() {
     this.menuController.enable(true, 'myMenu');

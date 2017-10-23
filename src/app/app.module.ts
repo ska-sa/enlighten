@@ -44,6 +44,7 @@ import { GooglePlus } from '@ionic-native/google-plus';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { Firebase } from '@ionic-native/firebase';
 
 import { TodoService, TodoLocalStorageService } from "./services/todo/todo";
 import { TutorAccess } from './services/tutor-data/tutor.data';
@@ -62,6 +63,7 @@ import { HttpModule } from '@angular/http';
 import { NativeAudio } from '@ionic-native/native-audio';
 import {WebRTCConfig} from './common/webrtc.config';
 import {WebRTCService} from './common/webrtc.service';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 export const environment = {
   production: false, 
@@ -167,6 +169,8 @@ export const environment = {
     GooglePlus,
     WebRTCConfig,
     WebRTCService,
+    AndroidPermissions,
+    Firebase,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

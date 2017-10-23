@@ -1,13 +1,14 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Enlighten",
+  "short_name": "Enlighten",
   "start_url": "index.html",
   "display": "standalone",
+  "gcm_sender_id": "103953800507",
   "icons": [{
     "src": "assets/imgs/logo.png",
     "sizes": "512x512",
     "type": "image/png"
   }],
-  "background_color": "#4e8ef7",
-  "theme_color": "#4e8ef7"
+  "background_color": "#993333",
+  "theme_color": "#993333"
 }

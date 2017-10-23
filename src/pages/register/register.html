@@ -52,13 +52,6 @@
           <ion-input type="number" [(ngModel)]="cell"></ion-input>
         </ion-item>
       </ion-row>
-      <!------------Password---------->
-      <ion-row>
-        <ion-item>
-          <ion-label stacked>Password</ion-label>
-          <ion-input type="password" [(ngModel)]="pass"></ion-input>
-        </ion-item>
-      </ion-row>
     </ion-grid>
 
     <button ion-button class="reduce" color="primary" (click)="next()">
@@ -87,12 +80,7 @@
       <ion-row>
         <ion-item>
             <ion-label stacked>School</ion-label>
-            <ion-select [(ngModel)]="sch">
-              <ion-option value="mer">THIS HIGH SCHOOL</ion-option>
-              <ion-option value="sax">THAT HIGH SCHOOL</ion-option>
-              <ion-option value="bis">OTHER HIGH SCHOOL</ion-option>
-              <ion-option value="dank">OTHER HIGH SCHOOL</ion-option>
-            </ion-select>
+            <ion-input type="text" [(ngModel)]="sch"></ion-input>
         </ion-item>
       </ion-row>
       <!------------Email---------->
@@ -107,11 +95,8 @@
         <ion-item>
             <ion-label stacked>Subject Requiring Tutoring</ion-label>
             <ion-select  [(ngModel)]="sub">
-              <ion-option value="ion">Ionic</ion-option>
-              <ion-option value="chem">Chemistry</ion-option>
-              <ion-option value="phy">Physics</ion-option>
-              <ion-option value="math">Maths</ion-option>
-              <ion-option value="eng">English</ion-option>
+              <ion-option value="Mathematics">Mathematics</ion-option>
+              <ion-option value="Physics">Physics</ion-option>
             </ion-select>
         </ion-item>
       </ion-row>

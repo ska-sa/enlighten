@@ -2,6 +2,7 @@ import {Injectable, EventEmitter} from '@angular/core';
 
 import {WebRTCConfig} from './webrtc.config';
 import { Diagnostic } from 'ionic-native';
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 @Injectable()
 export class WebRTCService {
@@ -14,7 +15,7 @@ export class WebRTCService {
     otherEl: HTMLMediaElement;
     onCalling: Function;
 
-    constructor(private config: WebRTCConfig) {
+    constructor(private config: WebRTCConfig,private androidPermissions: AndroidPermissions) {
         
     }
 
@@ -89,10 +90,10 @@ export class WebRTCService {
         var permission = false;
         var n = <any>navigator;
         n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
-        this._getRuntimePermission().then(status => {
+        this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA,this.androidPermissions.PERMISSION.RECORD_AUDIO]).then(status => {
             permission = true;
             alert("Permission got")
-            alert("Permission status: " + status)
+            //alert("Permission status: " + JSON.stringify(status));
             n.getUserMedia({ audio: true, video: true }, (stream) => {
                 // Set your video displays
                 this.myEl.src = URL.createObjectURL(stream);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { LogoutPage } from '../logout/logout';
@@ -16,8 +16,11 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { GooglePlus } from '@ionic-native/google-plus';
 
 import * as firebase from 'firebase/app';
+import 'firebase/messaging';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseApp } from 'angularfire2';
+import { Firebase } from '@ionic-native/firebase';
 import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the RegisterPage page.
@@ -33,14 +36,13 @@ import { Observable } from 'rxjs/Observable';
 export class RegisterPage {
   browse: string = "info";
   users: userAccess;
-  private fname: string;
-  private sname: string;
-  private grd: string;
-  private sch: string;
-  private cell: string;
-  private sub: string;
-  private email: string;
-  private pass: string;
+  private fname: string='';
+  private sname: string='';
+  private grd: string='';
+  private sch: string='';
+  private cell: string='';
+  private sub: string='';
+  private email: string ='';
   private type: string = "learner"
   private user;
   private gUser;
@@ -55,7 +57,7 @@ export class RegisterPage {
     private googlePlus: GooglePlus,
     public afAuth: AngularFireAuth, 
     private af: AngularFireDatabase,
-    private nativeStorage: NativeStorage) {
+    private nativeStorage: NativeStorage, private fcm: Firebase) {
 
   }
 
@@ -105,7 +107,17 @@ export class RegisterPage {
         env.authState = env.afAuth.authState;
         env.authState.subscribe(user => {
           if (user) {
+            env.fcm.getToken().then(token => {
+                firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
+            })
+
+            env.fcm.onTokenRefresh()
+              .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) );
+             
             env.events.publish('globals:update', user, 'learner'); 
+            if(env.email.length < 1) {
+              env.email = user.email;
+            }
             env.reg();
           } else {
             alert('Please check your internet connection and try again')
@@ -133,7 +145,6 @@ export class RegisterPage {
       imageurl: env.user.photoURL,
       coverurl: '',
       cellphone: env.cell,
-      password: env.pass,
       email: env.email,
       bio: '...',
       nickname: '...'  

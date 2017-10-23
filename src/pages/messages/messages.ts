@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { DrawPage } from '../draw/draw';
 /**
  * Generated class for the MessagesPage page.
  *
@@ -21,7 +22,7 @@ export class MessagesPage {
   private user2;
   private recipientId: string = '';
   private lessons_pending: FirebaseListObservable<any>;
-  private pending_lessons: FirebaseListObservable<any>;
+  private upcoming_now_lessons: FirebaseListObservable<any>;
   private hideTime = false;
   private messageBox;
   private messages = [{
@@ -47,7 +48,7 @@ export class MessagesPage {
     this.recipientId = navParams.get('id');
     let env = this;
     this.lessons_pending = af.list(`/lessons_pending_learners/${this.user.uid}`);
-    this.pending_lessons = af.list(`/lessons_pending_tutors_learners/${this.recipientId}/${this.user.uid}`);
+    this.upcoming_now_lessons = af.list(`/lessons_upcoming_now_tutors/${this.recipientId}/`);
     firebase.database().ref(`/users_learners/${this.user.uid}`).once('value').then(res => {
       env.user1 = res.val();
     }).catch(err => {
@@ -75,6 +76,10 @@ export class MessagesPage {
 
   closeKeyboard() {
 
+  }
+
+  beginClass() {
+    this.navCtrl.setRoot(DrawPage,{user: this.user, target: this.recipientId});
   }
 
   ionViewDidLoad() {

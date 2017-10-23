@@ -53,8 +53,9 @@ export class TutorclassesPage {
       firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).remove();
 
       firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).once('value').then(res2 => {
-        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update(res2.val());
-        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update({tutorname: res.val().tutorname});
+        var data = res2.val();
+        data.tutorname = res.val().tutorname;
+        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update(data);
         firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).remove();
       })
     })
