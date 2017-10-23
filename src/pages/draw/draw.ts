@@ -5,6 +5,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { WebRTCService } from '../../app/common/webrtc.service';
 import * as firebase from 'firebase/app';
 import { NativeStorage } from '@ionic-native/native-storage';
+import * as moment from 'moment';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
@@ -31,9 +32,14 @@ export class DrawPage implements OnInit {
   private remoteVideo;
   private n = <any>navigator;
   private boards =[];
+  private boardids = [];
   private boarddata: FirebaseListObservable<any>;
   private testRadioOpen: boolean;
   private testRadioResult;
+  private object;
+  private type: string;
+  private boardid: string;
+  private showBoard:boolean = false;
 
   constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, 
     private navParams: NavParams, public webRTCService: WebRTCService,public menu: MenuController,
@@ -41,20 +47,28 @@ export class DrawPage implements OnInit {
     this.user = navParams.get('user');
     this.target = navParams.get('target');
     this.menu.enable(false, 'myMenu');
+    this.object = navParams.get('object');
+    this.type = navParams.get('type');
     let env = this;
-    af.list(`/users_boards/${this.user.uid}/${this.target}`, {preserveSnapshot:true})
+    if(this.type == 'tutor') {
+      af.list(`/users_boards/${this.user.uid}/${this.target}`, {preserveSnapshot:true})
       .subscribe(snapshots => {
         if(snapshots.length > 0) {
           //present form
           snapshots.forEach(snapshot => {
             this.boards.push(snapshot.val());
           })
-
-          env.showCheckbox(this.boards);
+            env.showCheckbox(this.boards);
+          
         } else {
-          env.showCheckbox(this.boards);
+            env.showCheckbox(this.boards);
         }
       })
+    } else {
+      this.boardid = this.navParams.get('boardid');
+      this.showBoard = true;
+    }
+    
 
     this.nativeAudio.preloadComplex('uniqueI1', 'assets/tone.mp3', 1, 1, 0).then((succ)=>{
       console.log("suu",succ)
@@ -66,12 +80,12 @@ export class DrawPage implements OnInit {
   showCheckbox(boards) {
     let alertB = this.alertCtrl.create();
     alertB.setTitle('Which whiteboard would you like to use?');
-
+    let env = this;
     boards.forEach((board,i) => {
       alertB.addInput({
         type: 'radio',
         label: board.title,
-        value: board.title,
+        value: board.boardid,
         checked: false
       })
     })
@@ -79,22 +93,49 @@ export class DrawPage implements OnInit {
     alertB.addInput({
         type: 'radio',
         label: 'New whiteboard',
-        value: 'New',
+        value: 'new',
         checked: true
     })
-
+    var date = new Date()
     alertB.addButton('Cancel');
     alertB.addButton({
       text: 'Select',
       handler: data => {
         this.testRadioOpen = false;
         this.testRadioResult = data;
+        if(data == 'new') {
+            var pushData2 = {
+              data: {},
+              title: env.object.tutorname + ' - ' + moment(date).format('DD/MM'),
+              dateCreated: (new Date()).getTime()
+            }
+            var pushData1 = {
+              data: {},
+              title: env.object.learnername + ' - ' + moment(date).format('DD/MM'),
+              dateCreated: (new Date()).getTime()
+            }
+          
+
+          env.boardid = firebase.database().ref(`users_boards/${env.user.uid}/${env.target}`).push(pushData1).key;
+          firebase.database().ref(`users_boards/${env.user.uid}/${env.target}/${env.boardid}`).update({boardid: env.boardid})
+          
+          firebase.database().ref(`users_boards/${env.target}/${env.user.uid}/${env.boardid}`).update(pushData2);
+          firebase.database().ref(`users_boards/${env.target}/${env.user.uid}/${env.boardid}`).update({boardid: env.boardid});
+          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid});
+          
+          env.showBoard = true;
+        } else {
+          env.boardid = data;
+          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid});
+          env.showBoard = true;
+        }
+        
+        
+        //if data shows new then push a whiteboard with `${learnername} - ${(new Date()).getTime()}` 
       }
     });
     alertB.present().then(() => {
       this.testRadioOpen = true;
-      alert(this.testRadioResult);
-      alert(JSON.stringify(this.testRadioResult));
     });
   }
 

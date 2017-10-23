@@ -11,20 +11,14 @@
 </ion-header>
 
 
-<canvas-draw></canvas-draw>
+<canvas-draw *ngIf="showBoard==true" [myId]="user.uid" [targetId]="target" [boardId]="boardid"></canvas-draw>
 <div class="videos">
-  <ion-row>
-    <ion-col>
-        <ion-card>
+    <div class="vid ilb">
             <p>Remote Stream</p>
             <video #remotevideo autoplay></video>
-        </ion-card>
-    </ion-col>
-    <ion-col>
-        <ion-card>
+    </div>
+    <div class="vid ilb">
             <p>My Stream</p>
             <video #myvideo autoplay></video>
-        </ion-card>
-    </ion-col>
-  </ion-row>
+    </div>
 </div>

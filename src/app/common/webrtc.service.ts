@@ -92,7 +92,7 @@ export class WebRTCService {
         n.getUserMedia = n.getUserMedia || n.webkitGetUserMedia || n.mozGetUserMedia;
         this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.CAMERA,this.androidPermissions.PERMISSION.RECORD_AUDIO]).then(status => {
             permission = true;
-            alert("Permission got")
+            //alert("Permission got")
             //alert("Permission status: " + JSON.stringify(status));
             n.getUserMedia({ audio: true, video: true }, (stream) => {
                 // Set your video displays

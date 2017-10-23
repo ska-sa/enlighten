@@ -1,5 +1,11 @@
-import { Component, ViewChild, Renderer, Directive, ElementRef, OnInit, OnDestroy, Output, EventEmitter  } from '@angular/core';
+import { Component, ViewChild, Renderer, Directive, ElementRef, OnInit, OnDestroy, Output, EventEmitter, Input  } from '@angular/core';
 import { Platform, NavController, Gesture, MenuController } from 'ionic-angular';
+
+import * as firebase from 'firebase/app';
+import { NativeStorage } from '@ionic-native/native-storage';
+import * as moment from 'moment';
+
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
  * Generated class for the CanvasDrawComponent component.
  *
@@ -10,11 +16,13 @@ import { Platform, NavController, Gesture, MenuController } from 'ionic-angular'
   selector: 'canvas-draw',
   templateUrl: 'canvas-draw.html'
 })
-export class CanvasDrawComponent {
+export class CanvasDrawComponent implements OnInit {
 
   @ViewChild('myCanvas') canvas: any;
-  @Output()
-    longPress = new EventEmitter();
+  @Output() longPress = new EventEmitter();
+  @Input() myId; 
+  @Input() targetId; 
+  @Input() boardId; 
   private gesture: Gesture;
   canvasElement: any;
   private curves: Array<Array<any>> = [];
@@ -33,7 +41,8 @@ export class CanvasDrawComponent {
   private cW;
 
   constructor(public platform: Platform, public renderer: Renderer,public navCtrl: NavController,
-    public menuController: MenuController) {
+    public menuController: MenuController, private af: AngularFireDatabase) {
+      
     console.log('Hello CanvasDrawComponent Component');
     this.availableColours = [
             '#000',
@@ -46,15 +55,31 @@ export class CanvasDrawComponent {
   }
 
   ngOnInit() {
-    /*this.gesture = new Gesture(this.canvas.nativeElement);
-    this.gesture.listen();
-
-	  //turn on listening for pinch or rotate events
-    this.gesture.on('pinch', e => this.pinchEvent(e));
-      
-    this.gesture.on('press', e => {
-            this.longPress.emit(e);
-        })*/
+    let env = this;
+      this.af.list(`boards/${this.boardId}/data`,{preserveSnapshot: true})
+        .subscribe(snapshots => {
+          snapshots.forEach(snapshot => {
+            env.curves.push(snapshot.val());
+          })
+          let ctx = this.canvasElement.getContext('2d');
+          this.curves.forEach((e,i) =>{
+          var curve = this.curves[i];
+          curve.forEach((d,k) => {
+            if(k > 0) {
+              ctx.beginPath();
+              ctx.lineJoin = "round";
+              ctx.moveTo(curve[k-1].x, curve[k-1].y);
+              ctx.lineTo(curve[k].x, curve[k].y);
+              ctx.closePath();
+              ctx.strokeStyle = curve[k].col;
+              ctx.lineWidth = curve[k].brushSize;
+              ctx.stroke();
+            }
+            
+          })
+        })
+          env.redraw(1);
+        })
     }
   active() {
     return this.actives
@@ -134,6 +159,7 @@ export class CanvasDrawComponent {
       ctx.strokeStyle = this.currentColour;
       ctx.lineWidth = this.brushSize;
       ctx.stroke();
+      
     }
   }
 
@@ -199,6 +225,7 @@ export class CanvasDrawComponent {
 
       this.lastX = mouseXT;
       this.lastY = mouseYT;
+      firebase.database().ref(`/boards/${this.boardId}/data`).update(this.curves);
     }
   }
 
@@ -206,7 +233,8 @@ export class CanvasDrawComponent {
       let ctx = this.canvasElement.getContext('2d');
       ctx.clearRect(0, 0, this.canvasElement.width/this.scaleFactor, this.canvasElement.height/this.scaleFactor);
       this.currIndex = -1;
-      this.curves = [];   
+      this.curves = [];
+      firebase.database().ref(`/boards/${this.boardId}/data`).update([]);   
   }
 
 }

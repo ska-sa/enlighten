@@ -7,8 +7,20 @@ page-draw {
         height: 20vh;
         position: fixed;
         z-index: 100;
-        bottom: 0;
+        bottom: 10%;
         left: 0;
+        font-size: 0;
+        text-align: center;
+    }
+
+    .vid.ilb {
+      font-size: 16px;
+      display: inline-block;
+      width: 40%;
+      vertical-align: top;
+    }
+    video {
+      width: 100%;
     }
     #credentials, #dialler, #messages {
       clear: both;

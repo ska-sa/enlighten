@@ -20,10 +20,20 @@
   </ion-avatar>
   <!------------Timer---------->
   <p text-center>{{start | date:'HH:mm'}}</p>
-  <------------Subject---------->
+  <!-- ----------Subject---------->
   <h2 text-center style="color:white">MATHEMATICS</h2>
   <p class="sec" style="font-size: 12px" text-center color="secondary">with</p>
-  <ion-list no-lines>
+  <ion-list no-lines *ngIf="type == 'tutor'">
+    <ion-item *ngFor="let lesson of lessons | async" class="center-align">
+      <ion-avatar item-left class="avatar">
+        <img [src]="lesson.imageurl">
+      </ion-avatar>
+      <strong>{{lesson.learnername}}</strong>
+      <p class="desc" text-left>{{lesson.school}}</p>
+      <p class="desc" text-left>{{lesson.subjects.join(', ')}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-list no-lines *ngIf="type == 'learner'">
     <ion-item *ngFor="let lesson of lessons | async" class="center-align">
       <ion-avatar item-left class="avatar">
         <img [src]="lesson.imageurl">
@@ -34,8 +44,14 @@
     </ion-item>
   </ion-list>
 
-   <button class="btn" ion-button color="primary" (click)="openPage(drawPage)">
+   <button *ngIf="type == 'tutor'" class="btn" ion-button color="primary" (click)="openPage(drawPage,'')">
     ENTER CLASSROOM
   </button>
+  <h3 *ngIf="(currentBoard | async)?.length <1 && type=='learner'" style="text-align:center"> Please wait for your tutor to create a board... </h3>
+  <div *ngIf="(currentBoard | async)?.length >0">
+    <button *ngFor="let board of currentBoard | async" class="btn" ion-button color="primary" (click)="openPage(drawPage,board.boardid)">
+      ENTER CLASSROOM
+    </button>
+  </div>
 
 </ion-content>

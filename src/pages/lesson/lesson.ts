@@ -18,10 +18,12 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 export class LessonPage {
   lessons: FirebaseListObservable<any>;
   len: number = 0;
+  private currentBoard: FirebaseListObservable<any>
   private user;
   private target;
   private start;
   private drawPage;
+  private object;
   private type:string;
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private af: AngularFireDatabase, private tutorAccess: TutorAccess) {
@@ -29,6 +31,10 @@ export class LessonPage {
     this.target = navParams.get('target');
     this.start = navParams.get('start');
     this.type = navParams.get('type');
+    this.object = navParams.get('object');
+    
+
+    this.currentBoard = af.list(`users_boards_using/${this.user.uid}/`, {query: {limitToFirst: 1}});
     if(this.type == 'learner'){
       this.lessons = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
     } else {
@@ -42,8 +48,9 @@ export class LessonPage {
     console.log('ionViewDidLoad LessonPage');
   }
 
-  openPage(p) {
-    this.navCtrl.push(p, {user: this.user, target: this.target});
+  openPage(p,bid) {
+    alert(bid);
+    this.navCtrl.push(p, {user: this.user, target: this.target, object:this.object, type: this.type, boardid:bid});
   }
 
 }
