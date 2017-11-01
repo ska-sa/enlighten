@@ -4,7 +4,7 @@ import { Platform, NavController, Gesture, MenuController } from 'ionic-angular'
 import * as firebase from 'firebase/app';
 import { NativeStorage } from '@ionic-native/native-storage';
 import * as moment from 'moment';
-
+import * as io from 'socket.io-client';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
  * Generated class for the CanvasDrawComponent component.
@@ -25,7 +25,7 @@ export class CanvasDrawComponent implements OnInit {
   @Input() boardId; 
   private gesture: Gesture;
   canvasElement: any;
-  private curves: Array<Array<any>> = [];
+  private curves: Array<Array<any>> = [[]];
   private currIndex: number = -1;
   lastX: number;
   lastY: number;
@@ -33,16 +33,19 @@ export class CanvasDrawComponent implements OnInit {
   private actives: string;
   currentColour: string = '#000';
   availableColours: any;
-  brushSize: number = 5;
+  brushSize: number = 2;
   private scaleFactor: number = 1;
   private panY:number = 0;
   private panX:number = 0;
   private cH;
   private cW;
+  private mousedown = false;
+  private socket;
 
   constructor(public platform: Platform, public renderer: Renderer,public navCtrl: NavController,
     public menuController: MenuController, private af: AngularFireDatabase) {
-      
+    this.socket = io.connect('http://localhost:3000'); 
+    this.socket.emit('adduser', {username:`user ${Math.random()*100}`, uid:'',boardid:'1'})
     console.log('Hello CanvasDrawComponent Component');
     this.availableColours = [
             '#000',
@@ -54,10 +57,17 @@ export class CanvasDrawComponent implements OnInit {
         ];
   }
 
+
+  disabledown() {
+    this.mousedown = false;
+  }
+
   ngOnInit() {
+    
     let env = this;
-      this.af.list(`boards/${this.boardId}/data`,{preserveSnapshot: true})
+      /*this.af.list(`boards/${this.boardId}/data`,{preserveSnapshot: true})
         .subscribe(snapshots => {
+          env.curves = [];
           snapshots.forEach(snapshot => {
             env.curves.push(snapshot.val());
           })
@@ -78,9 +88,10 @@ export class CanvasDrawComponent implements OnInit {
             
           })
         })
-          env.redraw(1);
-        })
-    }
+        })*/ //this for firebase
+  }
+
+  
   active() {
     return this.actives
   }
@@ -120,7 +131,18 @@ export class CanvasDrawComponent implements OnInit {
       this.renderer.setElementAttribute(this.canvasElement, 'width', this.platform.width() + '');
       this.renderer.setElementAttribute(this.canvasElement, 'height', this.platform.height() + '');
 
-
+      console.log(io);
+      console.log(this.socket);
+      let ctx = this.canvasElement.getContext('2d');
+      this.socket.on('draw_line', data => {
+        var line = data.line;
+        ctx.beginPath();
+        ctx.strokeStyle = line[2].c;
+        ctx.lineWidth = line[2].t;
+        ctx.moveTo(line[0].x, line[0].y);
+        ctx.lineTo(line[1].x, line[1].y);
+        ctx.stroke();
+      })
   }
 
   changeColour(colour){
@@ -132,12 +154,18 @@ export class CanvasDrawComponent implements OnInit {
   }
 
   handleStart(ev){
+    this.mousedown = true;
     if(this.panning !== true) {
       this.currIndex ++;
       this.curves.push(['']);
       let ctx = this.canvasElement.getContext('2d');
-      this.lastX = ev.touches[0].pageX;
-      this.lastY = ev.touches[0].pageY;
+      if(ev.touches) {
+        this.lastX = ev.touches[0].pageX
+        this.lastY = ev.touches[0].pageY  
+      } else {
+        this.lastX = ev.clientX;
+        this.lastY = ev.clientY
+      }
 
       //alert(`X:${this.lastX}, Y:${this.lastY}`);
       var offsetX = 0;
@@ -200,13 +228,20 @@ export class CanvasDrawComponent implements OnInit {
   }
 
   handleMove(ev){
-    if(this.panning !== true) {
+    if(this.panning !== true && this.mousedown == true) {
       let ctx = this.canvasElement.getContext('2d');
       var offsetX=0;
       var offsetY=0;
-
-      let currentX = ev.touches[0].pageX;
-      let currentY = ev.touches[0].pageY;
+      var currentX=0;
+      var currentY=0;
+      if(ev.touches) {
+        currentX = ev.touches[0].pageX
+        currentY = ev.touches[0].pageY 
+        this.mousedown = true; 
+      } else {
+        currentX = ev.clientX;
+        currentY = ev.clientY
+      }
 
       var mouseX = (currentX-offsetX);
       var mouseY = (currentY-offsetY);
@@ -214,18 +249,20 @@ export class CanvasDrawComponent implements OnInit {
       var mouseYT=Math.round((mouseY-this.panY)/this.scaleFactor);
 
       this.curves[this.currIndex].push({x: mouseXT, y: mouseYT, col: this.currentColour, brushSize: this.brushSize});
-      ctx.beginPath();
+      //console.log(this.curves)
+      this.socket.emit('draw_line', { line: [ {x: mouseXT, y:mouseYT}, {x: this.lastX, y: this.lastY}, {t: this.brushSize, c: this.currentColour}]});
+      /*ctx.beginPath();
       ctx.lineJoin = "round";
       ctx.moveTo(this.lastX, this.lastY);
       ctx.lineTo(mouseXT, mouseYT);
       ctx.closePath();
       ctx.strokeStyle = this.currentColour;
       ctx.lineWidth = this.brushSize;
-      ctx.stroke();       
+      ctx.stroke();      */ 
 
       this.lastX = mouseXT;
       this.lastY = mouseYT;
-      firebase.database().ref(`/boards/${this.boardId}/data`).update(this.curves);
+      //firebase.database().ref(`/boards/${this.boardId}/data`).update(this.curves);
     }
   }
 
@@ -234,7 +271,7 @@ export class CanvasDrawComponent implements OnInit {
       ctx.clearRect(0, 0, this.canvasElement.width/this.scaleFactor, this.canvasElement.height/this.scaleFactor);
       this.currIndex = -1;
       this.curves = [];
-      firebase.database().ref(`/boards/${this.boardId}/data`).update([]);   
+      //firebase.database().ref(`/boards/${this.boardId}/data`).update([]);   
   }
 
 }

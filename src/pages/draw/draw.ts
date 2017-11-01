@@ -6,6 +6,7 @@ import { WebRTCService } from '../../app/common/webrtc.service';
 import * as firebase from 'firebase/app';
 import { NativeStorage } from '@ionic-native/native-storage';
 import * as moment from 'moment';
+import * as io from 'socket.io-client';
 
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
@@ -24,9 +25,9 @@ export class DrawPage implements OnInit {
   @ViewChild('remotevideo') remotevideo: any;
 
   private user;
-  private target;
+  private target='';
   private peer: any;
-  private myId;
+  private myId ='';
   private calleeId;
   private myVideo;
   private remoteVideo;
@@ -38,8 +39,8 @@ export class DrawPage implements OnInit {
   private testRadioResult;
   private object;
   private type: string;
-  private boardid: string;
-  private showBoard:boolean = false;
+  private boardid: string ='';
+  private showBoard:boolean = true; //make this false
 
   constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, 
     private navParams: NavParams, public webRTCService: WebRTCService,public menu: MenuController,
@@ -50,7 +51,7 @@ export class DrawPage implements OnInit {
     this.object = navParams.get('object');
     this.type = navParams.get('type');
     let env = this;
-    if(this.type == 'tutor') {
+    /*if(this.type == 'tutor') {
       af.list(`/users_boards/${this.user.uid}/${this.target}`, {preserveSnapshot:true})
       .subscribe(snapshots => {
         if(snapshots.length > 0) {
@@ -67,7 +68,7 @@ export class DrawPage implements OnInit {
     } else {
       this.boardid = this.navParams.get('boardid');
       this.showBoard = true;
-    }
+    }*/
     
 
     this.nativeAudio.preloadComplex('uniqueI1', 'assets/tone.mp3', 1, 1, 0).then((succ)=>{
@@ -155,7 +156,7 @@ export class DrawPage implements OnInit {
     let env = this;
     console.log('initializing...');
     this.webRTCService.createPeer();
-    setTimeout(()=> {
+    /*setTimeout(()=> {
       this.myId = this.webRTCService.myCallId();
       firebase.database().ref(`/users_callids/${env.user.uid}`).update({callid: this.myId});
       if(type == 'tutor') {
@@ -167,7 +168,7 @@ export class DrawPage implements OnInit {
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
-    });
+    });*/
   }
 
   call(id) {

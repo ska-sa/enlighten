@@ -35,8 +35,8 @@ import {WebRTCService} from './common/webrtc.service';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  //rootPage = VideocallPage;
-  rootPage = LogoutPage;
+  rootPage =DrawPage;
+  //rootPage = LogoutPage;
   tutorsPage;                             
   profilePage;
   appointmentsPage;

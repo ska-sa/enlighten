@@ -18,7 +18,7 @@
 
 
 <!--<ion-content class="content">-->
-  <canvas #myCanvas (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" class="canvas"></canvas>
+  <canvas #myCanvas (mousedown)="handleStart($event)" (mousemove)="handleMove($event)" (mouseup)="disabledown()" (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" class="canvas"></canvas>
 
 
 
@@ -34,10 +34,10 @@
       </ion-buttons>
 
     <ion-buttons right>
-        <button color="light" ion-button icon-only (click)="changeSize(5)"><ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(10)"><ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(20)"><ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(50)"><ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(200)"><ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon></button>
+        <button color="light" ion-button icon-only (click)="changeSize(2)"><ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon></button>
+        <button color="light" ion-button icon-only (click)="changeSize(16)"><ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon></button>
+        <button color="light" ion-button icon-only (click)="changeSize(32)"><ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon></button>
+        <button color="light" ion-button icon-only (click)="changeSize(64)"><ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon></button>
+        <button color="light" ion-button icon-only (click)="changeSize(128)"><ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon></button>
     </ion-buttons>
 </ion-toolbar>
