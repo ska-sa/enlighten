@@ -44,7 +44,8 @@ export class CanvasDrawComponent implements OnInit {
 
   constructor(public platform: Platform, public renderer: Renderer,public navCtrl: NavController,
     public menuController: MenuController, private af: AngularFireDatabase) {
-    this.socket = io.connect('http://localhost:3000'); 
+    //this.socket = io.connect('http://localhost:3000'); 
+    this.socket = io.connect('https://quiet-garden-26225.herokuapp.com/');
     this.socket.emit('adduser', {username:`user ${Math.random()*100}`, uid:'',boardid:'1'})
     console.log('Hello CanvasDrawComponent Component');
     this.availableColours = [
