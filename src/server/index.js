@@ -7,7 +7,8 @@ var _ = require('lodash');
 
 
 server.listen(3000);
-app.use(express.static(__dirname + '/public'))
+//app.use(express.static('index.html'))
+app.use((req,res)=> res.sendFile(__dirname+ '/index.html'))
 console.log("Server running on 127.0.0.1:3000");
 var boards = ['same_board']
 var line_history = [];
