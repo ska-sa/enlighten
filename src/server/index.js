@@ -11,6 +11,9 @@ io.set('origins', '*:*');
 
 io.set('match origin protocol', true);
 
+io.set('transports', ['xhr-polling']);
+io.set('polling duration', 10);
+
 app.use(express.static(__dirname + '/public'))
 
 server.listen(port);
