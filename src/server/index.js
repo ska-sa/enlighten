@@ -1,18 +1,22 @@
 var express = require('express'),
     http = require('http');
+
+var port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var _ = require('lodash');
 
+io.set('origins', '*:*');
 
+io.set('match origin protocol', true);
 
 app.use(express.static(__dirname + '/public'))
 
-server.listen(3000);
+server.listen(port);
 
 app.get('/index.html');
-console.log("Server running on 127.0.0.1:3000");
+console.log(`Server running on port:${port}`);
 var boards = ['same_board']
 var line_history = [];
 var userids = [];
