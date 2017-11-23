@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, ToastController } from 'ionic-angular';
 import { ScreenOrientation } from 'ionic-native';
 
 
@@ -25,6 +25,7 @@ import { TutorclassmenuPage } from '../pages/tutorclassmenu/tutorclassmenu';
 import { DrawPage } from '../pages/draw/draw';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {WebRTCConfig} from './common/webrtc.config';
@@ -65,7 +66,9 @@ export class MyApp {
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public events: Events, public nativeStorage: NativeStorage,
-    public webRTC: WebRTCService
+    public webRTC: WebRTCService,
+    private toastCtrl: ToastController,
+    private fireAuth: AngularFireAuth
   ) {
     this.initializeApp();
     this.userselectionPage = UserselectionPage;
@@ -104,7 +107,7 @@ export class MyApp {
       this.tutorclassesPage = TutorclassesPage;
       this.tutorclassmenuPage = TutorclassmenuPage;
       this.lessonPage = LessonPage;
-
+      this.initfireBase();
       this.nativeStorage.getItem('user-info').then(data => {
         this.type = data.type;
         this.user = data.user;
@@ -112,6 +115,40 @@ export class MyApp {
         
       });
     });
+  }
+
+  initfireBase(){
+    if(this.platform.is('cordova')){
+      this.fireAuth.authState.subscribe(user => {
+        if (user){
+          this.user = user;
+          /*firebase.database().ref(`users/${user.uid}`).update({
+            photoUrl: user.photoURL != null? user.photoURL: 'http://rydwith.com/images/avatar.png',
+            email: user.email,
+            timestamp: (new Date()).getTime(),
+            displayName: user.displayName != null? user.displayName: 'Awesome Person',
+            cellphoneNumber: '+27'
+          })*/
+
+          let tempmsg = 'Welcome ' + this.displayName;
+          
+          let toast = this.toastCtrl.create({
+            message: tempmsg,
+            duration: 2000,
+            position: 'top',
+          });
+          toast.present();
+
+          toast.onDidDismiss(()=>{
+            this.nav.setRoot(HomePage,{user:user}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500});
+          });
+        } else {
+          this.nav.setRoot(LogoutPage);
+        }
+      });
+
+      //this.silentLogin();
+    }
   }
 
   logout() {

@@ -92,7 +92,7 @@ export class LoginPage {
     this.loader.present();
     this.googlePlus.login({
             //'webClientId': '559242294803-iel70p87sa56tv4leg3hosnbu46lrtfc.apps.googleusercontent.com',
-            'webClientId': '745996686081-ta15tog2jhd7v3832l95874i2ng8c3m6.apps.googleusercontent.com',
+            'webClientId': '745996686081-modil5qum4720gdi6ma9p2gl6b1vflaf.apps.googleusercontent.com',
             'offline': true})
             .then((success) =>{
               this.gglogged(success);
