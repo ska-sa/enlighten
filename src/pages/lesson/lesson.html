@@ -48,8 +48,8 @@
     ENTER CLASSROOM
   </button>
   <h3 *ngIf="(currentBoard | async)?.length <1 && type=='learner'" style="text-align:center"> Please wait for your tutor to create a board... </h3>
-  <div *ngIf="(currentBoard | async)?.length >0">
-    <button *ngFor="let board of currentBoard | async" class="btn" ion-button color="primary" (click)="openPage(drawPage,board.boardid)">
+  <div *ngIf="(currentBoard | async)?.length >0"> <!-- We can also check the length of board id for a safe-->
+    <button *ngFor="let board of currentBoard | async" class="btn" ion-button color="primary" (click)="openPage(drawPage)">
       ENTER CLASSROOM
     </button>
   </div>

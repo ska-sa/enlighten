@@ -13,14 +13,17 @@ var boards = ['same_board']
 var line_history = [];
 var userids = [];
 io.on('connection', socket => {
-  socket.on('adduser', userid => {
+  socket.on('adduser', user => {
+    if(boards.indexOf(user.boardid) == -1) {
+      boards.push(user.boardid);
+    }
     socket.username = 'Same user name';
     console.log(`${userid} has connected to this room`)
-    socket.room = `same_board ${userid}`;
-    socket.join(`same_board ${userid}`);
-    socket.emit('updateboard','SERVER', 'you have connected to same_board');
-    socket.broadcast.to('same_board').emit('updateboard','SEVER', `${userid} has connected to this room`);
-    socket.emit('updateboards', boards, 'room1')
+    socket.room = user.boardid;
+    socket.join(user.boardid);
+    socket.emit('updateboard','SERVER', `you have connected to ${user.boardid}`);
+    socket.broadcast.to(user.boardid).emit('updateboard','SEVER', `${userid} has connected to this room`);
+    socket.emit('updateboards', boards, user.boardid)
   })
 
   socket.on('disconnect', ()=> {

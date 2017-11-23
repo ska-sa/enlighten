@@ -45,8 +45,7 @@ export class CanvasDrawComponent implements OnInit {
   constructor(public platform: Platform, public renderer: Renderer,public navCtrl: NavController,
     public menuController: MenuController, private af: AngularFireDatabase) {
     //this.socket = io.connect('http://localhost:3000'); 
-    this.socket = io.connect('https://fast-gorge-33585.herokuapp.com/');
-    this.socket.emit('adduser', {username:`user ${Math.random()*100}`, uid:'',boardid:'1'})
+    
     console.log('Hello CanvasDrawComponent Component');
     this.availableColours = [
             '#000',
@@ -64,32 +63,9 @@ export class CanvasDrawComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-    let env = this;
-      /*this.af.list(`boards/${this.boardId}/data`,{preserveSnapshot: true})
-        .subscribe(snapshots => {
-          env.curves = [];
-          snapshots.forEach(snapshot => {
-            env.curves.push(snapshot.val());
-          })
-          let ctx = this.canvasElement.getContext('2d');
-          this.curves.forEach((e,i) =>{
-          var curve = this.curves[i];
-          curve.forEach((d,k) => {
-            if(k > 0) {
-              ctx.beginPath();
-              ctx.lineJoin = "round";
-              ctx.moveTo(curve[k-1].x, curve[k-1].y);
-              ctx.lineTo(curve[k].x, curve[k].y);
-              ctx.closePath();
-              ctx.strokeStyle = curve[k].col;
-              ctx.lineWidth = curve[k].brushSize;
-              ctx.stroke();
-            }
-            
-          })
-        })
-        })*/ //this for firebase
+    ///alert("Your board id is: " + this.boardId);
+    this.socket = io.connect('https://enlighten-whiteboard.herokuapp.com');
+    this.socket.emit('adduser', {username:`user ${this.myId}`, uid:this.myId,boardid:this.boardId})
   }
 
   
@@ -135,13 +111,16 @@ export class CanvasDrawComponent implements OnInit {
       console.log(io);
       console.log(this.socket);
       let ctx = this.canvasElement.getContext('2d');
-      this.socket.on('draw_line', data => {
+      this.socket.on('receive_line', data => {
+        //this.curves[this.currIndex].push({x: line[0].x, y: line[0].y, col: line[2].c, brushSize: line[2].t});
         var line = data.line;
         ctx.beginPath();
+        ctx.lineJoin = "round";
         ctx.strokeStyle = line[2].c;
         ctx.lineWidth = line[2].t;
         ctx.moveTo(line[0].x, line[0].y);
         ctx.lineTo(line[1].x, line[1].y);
+        ctx.closePath();
         ctx.stroke();
       })
   }
@@ -208,6 +187,7 @@ export class CanvasDrawComponent implements OnInit {
 
     ctx.mozImageSmoothingEnabled = false;  // firefox
     ctx.imageSmoothingEnabled = false;
+    ctx.translate(this.platform.width()/2, this.platform.height()/2);
     ctx.scale(sc,sc);
     this.curves.forEach((e,i) =>{
       var curve = this.curves[i];
@@ -225,6 +205,7 @@ export class CanvasDrawComponent implements OnInit {
         
       })
     })
+    ctx.setTransform(1,0,0,1,0,0);
     
   }
 
@@ -252,14 +233,14 @@ export class CanvasDrawComponent implements OnInit {
       this.curves[this.currIndex].push({x: mouseXT, y: mouseYT, col: this.currentColour, brushSize: this.brushSize});
       //console.log(this.curves)
       this.socket.emit('draw_line', { line: [ {x: mouseXT, y:mouseYT}, {x: this.lastX, y: this.lastY}, {t: this.brushSize, c: this.currentColour}]});
-      /*ctx.beginPath();
+      ctx.beginPath();
       ctx.lineJoin = "round";
       ctx.moveTo(this.lastX, this.lastY);
       ctx.lineTo(mouseXT, mouseYT);
       ctx.closePath();
       ctx.strokeStyle = this.currentColour;
       ctx.lineWidth = this.brushSize;
-      ctx.stroke();      */ 
+      ctx.stroke();      
 
       this.lastX = mouseXT;
       this.lastY = mouseYT;
@@ -273,6 +254,7 @@ export class CanvasDrawComponent implements OnInit {
       this.currIndex = -1;
       this.curves = [];
       //firebase.database().ref(`/boards/${this.boardId}/data`).update([]);   
+      this.socket.emit('clear', {});
   }
 
 }

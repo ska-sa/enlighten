@@ -40,7 +40,7 @@ export class DrawPage implements OnInit {
   private object;
   private type: string;
   private boardid: string ='';
-  private showBoard:boolean = true; //make this false
+  private showBoard:boolean = false; //make this false
 
   constructor(public navCtrl: NavController,private nativeAudio: NativeAudio, 
     private navParams: NavParams, public webRTCService: WebRTCService,public menu: MenuController,
@@ -51,11 +51,12 @@ export class DrawPage implements OnInit {
     this.object = navParams.get('object');
     this.type = navParams.get('type');
     let env = this;
-    /*if(this.type == 'tutor') {
+    if(this.type == 'tutor') {
       af.list(`/users_boards/${this.user.uid}/${this.target}`, {preserveSnapshot:true})
       .subscribe(snapshots => {
         if(snapshots.length > 0) {
           //present form
+          this.boards = [];
           snapshots.forEach(snapshot => {
             this.boards.push(snapshot.val());
           })
@@ -65,10 +66,10 @@ export class DrawPage implements OnInit {
             env.showCheckbox(this.boards);
         }
       })
-    } else {
+    } else if (this.type == 'learner') {
       this.boardid = this.navParams.get('boardid');
       this.showBoard = true;
-    }*/
+    }
     
 
     this.nativeAudio.preloadComplex('uniqueI1', 'assets/tone.mp3', 1, 1, 0).then((succ)=>{
@@ -107,12 +108,12 @@ export class DrawPage implements OnInit {
         if(data == 'new') {
             var pushData2 = {
               data: {},
-              title: env.object.tutorname + ' - ' + moment(date).format('DD/MM'),
+              title: env.object.tutorname + ' - ' + moment(date).format('DD/MM HH/mm'),
               dateCreated: (new Date()).getTime()
             }
             var pushData1 = {
               data: {},
-              title: env.object.learnername + ' - ' + moment(date).format('DD/MM'),
+              title: env.object.learnername + ' - ' + moment(date).format('DD/MM HH/mm'),
               dateCreated: (new Date()).getTime()
             }
           
@@ -122,13 +123,17 @@ export class DrawPage implements OnInit {
           
           firebase.database().ref(`users_boards/${env.target}/${env.user.uid}/${env.boardid}`).update(pushData2);
           firebase.database().ref(`users_boards/${env.target}/${env.user.uid}/${env.boardid}`).update({boardid: env.boardid});
-          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid});
+          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid}).then(res => {
+            env.showBoard = true;
+          });
           
-          env.showBoard = true;
+          
         } else {
           env.boardid = data;
-          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid});
-          env.showBoard = true;
+          firebase.database().ref(`users_boards_using/${env.target}/`).update({boardid: env.boardid}).then(res => {
+            env.showBoard = true;
+          });
+          
         }
         
         
@@ -150,13 +155,13 @@ export class DrawPage implements OnInit {
     this.myVideo = this.myvideo.nativeElement;
     var type = '';
     this.nativeStorage.getItem('user-info').then(res => {
-      alert(JSON.stringify(res));
+      alert('user-info: '+JSON.stringify(res));
       type = res.type;
     })
     let env = this;
     console.log('initializing...');
     this.webRTCService.createPeer();
-    /*setTimeout(()=> {
+    setTimeout(()=> {
       this.myId = this.webRTCService.myCallId();
       firebase.database().ref(`/users_callids/${env.user.uid}`).update({callid: this.myId});
       if(type == 'tutor') {
@@ -168,7 +173,7 @@ export class DrawPage implements OnInit {
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
-    });*/
+    });
   }
 
   call(id) {

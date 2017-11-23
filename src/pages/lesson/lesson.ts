@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
 import { DrawPage } from '../draw/draw';
-
+import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 /**
  * Generated class for the LessonPage page.
@@ -25,6 +25,7 @@ export class LessonPage {
   private drawPage;
   private object;
   private type:string;
+  private boardid: string ='';
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private af: AngularFireDatabase, private tutorAccess: TutorAccess) {
     this.user = navParams.get('user');
@@ -32,9 +33,12 @@ export class LessonPage {
     this.start = navParams.get('start');
     this.type = navParams.get('type');
     this.object = navParams.get('object');
-    
+    let env = this;
 
     this.currentBoard = af.list(`users_boards_using/${this.user.uid}/`, {query: {limitToFirst: 1}});
+    firebase.database().ref(`users_boards_using/${this.user.uid}/`).once('value').then(snapshot => {
+      env.boardid = snapshot.val().boardid;
+    })
     if(this.type == 'learner'){
       this.lessons = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
     } else {
@@ -48,9 +52,8 @@ export class LessonPage {
     console.log('ionViewDidLoad LessonPage');
   }
 
-  openPage(p,bid) {
-    alert(bid);
-    this.navCtrl.push(p, {user: this.user, target: this.target, object:this.object, type: this.type, boardid:bid});
+  openPage(p) {
+    this.navCtrl.push(p, {user: this.user, target: this.target, object:this.object, type: this.type, boardid:this.boardid});
   }
 
 }
