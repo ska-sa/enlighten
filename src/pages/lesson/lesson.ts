@@ -28,21 +28,23 @@ export class LessonPage {
   private boardid: string ='';
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private af: AngularFireDatabase, private tutorAccess: TutorAccess) {
-    this.user = navParams.get('user');
-    this.target = navParams.get('target');
-    this.start = navParams.get('start');
-    this.type = navParams.get('type');
-    this.object = navParams.get('object');
-    let env = this;
+    if(navParams.get('user') != null && navParams.get('user') != undefined) {
+      this.user = navParams.get('user');
+      this.target = navParams.get('target');
+      this.start = navParams.get('start');
+      this.type = navParams.get('type');
+      this.object = navParams.get('object');
+      let env = this;
 
-    this.currentBoard = af.list(`users_boards_using/${this.user.uid}/`, {query: {limitToFirst: 1}});
-    firebase.database().ref(`users_boards_using/${this.user.uid}/`).once('value').then(snapshot => {
-      env.boardid = snapshot.val().boardid;
-    })
-    if(this.type == 'learner'){
-      this.lessons = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
-    } else {
-      this.lessons = af.list(`/lessons_upcoming_now_tutors/${this.user.uid}`, {query: {limitToFirst: 1}});
+      this.currentBoard = af.list(`users_boards_using/${this.user.uid}/`, {query: {limitToFirst: 1}});
+      firebase.database().ref(`users_boards_using/${this.user.uid}/`).once('value').then(snapshot => {
+        env.boardid = snapshot.val().boardid;
+      })
+      if(this.type == 'learner'){
+        this.lessons = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
+      } else {
+        this.lessons = af.list(`/lessons_upcoming_now_tutors/${this.user.uid}`, {query: {limitToFirst: 1}});
+      }
     }
     
     this.drawPage = DrawPage;

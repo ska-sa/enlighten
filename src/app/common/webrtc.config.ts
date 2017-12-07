@@ -26,21 +26,22 @@ export class WebRTCConfig {
         console.log("options being got")
         return {
             // Set API key for cloud server (you don't need this if you're running your own.
-            key: this.key,
-
+            //key: this.key,
+            port: 9000,
+            host: 'https://enlighten-whiteboard.herokuapp.com',
             // Set highest debug level (log everything!).
             debug: 3,
             // Set it to false because of:
             // > PeerJS:  ERROR Error: The cloud server currently does not support HTTPS. 
             // > Please run your own PeerServer to use HTTPS.
-            secure: false,
+            secure: true,
 
-            config: {
+            /*config: {
                 iceServers: [
                     this.stunServer,
                     this.turnServer
                 ]
-            }
+            }*/
         };
     }
 

@@ -9,28 +9,30 @@
         </button>
     </ion-buttons>
     <ion-buttons right>
-      
+        
         <button ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
             <ion-icon style="color: #fff;" name="egg"></ion-icon>
         </button>
+        <button color="light" ion-button icon-only (click)="clearCanvas()"><ion-icon name="trash"></ion-icon></button>
     </ion-buttons>
 </ion-toolbar>
 
 
 <!--<ion-content class="content">-->
-  <canvas #myCanvas (mousedown)="handleStart($event)" (mousemove)="handleMove($event)" (mouseup)="disabledown()" (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" class="canvas"></canvas>
+<ion-fab right top>
+    <button ion-fab color="primary" (click)="zoomIn()"><ion-icon name="add"></ion-icon></button>
+</ion-fab>
+<ion-fab left top>
+    <button ion-fab color="primary" (click)="zoomOut()"><ion-icon name="remove"></ion-icon></button>
+</ion-fab>
+<canvas #myCanvas (mousedown)="handleStart($event)" (mousemove)="handleMove($event)" (mouseup)="disabledown()" (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" class="canvas">
+</canvas>
 
 
 
 <ion-toolbar id="bottom-toolbar">
     <ion-buttons left>
-        <button color="light" ion-button icon-only (click)="clearCanvas()"><ion-icon name="trash"></ion-icon></button>
-        <button ion-button (click)="zoomIn()" > 
-          <ion-icon name="add" color="light"> </ion-icon>
-        </button>
-        <button ion-button (click)="zoomOut()" > 
-          <ion-icon name="remove" color="light"> </ion-icon>
-        </button>
+        <button color="light" ion-button icon-only (click)="showVideo()"><ion-icon name="videocam"></ion-icon></button>
       </ion-buttons>
 
     <ion-buttons right>

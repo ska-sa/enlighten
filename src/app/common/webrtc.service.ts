@@ -24,7 +24,7 @@ export class WebRTCService {
      */
     createPeer(userId: string = '') {
         // Create the Peer object where we create and receive connections.
-        this._peer = new Peer(/*userId,*/ this.config.getPeerJSOption());
+        this._peer = new Peer(userId, this.config.getPeerJSOption());
         setTimeout(()=> {
             console.log(this._peer.id);
             this.myid = this._peer.id;
@@ -65,6 +65,8 @@ export class WebRTCService {
 
     call(otherUserId: string) {
         // Initiate a call!
+        alert(`Calling ${otherUserId}`)
+        alert(JSON.stringify(this._localStream));
         var call = this._peer.call(otherUserId, this._localStream);
 
         this._step2(call);
@@ -139,6 +141,7 @@ export class WebRTCService {
 
         // Wait for stream on the call, then set peer video display
         call.on('stream', (stream) => {
+            alert(`successful! ${JSON.stringify(stream)}`);
             this.otherEl.src = URL.createObjectURL(stream);
         });
 

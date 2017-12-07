@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header *ngIf="first==false">
   <ion-navbar color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -7,7 +7,37 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="has-header" padding text-center class="vertical-align-content" [hidden]="tutors && tutors.length > 0">
+<ion-slides pager *ngIf="first == true" no-padding>
+
+  <ion-slide style="background-color: white">
+    <h2> First time? No worries. Let's walk you through!</h2>
+    <img src="assets/img/slide-01.png" height="120">
+    <h2> <b> Step 1: </b> Select a tutor </h2>
+    <p> Got it? Swipe left </p>
+  </ion-slide>
+
+  <ion-slide style="background-color: white">
+    <h2> Next, you can book the tutor </h2>
+    <h2> <b> Step 2: </b> Select a session </h2>
+    <img src="assets/img/slide-02.png">
+    <h2> <b> Step 3: </b> Book the tutor! </h2>
+    <p> Got it? Swipe left </p>
+  </ion-slide>
+
+  <ion-slide>
+    <h2> Your lesson will be booked successfully. </h2>
+    <img src="assets/img/slide-03.png">
+    <h2> A notification will be sent to you an hour before your lesson begins. </h2>
+    <h2> Make sure you show up on time! </h2>
+    <img class="girl" src="assets/img/girl.png">
+    <button class="reduce" ion-button icon-left color="primary" (click)="endGuide()">
+      Got it!
+    </button>
+  </ion-slide>
+
+</ion-slides>
+
+<ion-content *ngIf="first==false" class="has-header" padding text-center class="vertical-align-content" [hidden]="tutors && tutors.length > 0">
   <ion-grid>
     <ion-row>
       <ion-col class="readjust">
@@ -17,7 +47,7 @@
   </ion-grid>
 </ion-content>
 
-<ion-content class="has-header" [hidden]="!tutors || tutors.length <= 0">
+<ion-content *ngIf="first==false" class="has-header" [hidden]="!tutors || tutors.length <= 0">
   <ion-list no-lines>
     <ion-list-header no-lines text-center>
       Recommended for you

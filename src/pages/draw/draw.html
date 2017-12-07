@@ -10,15 +10,17 @@
   </ion-navbar>
 </ion-header>
 
-
-<canvas-draw *ngIf="showBoard==true" [myId]="'user.uid'" [targetId]="target" [boardId]="boardid"></canvas-draw>
-<div class="videos">
-    <div class="vid ilb">
-            <p>Remote Stream</p>
-            <video #remotevideo autoplay></video>
-    </div>
-    <div class="vid ilb">
-            <p>My Stream</p>
-            <video #myvideo autoplay></video>
-    </div>
+<ion-content>
+<canvas-draw [hidden]="showVideo == true" (videoToggle)="showVid($event)" *ngIf="showBoard==true" [myId]="user.uid" [targetId]="target" [boardId]="boardid"></canvas-draw>
+<div class="videos" [hidden]="showVideo != true">
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="showVid(false)"><ion-icon name="color-palette"></ion-icon></button>
+  </ion-fab>
+  <div [hidden]="hideMyVideo == false"  class="vid ilb mine" #myvideo> <!-- CHANGE BACK TO TRUE 
+    <!--<video  autoplay muted></video>-->
+  </div>
+  <div class="vid ilb" #remotevideo>
+    <!--<video #remotevideo autoplay></video>-->
+  </div>
 </div>
+</ion-content>

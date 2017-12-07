@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, MenuController } from 'ionic-angular';
+import { NavController, NavParams, MenuController, Events } from 'ionic-angular';
 import {CreateclassPage} from '../createclass/createclass';
 import { LessonPage } from '../lesson/lesson';
 
@@ -25,7 +25,8 @@ export class TutorhomePage {
   private lessonPage;
   private user;
   constructor(public navCtrl: NavController, 
-    private af: AngularFireDatabase, public navParams: NavParams, public menuController: MenuController) {
+    private af: AngularFireDatabase, public navParams: NavParams, public menuController: MenuController,
+    public events: Events) {
     this.createclassPage = CreateclassPage;
     this.menuController.enable(true, 'myMenu')
     this.lessonPage = LessonPage;
@@ -37,6 +38,8 @@ export class TutorhomePage {
   }
 
   ionViewDidLoad() {
+    this.menuController.enable(true, 'myMenu');
+    this.events.publish('globals:update', this.user, 'tutor'); 
     console.log('ionViewDidLoad TutorhomePage');
   }
 

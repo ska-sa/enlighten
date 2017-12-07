@@ -36,7 +36,7 @@ export class TutorprofilePage {
   private email: string;
   private hq: string;
   private degree: string;
-
+  private starttime: any = '';
   private lastDay;
   //INFO FOR SUBJECT CHOICES
   subinterests: Array<any> = [];
@@ -82,23 +82,33 @@ export class TutorprofilePage {
     console.log('ionViewDidLoad TutorprofilePage');
   }
 
-  updateDtStart(k,idx,val, key) {
+  updateDtStart(k,idx,val, key, slottime) {
     //alert("changed!");
     //alert(val);
     //var timestamp = moment(day.toString()).format('x');
     var day = moment().startOf('week').add(idx+1,'days').add(val.hour,'hours').add(val.minute, 'minutes').toDate();
     this.lastDay = day.getTime();
     firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).update({
-      start: day.toISOString(),
+      start:  moment(day).format(),//.toISOString(),
+      booked: false //how to do this better
+    })
+    firebase.database().ref(`/calendar_tutors_unbooked/${this.user.uid}/${key}`).update({
+      start: moment(day).format(),//,
       booked: false //how to do this better
     })
     this.weekDays[idx].slots[k].start = day.getTime();
+    this.time(slottime);
   }
 
   updateDur(k,idx,val, key) {
     var end = this.lastDay + val*60*1000;
     var endDate = (new Date(end)).toISOString(); //FIRST CHECK IF IT CLASHES WITH OTHER DATES
     firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).update({
+      duration: val, //miliseconds
+      end: endDate,
+      booked: false //how to do this better
+    })
+    firebase.database().ref(`/calendar_tutors_unbooked/${this.user.uid}/${key}`).update({
       duration: val, //miliseconds
       end: endDate,
       booked: false //how to do this better
@@ -134,6 +144,15 @@ export class TutorprofilePage {
           booked: false,
           end: new Date() //miliseconds
         })
+        firebase.database().ref(`/calendar_tutors_unbooked/${this.user.uid}`).push({
+          title: 'Enlighten Tutoring Session',
+          notes: 'Calendar slot',
+          location: 'Enlighten app: Session',
+          start: slot.start,
+          duration: slot.dur,
+          booked: false,
+          end: new Date() //miliseconds
+        })
         //this.createEvent(true,slot.start,slot.dur);
       })
       
@@ -147,6 +166,10 @@ export class TutorprofilePage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  time(s) {
+    this.starttime = moment(s).local();
   }
 
   createEvent(reccurence,date,duration) {
@@ -181,6 +204,7 @@ export class TutorprofilePage {
 
   remove(key) {
     firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).remove();
+    firebase.database().ref(`/calendar_tutors_unbooked/${this.user.uid}/${key}`).remove();
   }
 
 }

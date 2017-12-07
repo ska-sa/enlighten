@@ -46,6 +46,28 @@ page-home {
         background-color: red;
     }
 
+ 
+
+    ion-slide h2 {
+        font-size: 1.8em;
+        font-weight: normal;
+    }
+
+    ion-slide img {
+        width: 100% !important;
+        display: block;
+        
+        object-fit: contain;
+    }
+
+    ion-slide img.girl {
+        position: absolute;
+        bottom: -10%;
+        left: -7.5%;
+        width: 40% !important;
+        z-index: -1;
+    }
+
     .pending {
         position:  fixed;
         width: 80%;

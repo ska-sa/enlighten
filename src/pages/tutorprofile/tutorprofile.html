@@ -19,7 +19,7 @@
       <img [src]="this.picture">
   </ion-avatar>
 
-  <ion-grid>
+  <ion-grid no-padding>
     <!------------First & Surname---------->
     <ion-row>
       <ion-col>
@@ -107,7 +107,7 @@
           <ion-col  *ngIf="slot.dow == idx">
             <ion-item >
                   <ion-label stacked>Time</ion-label>
-                  <ion-datetime displayFormat="h:mm A" (ionChange)="updateDtStart(k,idx,$event,slot.$key)"  [(ngModel)]="slot.start"></ion-datetime>
+                  <ion-datetime displayFormat="h:mm A" (ionChange)="updateDtStart(k,idx,$event,slot.$key, slot.start)" [(ngModel)]="slot.start"></ion-datetime>
             </ion-item>
           </ion-col>
 

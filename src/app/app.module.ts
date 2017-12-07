@@ -64,6 +64,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import {WebRTCConfig} from './common/webrtc.config';
 import {WebRTCService} from './common/webrtc.service';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
+import { TolocalPipe } from '../pipes/tolocal/tolocal';
 
 export const environment = {
   production: false, 
@@ -109,7 +110,8 @@ export const environment = {
     CalendarComponent,
     CanvasDrawComponent,
     DrawPage,
-    VideocallPage
+    VideocallPage,
+    TolocalPipe
   ],
   imports: [
     HttpModule,

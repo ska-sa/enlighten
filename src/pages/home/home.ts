@@ -6,11 +6,12 @@ import { TutorAccess } from '../../app/services/tutor-data/tutor.data';
 import { Events } from 'ionic-angular';
 import { LessonPage } from '../lesson/lesson';
 import { MessagesPage } from '../messages/messages';
-
+import { NativeStorage } from '@ionic-native/native-storage';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs/Observable';
+
 //Importing pages
 
 @Component({
@@ -25,7 +26,8 @@ export class HomePage {
   private lessons_upcoming_now: FirebaseListObservable<any>;
   private lessonPage;
   private messagesPage;
-  private user;
+  private user: any = {uid:'', displayName: '', photoURL: ''};
+  private first: boolean = false;
   constructor(
     public navCtrl: NavController,
     private todoService: TodoService,
@@ -35,20 +37,25 @@ export class HomePage {
     private menuController: MenuController,
     public loadingCtrl: LoadingController,
     public events: Events, private navParams: NavParams, 
-    private af: AngularFireDatabase) {
+    private af: AngularFireDatabase, private nativeStorage: NativeStorage) {
       this.user = navParams.get('user');
+      this.nativeStorage.setItem('user-info', {user: this.user, type: 'learner'});
       this.tutors = this.tutorAccess.getTutors();
       this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
       this.ftutors = af.list(`/users_tutors`);
-      this.menuController.enable(true, 'myMenu')
+      this.menuController.enable(true, 'myMenu');
+
+      firebase.database().ref(`users_global/${this.user.uid}`).once('value').then(res => {
+        this.first = res.val().first;
+      })
       this.lessonPage = LessonPage;
       this.messagesPage = MessagesPage;
       //setTimeout(this.lessonReady,2000);
   }
   
   ngOnInit() {
-    this.initLoader();
-    this.loadTodos();
+    //this.initLoader();
+    //this.loadTodos();
   }
   changePage(page,object,start) {
     this.navCtrl.push(page, {user: this.user, target: object.tutorid, start: start, type:'learner', object: object});
@@ -56,6 +63,13 @@ export class HomePage {
   ionViewDidLoad() {
     this.menuController.enable(true, 'myMenu');
     console.log('ionViewDidLoad ProfilePage');
+  }
+
+  endGuide() {
+    this.first = false;
+    firebase.database().ref(`users_global/${this.user.uid}`).update({
+      first: false
+    })
   }
 
   viewTutor(id) {

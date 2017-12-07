@@ -20,6 +20,7 @@ export class CanvasDrawComponent implements OnInit {
 
   @ViewChild('myCanvas') canvas: any;
   @Output() longPress = new EventEmitter();
+  @Output() videoToggle: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() myId; 
   @Input() targetId; 
   @Input() boardId; 
@@ -62,10 +63,15 @@ export class CanvasDrawComponent implements OnInit {
     this.mousedown = false;
   }
 
+  showVideo() {
+    this.videoToggle.emit(true);
+  }
+
   ngOnInit() {
-    ///alert("Your board id is: " + this.boardId);
+    //alert("Your board id is: " + this.boardId);
     this.socket = io.connect('https://enlighten-whiteboard.herokuapp.com');
     this.socket.emit('adduser', {username:`user ${this.myId}`, uid:this.myId,boardid:this.boardId})
+    //alert(JSON.stringify({username:`user ${this.myId}`, uid:this.myId,boardid:this.boardId}));
   }
 
   
@@ -111,8 +117,8 @@ export class CanvasDrawComponent implements OnInit {
       console.log(io);
       console.log(this.socket);
       let ctx = this.canvasElement.getContext('2d');
-      this.socket.on('receive_line', data => {
-        //this.curves[this.currIndex].push({x: line[0].x, y: line[0].y, col: line[2].c, brushSize: line[2].t});
+      this.socket.on('draw_line', data => {
+        this.curves[this.currIndex].push({x: line[0].x, y: line[0].y, col: line[2].c, brushSize: line[2].t});
         var line = data.line;
         ctx.beginPath();
         ctx.lineJoin = "round";

@@ -9,14 +9,21 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Chat</ion-title>
+    <ion-title>Book Tutor</ion-title>
   </ion-navbar>
 </ion-header>
 
   <ion-content class="content-stable"
                 on-swipe-left="hideTime = false"
                 on-swipe-right="hideTime = true">
-    <calendar [user1]="user1" [user2]="user2" [user1id]="user.uid" [user2id]="recipientId" *ngIf="(upcoming_now_lessons | async)?.length == 0"> </calendar>
+    <h2> Book a session </h2>
+    <ion-item>
+      <ion-label stacked>Choose a session</ion-label>
+      <ion-select [(ngModel)]="sessionid">
+        <ion-option *ngFor="let session of calendar_tutors_unbooked | async" [value]="session.$key">{{session.start | tolocal}}</ion-option>
+      </ion-select>
+    </ion-item>            
+    <!--<calendar [user1]="user1" [user2]="user2" [user1id]="user.uid" [user2id]="recipientId" *ngIf="(upcoming_now_lessons | async)?.length == 0"> </calendar>
     
     <ion-item no-padding *ngIf="(pending_pending | async)?.length > 0">
     <div *ngFor="let message of messages"
@@ -29,17 +36,18 @@
 
 
     </div>
-    </ion-item>
+    </ion-item>-->
+    <button ion-button (click)="book()">
+      Book
+    </button>
 
   </ion-content>
-  <button (click)="beginClass()">
-    Open Class
-  </button>
-  <ion-footer keyboard-attach class="bar-stable item-input-inset" *ngIf="(upcoming_now_lessons | async)?.length > 0">
+  
+  <!--<-ion-footer keyboard-attach class="bar-stable item-input-inset" *ngIf="(upcoming_now_lessons | async)?.length > 0">
     <label class="item-input-wrapper">
       <input type="text" placeholder="Type your message" [(ngModel)]="messageBox"/>
     </label>
     <button class="button button-clear" (click)="sendMessage(messageBox)">
       Send
     </button>
-  </ion-footer>
+  </ion-footer>-->

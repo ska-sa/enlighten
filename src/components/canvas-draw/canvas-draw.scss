@@ -32,4 +32,13 @@ canvas-draw {
         margin-top: 56px;
         height: calc(100vh - 112px);
     }
+
+    ion-fab {
+        margin-top: 60px;
+    }
+
+    ion-fab button {
+        height: 36px !important;
+        width: 36px !important;
+    }
 }

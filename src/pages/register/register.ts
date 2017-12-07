@@ -154,7 +154,8 @@ export class RegisterPage {
       institution: env.sch,
       highest_qualification: 'school',
       grade: env.grd,
-      subjects: env.sub  
+      subjects: env.sub,
+      first: true  
     })
     firebase.database().ref(`/users_learners/${this.user.uid}/education`).push({
       institution: 'school',

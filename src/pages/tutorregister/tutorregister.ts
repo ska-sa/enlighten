@@ -177,7 +177,8 @@ export class TutorregisterPage {
       institution: env.ins,
       highest_qualification: env.hq,
       degree: env.degree,
-      subjects: env.subinterests  
+      subjects: env.subinterests,
+      first: true
     })
     firebase.database().ref(`/users_tutors/${this.user.uid}/education`).push({
       institution: 'university',

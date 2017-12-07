@@ -17,12 +17,12 @@ io.on('connection', socket => {
     if(boards.indexOf(user.boardid) == -1) {
       boards.push(user.boardid);
     }
-    socket.username = 'Same user name';
-    console.log(`${userid} has connected to this room`)
+    socket.username = user.username;
+    console.log(`${user.username} has connected to this room`)
     socket.room = user.boardid;
     socket.join(user.boardid);
     socket.emit('updateboard','SERVER', `you have connected to ${user.boardid}`);
-    socket.broadcast.to(user.boardid).emit('updateboard','SEVER', `${userid} has connected to this room`);
+    socket.broadcast.to(user.boardid).emit('updateboard','SERVER', `${user.username} has connected to this room`);
     socket.emit('updateboards', boards, user.boardid)
   })
 

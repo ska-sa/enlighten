@@ -26,18 +26,19 @@ import { DrawPage } from '../pages/draw/draw';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { GooglePlus } from '@ionic-native/google-plus';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {WebRTCConfig} from './common/webrtc.config';
 import {WebRTCService} from './common/webrtc.service';
-
+import * as firebase from 'firebase/app'
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  //rootPage =DrawPage;
-  rootPage = LogoutPage;
+  rootPage =DrawPage;
+  //rootPage = LogoutPage;
   tutorsPage;                             
   profilePage;
   appointmentsPage;
@@ -59,7 +60,7 @@ export class MyApp {
   private type: string;
   private profPic: string;
   private page: string;
-  private user = {photoURL: '', displayName: ''};
+  private user: any = {photoURL: '', displayName: '',uid: ''};
   constructor(
     public platform: Platform,
     public menu: MenuController,
@@ -68,7 +69,8 @@ export class MyApp {
     public events: Events, public nativeStorage: NativeStorage,
     public webRTC: WebRTCService,
     private toastCtrl: ToastController,
-    private fireAuth: AngularFireAuth
+    private fireAuth: AngularFireAuth,
+    private googlePlus: GooglePlus
   ) {
     this.initializeApp();
     this.userselectionPage = UserselectionPage;
@@ -107,13 +109,29 @@ export class MyApp {
       this.tutorclassesPage = TutorclassesPage;
       this.tutorclassmenuPage = TutorclassmenuPage;
       this.lessonPage = LessonPage;
-      this.initfireBase();
+      
       this.nativeStorage.getItem('user-info').then(data => {
         this.type = data.type;
-        this.user = data.user;
-        //alert(data.user.uid);
-        
-      });
+        this.user = data.user;     
+      })
+
+      this.platform.pause.subscribe(()=>{
+        if(this.type == 'tutor') {
+          firebase.database().ref(`users_tutors/${this.user.uid}`).update({
+            status: 'away'
+          })
+        }  
+      })
+
+      this.platform.resume.subscribe(()=>{
+        if(this.type == 'tutor') {
+          firebase.database().ref(`users_tutors/${this.user.uid}`).update({
+            status: 'online'
+          })
+        }  
+      })
+
+      //this.initfireBase(); 
     });
   }
 
@@ -122,6 +140,9 @@ export class MyApp {
       this.fireAuth.authState.subscribe(user => {
         if (user){
           this.user = user;
+          firebase.database().ref(`users_global/${user.uid}`).once('value').then(res => {
+            this.type = res.val().type;
+          })
           /*firebase.database().ref(`users/${user.uid}`).update({
             photoUrl: user.photoURL != null? user.photoURL: 'http://rydwith.com/images/avatar.png',
             email: user.email,
@@ -130,7 +151,7 @@ export class MyApp {
             cellphoneNumber: '+27'
           })*/
 
-          let tempmsg = 'Welcome ' + this.displayName;
+          let tempmsg = 'Welcome ' + this.user.displayName;
           
           let toast = this.toastCtrl.create({
             message: tempmsg,
@@ -140,7 +161,16 @@ export class MyApp {
           toast.present();
 
           toast.onDidDismiss(()=>{
-            this.nav.setRoot(HomePage,{user:user}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500});
+            if(this.type =='learner') {
+              this.nav.setRoot(HomePage,{user:user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
+                this.nav.popToRoot();
+              });
+            } else {
+              this.nav.setRoot(TutorhomePage,{
+      user: this.user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
+                this.nav.popToRoot();
+              });
+            } 
           });
         } else {
           this.nav.setRoot(LogoutPage);
@@ -169,6 +199,10 @@ export class MyApp {
   openPage(page) {
     // close the menu when clicking a link from the menu
     this.menu.close();
+    if(page == this.logoutPage) {
+      this.fireAuth.auth.signOut();
+      this.googlePlus.logout();
+    }
     
     // navigate to the new page if it is not the current page
     this.nav.push(page,{user: this.user, type: this.type});
