@@ -131,8 +131,8 @@ export class MessagesPage {
 
     let toast = this.toastCtrl.create({
       message: tempmsg,
-      duration: 10000,
-      position: 'top',
+      duration: 5000,
+      position: 'bottom',
     })
 
     toast.present()
@@ -157,7 +157,6 @@ export class MessagesPage {
     } else {
       this.loader.dismiss()
     }
-    
   }
 
   acceptLesson (lessonid, learnerid, tutorid) {
