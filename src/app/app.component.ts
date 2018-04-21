@@ -33,6 +33,7 @@ import { NativeStorage } from '@ionic-native/native-storage'
 import {WebRTCConfig} from './common/webrtc.config'
 import {WebRTCService} from './common/webrtc.service'
 import * as firebase from 'firebase/app'
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -90,7 +91,7 @@ export class MyApp {
   }
 
 
-  initializeApp() {
+  initializeApp () {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -139,7 +140,7 @@ export class MyApp {
     })
   }
 
-  initfireBase(){
+  initfireBase () {
     if(this.platform.is('cordova')){
       this.fireAuth.authState.subscribe(user => {
         if (user){
@@ -187,12 +188,12 @@ export class MyApp {
     }
   }
 
-  logout() {
+  logout () {
     this.menu.close()
     this.nav.push(this.logoutPage)
   }
 
-  returnState() {
+  returnState () {
     var state
 
     if (this.page == 'menu') {
@@ -204,7 +205,7 @@ export class MyApp {
     return state
   }
 
-  openPage(page) {
+  openPage (page) {
     // close the menu when clicking a link from the menu
     this.menu.close()
 
