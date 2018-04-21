@@ -139,15 +139,47 @@ export class MessagesPage {
     this.navCtrl.pop()
   }
 
-  book(session, id) {
+  book (session, id) {
     this.session = session
     this.sessionid = id
     this.loader.present()
     //alert(JSON.stringify(this.session))
     if (this.session !== null && this.session !== undefined) {
-      let sessionId = this.sessionid
-      let start = this.session.start
-      let duration = this.session.duration
+
+      let rate = this.user1.rate || 100
+
+      this.createLessonRequest(this.sessionid, this.session.start, this.session.duration, rate)
+        .then(() => {
+          if (rate < 40) {
+            this.acceptLesson(this.sessionid, this.user.uid, this.recipientId)
+          }
+        })
+    } else {
+      this.loader.dismiss()
+    }
+    
+  }
+
+  acceptLesson (lessonid, learnerid, tutorid) {
+    firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).once('value').then(res => {
+      firebase.database().ref(`/lessons_upcoming_learners/${learnerid}/${lessonid}`).update(res.val())
+      firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).remove()
+
+      firebase.database().ref(`/lessons_pending_tutors/${tutorid}/${lessonid}`).once('value').then(res2 => {
+        var data = res2.val()
+        data.tutorname = res.val().tutorname
+        firebase.database().ref(`/lessons_upcoming_tutors/${tutorid}/${lessonid}`).update(data)
+        firebase.database().ref(`/lessons_pending_tutors/${tutorid}/${lessonid}`).remove()
+      })
+    })
+
+    firebase.database().ref(`/lessons_pending_tutors_learners/${this.user.uid}/${learnerid}/${lessonid}`).remove()
+  }
+
+  createLessonRequest (sessionId, start, duration, rate) {
+    return new Promise((resolve, reject) => {
+
+      // Pending entry in student lessons
       firebase.database().ref(`/lessons_pending_learners/${this.user.uid}/${sessionId}`).update({
         title: 'Physics',
         start: start,
@@ -162,11 +194,10 @@ export class MessagesPage {
         price: duration*100/60
       }).catch(err => {
         this.loader.dismiss()
+        reject(err)
       })
 
-      // academic rating of school
-      let rate = this.user1.rate || 100
-
+      // Pending entry in tutors lessons
       firebase.database().ref(`/lessons_pending_tutors/${this.recipientId}/${sessionId}`).update({
         title: 'Physics',
         start: start,
@@ -185,20 +216,24 @@ export class MessagesPage {
         this.loader.dismiss()
       }).catch(err => {
         this.loader.dismiss()
+        reject(err)
       })
 
+      // Joint entry
       firebase.database().ref(`/lessons_pending_tutors_learners/${this.recipientId}/${this.user.uid}/${sessionId}`).set(true)
       
-      // this means we can only book one at a time
+      // Ensure single bookings
       firebase.database().ref(`/calendar_tutors/${this.recipientId}/${sessionId}`).update({
           booked: true
       })
 
-      firebase.database().ref(`/calendar_tutors_unbooked/${this.recipientId}/${sessionId}`).remove()
-    } else {
-      this.loader.dismiss()
-    }
-    
+      //Remove booked lessions from available/unbooked lessons
+      firebase.database().ref(`/calendar_tutors_unbooked/${this.recipientId}/${sessionId}`)
+        .remove()
+        .then(() => {
+          resolve({})
+        })
+    })
   }
 
   beginClass () {
