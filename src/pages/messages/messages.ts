@@ -208,5 +208,4 @@ export class MessagesPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad MessagesPage')
   }
-
 }
