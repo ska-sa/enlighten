@@ -81,7 +81,8 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
-    <engine name="android" spec="^6.2.3" />
+    <allow-navigation href="http://192.168.56.1:8100" />
+    <engine name="android" spec="6.4.0" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
@@ -100,18 +101,9 @@
     <plugin name="android-camera-permission" spec="^1.0.0" />
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
     <plugin name="cordova-plugin-audioinput" spec="^0.3.0" />
-    <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0">
-        <variable name="XWALK_VERSION" value="23+" />
-        <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
-        <variable name="XWALK_COMMANDLINE" value="--disable-pull-to-refresh-effect" />
-        <variable name="XWALK_MODE" value="embedded" />
-        <variable name="XWALK_MULTIPLEAPK" value="true" />
-    </plugin>
     <plugin name="cordova-plugin-audiotoggle" spec="^1.0.3" />
     <plugin name="cordova.plugins.diagnostic" spec="^3.7.1" />
-    <plugin name="com.hutchind.cordova.plugins.streamingmedia" spec="~0.1.4" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.24" />
-    <plugin name="cordova-plugin-twilio-video" spec="file:../demo/cordova-plugin-twilio-video-master" />
-    <plugin name="cordova.plugin.twilio.video" spec="file:../demo/cordova-plugin-twilio-video-master" />
-    <plugin name="cordova-plugin-compat" spec="^1.1.0" />
+    <plugin name="cordova-plugin-compat" spec="^1.2.0" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="^5.3.2" />
 </widget>

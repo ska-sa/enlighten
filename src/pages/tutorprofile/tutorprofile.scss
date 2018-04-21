@@ -4,6 +4,12 @@ page-tutorprofile {
         .select-md {
             padding: 13px 8px 13px 16px !important;
         }
+
+        ion-col {
+            text-align: left !important;
+            display: flex;
+            align-items: center;
+        }
         img{
             height: 80px;
             width: auto;

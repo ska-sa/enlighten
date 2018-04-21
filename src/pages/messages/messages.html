@@ -13,17 +13,32 @@
   </ion-navbar>
 </ion-header>
 
-  <ion-content class="content-stable"
+  <ion-content padding class="content-stable"
                 on-swipe-left="hideTime = false"
                 on-swipe-right="hideTime = true">
-    <h2> Book a session </h2>
-    <ion-item>
+    
+
+    <ion-grid>
+      <ion-row>
+        <h2> Book a session </h2>
+      </ion-row>
+      <ion-row *ngFor="let session of calendar_tutors_unbooked | async">
+        <ion-col col-4> {{session.start | tolocal}} </ion-col>
+        <ion-col col-4> Single lesson </ion-col>
+        <ion-col col-4>
+          <button class="book" ion-button (click)="book(session, session.$key)">
+            Book
+          </button> 
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!--<ion-item>
       <ion-label stacked>Choose a session</ion-label>
       <ion-select [(ngModel)]="sessionid">
-        <ion-option *ngFor="let session of calendar_tutors_unbooked | async" [value]="session.$key">{{session.start | tolocal}}</ion-option>
+        <ion-option *ngFor="let session of calendar_tutors_unbooked | async" [value]=""></ion-option>
       </ion-select>
     </ion-item>            
-    <!--<calendar [user1]="user1" [user2]="user2" [user1id]="user.uid" [user2id]="recipientId" *ngIf="(upcoming_now_lessons | async)?.length == 0"> </calendar>
+    <calendar [user1]="user1" [user2]="user2" [user1id]="user.uid" [user2id]="recipientId" *ngIf="(upcoming_now_lessons | async)?.length == 0"> </calendar>
     
     <ion-item no-padding *ngIf="(pending_pending | async)?.length > 0">
     <div *ngFor="let message of messages"
@@ -37,9 +52,7 @@
 
     </div>
     </ion-item>-->
-    <button ion-button (click)="book()">
-      Book
-    </button>
+    
 
   </ion-content>
   

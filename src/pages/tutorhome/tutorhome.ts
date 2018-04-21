@@ -43,7 +43,7 @@ export class TutorhomePage {
     console.log('ionViewDidLoad TutorhomePage');
   }
 
-  changePage(page,object,start) {
+  changePage(page,object={learnerid:null},start='') {
     this.navCtrl.push(page, {user: this.user, target: object.learnerid, start: start, type:'tutor', object: object});
   }
 

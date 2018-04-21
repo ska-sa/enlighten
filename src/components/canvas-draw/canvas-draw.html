@@ -1,9 +1,9 @@
 <!-- Generated template for the CanvasDrawComponent component -->
 <ion-toolbar id="top-toolbar">
     <ion-buttons left>
-        <button ion-button (click)="pop()">
+        <!--<button ion-button (click)="pop()">
           <ion-icon name="arrow-back" color="light" class="back"></ion-icon>
-        </button>
+        </button>-->
         <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
             <ion-icon [style.color]="colour" name="brush"></ion-icon>
         </button>

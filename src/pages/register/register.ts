@@ -41,12 +41,17 @@ export class RegisterPage {
   private grd: string='';
   private sch: string='';
   private cell: string='';
+  private gcell: string = '';
   private sub: string='';
   private email: string ='';
   private type: string = "learner"
   private user;
   private gUser;
   private authState;
+  private schools:Array<any> = [];
+
+  private schfocused: boolean = false;
+  private rate = 100;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams, 
     public alertCtrl: AlertController,
@@ -58,11 +63,56 @@ export class RegisterPage {
     public afAuth: AngularFireAuth, 
     private af: AngularFireDatabase,
     private nativeStorage: NativeStorage, private fcm: Firebase) {
+      this.getSchools();
+  }
 
+  addFocus() {
+    if(this.sch.length > 3) {
+      this.schfocused = true;
+    }
+  }
+
+  removeFocus() {
+    setTimeout(()=>{
+      this.schfocused = false;
+    }, 100)
+    
+  }
+
+  selectSchool(s) {
+    this.sch = s.school;
+
+    this.rate = parseFloat(s.rate.toString().replace(',','.'));
+    this.removeFocus()
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
+  }
+
+  getSchools() {
+    this.af.list(`/schools`, {preserveSnapshot: true})
+        .subscribe(snapshots => {
+          this.schools = [];
+          snapshots.forEach(snapshot => {
+            this.schools.push(snapshot.val())
+          })
+          console.log(this.schools)
+        })
+  }
+
+  getItems(ev:any) {
+    let val = ev.target.value;
+    this.addFocus();
+    if(val.length > 3) {
+      this.getSchools(); 
+      if(val && val.trim() != '') {
+        this.schools = this.schools.filter((school)=>{  
+          return (school.school.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        })
+        console.log(this.schools);
+      }
+    }
   }
   private loader = this.loadingCtrl.create({
       content: "Registering..."
@@ -145,9 +195,11 @@ export class RegisterPage {
       imageurl: env.user.photoURL,
       coverurl: '',
       cellphone: env.cell,
+      guardian: env.gcell,
       email: env.email,
       bio: '...',
-      nickname: '...'  
+      nickname: '...',
+      priority: env.rate  
     })
     firebase.database().ref(`/users_global/${this.user.uid}`).update({
       type: env.type,

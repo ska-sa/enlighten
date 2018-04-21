@@ -1,6 +1,11 @@
 page-draw {
-    .no-scroll {
-        overflow: hidden;
+    .no-scroll, ion-content, .scroll-content {
+        overflow: hidden !important;
+    }
+
+    .draw .scroll-content {
+      margin-top: 0 !important;
+      height: 100vh !important;
     }
 
     .videos {

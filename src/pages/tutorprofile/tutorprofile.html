@@ -74,19 +74,19 @@
       </ion-item>
     </ion-row>
     <!------------DEGREE OF STUDY---------->
-      <ion-row>
-        <ion-item>
-          <ion-label stacked>Degree of Study</ion-label>
-          <ion-input type="text" [(ngModel)]="degree"></ion-input>
-        </ion-item>
-      </ion-row>
-      <!------------Email---------->
-      <ion-row>
-        <ion-item>
-          <ion-label stacked>Email Address</ion-label>
-          <ion-input type="text" [(ngModel)]="email"></ion-input>
-        </ion-item>
-      </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label stacked>Degree of Study</ion-label>
+        <ion-input type="text" [(ngModel)]="degree"></ion-input>
+      </ion-item>
+    </ion-row>
+    <!------------Email---------->
+    <ion-row>
+      <ion-item>
+        <ion-label stacked>Email Address</ion-label>
+        <ion-input type="text" [(ngModel)]="email"></ion-input>
+      </ion-item>
+    </ion-row>
     <!------------Cell number---------->
     <ion-row>
       <ion-item>
@@ -94,64 +94,7 @@
         <ion-input type="text" [(ngModel)]="cell"></ion-input>
       </ion-item>
     </ion-row>
-
-    <!------------SCHEDULE---------->
-    <h4> My Weekly Schedule </h4>
-    <ion-row *ngFor="let day of weekDays; let idx = index">
-      <ion-grid>
-        <ion-row>
-          <p class="header"> {{day.name}}</p> <ion-icon name="add" (click)="fcalendar.push({start:'',duration:'', dow: idx, location: 'Enlighten App', notes: 'Calendar slot', title: 'Enlighten Tutoring Session'})" color="primary"> </ion-icon>
-        </ion-row>
-
-        <ion-row *ngFor="let slot of fcalendar | async; let k = index">    
-          <ion-col  *ngIf="slot.dow == idx">
-            <ion-item >
-                  <ion-label stacked>Time</ion-label>
-                  <ion-datetime displayFormat="h:mm A" (ionChange)="updateDtStart(k,idx,$event,slot.$key, slot.start)" [(ngModel)]="slot.start"></ion-datetime>
-            </ion-item>
-          </ion-col>
-
-          <ion-col class="il" *ngIf="slot.dow == idx">
-            <ion-item class="il">
-              <ion-label stacked>Duration</ion-label>
-              <ion-select (ionChange)="updateDur(k,idx,$event,slot.$key)" [(ngModel)]="slot.duration">
-                <ion-option value="15">15 minutes</ion-option>
-                <ion-option value="30">30 minutes</ion-option>
-                <ion-option value="45">45 minutes</ion-option>
-                <ion-option value="60">60 minutes</ion-option>
-                <ion-option value="90">90 minutes</ion-option>
-                <ion-option value="120">120 minutes</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-col>
-
-          <ion-col class="column" *ngIf="slot.dow == idx">
-            <ion-icon name="close" (click)="remove(slot.$key)" color="primary"> </ion-icon>
-          </ion-col>
-
-        </ion-row>
-      </ion-grid>
-       
-      
-    </ion-row>
-    <h4 style="margin-top: 15%"> My Subjects </h4>
-    <!------------Subjects---------->
-    <ion-row>
-        <ion-item *ngFor="let subinterest of subinterests; let idx = index">
-            <ion-label stacked>Subject to Tutor</ion-label>
-            <ion-select  (ngModel)="idx">
-              <ion-option *ngFor="let subject of subjects" (value) = "subject.abbrv">{{subject.name}}</ion-option>
-            </ion-select>
-        </ion-item>
-        <button ion-button clear block color="dark" (click)="addsubinterest()">+ Add Subject for Tutoring</button>
-    </ion-row>
-
-    
-    <!------------Add Subject---------->
-    
-    
   </ion-grid>
- 
   <button class="up-btn" ion-button color="primary" medium (click)="sendUserData()">Update</button>
 
 </ion-content>

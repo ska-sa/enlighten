@@ -28,5 +28,13 @@ page-register {
         .col {
             padding: 0;
         }
+
+        .searchbar-input {
+            padding-left: 0!important;
+        }
+
+        .searchbar-search-icon {
+            display: none !important;
+        }
     }
 }

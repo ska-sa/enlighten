@@ -179,8 +179,8 @@ export class DrawPage implements OnInit {
     })
     let env = this;
     console.log('initializing...');
-    //this.webRTCService.createPeer(this.user.uid);
-    /*setTimeout(()=> {
+    this.webRTCService.createPeer(this.user.uid);
+    setTimeout(()=> {
       this.myId = this.webRTCService.myCallId();
       firebase.database().ref(`/users_callids/${env.user.uid}`).update({callid: this.myId});
       if(type == 'tutor') {
@@ -192,12 +192,13 @@ export class DrawPage implements OnInit {
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
-    });*/
-    if(this.platform.is('cordova')){
+    });
+
+    /*if(this.platform.is('cordova')){
       this.connectCD();
     } else {
       this.connect();
-    }
+    }*/
     
     //this.show();
   }

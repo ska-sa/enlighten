@@ -26,7 +26,7 @@ export class CanvasDrawComponent implements OnInit {
   @Input() boardId; 
   private gesture: Gesture;
   canvasElement: any;
-  private curves: Array<Array<any>> = [[]];
+  private curves: Array<Array<any>> = [];
   private currIndex: number = -1;
   lastX: number;
   lastY: number;
@@ -68,7 +68,7 @@ export class CanvasDrawComponent implements OnInit {
   }
 
   ngOnInit() {
-    //alert("Your board id is: " + this.boardId);
+    console.log("Your board id is: " + this.boardId);
     this.socket = io.connect('https://enlighten-whiteboard.herokuapp.com');
     this.socket.emit('adduser', {username:`user ${this.myId}`, uid:this.myId,boardid:this.boardId})
     //alert(JSON.stringify({username:`user ${this.myId}`, uid:this.myId,boardid:this.boardId}));
@@ -118,8 +118,10 @@ export class CanvasDrawComponent implements OnInit {
       console.log(this.socket);
       let ctx = this.canvasElement.getContext('2d');
       this.socket.on('draw_line', data => {
-        this.curves[this.currIndex].push({x: line[0].x, y: line[0].y, col: line[2].c, brushSize: line[2].t});
+        this.curves.push([])
+        this.currIndex++;
         var line = data.line;
+        this.curves[this.currIndex].push({x: line[0].x, y: line[0].y, col: line[2].c, brushSize: line[2].t});
         ctx.beginPath();
         ctx.lineJoin = "round";
         ctx.strokeStyle = line[2].c;

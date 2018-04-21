@@ -15,6 +15,6 @@ export class TolocalPipe implements PipeTransform {
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args) {
-    return moment(value).local();
+    return moment(value).format('MMM Do hh:mm');
   }
 }

@@ -15,5 +15,12 @@
 
 
 <ion-content padding>
-
+  <button ion-button>
+    <a href="whatsapp://send?text=Hello World">
+      <ion-icon name="logo-whatsapp" id="whatsapp" padding></ion-icon> Start call
+    </a>
+  </button>
+  <button ion-fab (click)="whatsappShare()"><ion-icon name="logo-whatsapp"></ion-icon></button>
+  <a style="color: black" href="intent://send/+XXXXXXXXXXX#Intent;scheme=smsto;package=com.whatsapp;action=android.intent.action.SENDTO;end">Open WhatsApp chat window
+  </a>
 </ion-content>

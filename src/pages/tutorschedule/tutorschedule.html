@@ -1,0 +1,50 @@
+<!--
+  Generated template for the TutorschedulePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>My Schedule</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <h4> My Weekly Schedule </h4>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-5> Date </ion-col>
+      <ion-col col-4> Duration </ion-col>
+      <ion-col col-3> Weekly? </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let slot of fcalendar | async; let k = index">
+      <ion-col col-5>
+        <ion-item >
+              <ion-label stacked>Time</ion-label>
+              <ion-datetime displayFormat="DD MMM h:mm A" pickerFormat="DD MMM h:mm A" (ionChange)="updateDtStart(k, $event, slot.$key, slot.start)" [(ngModel)]="slot.start"></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col class="il" col-4>
+        <ion-item class="il">
+          <ion-label stacked>Duration</ion-label>
+          <ion-select (ionChange)="updateDur(k, $event, slot.$key, slot.duration)" [(ngModel)]="slot.duration">
+            <ion-option value="15">15 minutes</ion-option>
+            <ion-option value="30">30 minutes</ion-option>
+            <ion-option value="45">45 minutes</ion-option>
+            <ion-option value="60">60 minutes</ion-option>
+            <ion-option value="90">90 minutes</ion-option>
+            <ion-option value="120">120 minutes</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col col-3>
+        <ion-checkbox [(ngModel)]="slot.recurring"> </ion-checkbox>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center padding-vertical> 
+      <button ion-button (click)="addToCalendar()"> Add slot </button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

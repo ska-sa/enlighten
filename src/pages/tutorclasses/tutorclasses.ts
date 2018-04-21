@@ -27,7 +27,11 @@ export class TutorclassesPage {
     private af: AngularFireDatabase) {
     this.classroomPage = ClassroomPage;
     this.user = navParams.get('user');
-    this.lessons_pending = af.list(`/lessons_pending_tutors/${this.user.uid}`);
+    this.lessons_pending = af.list(`/lessons_pending_tutors/${this.user.uid}`, {
+      query: {
+        orderByChild: 'rate'
+      }
+    });
     this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`);
     this.lessons_history = af.list(`/lessons_history_tutors/${this.user.uid}`);
   }

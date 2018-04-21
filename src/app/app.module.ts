@@ -33,6 +33,8 @@ import { TutorclassesPage } from '../pages/tutorclasses/tutorclasses';
 import { RequestsPage } from '../pages/requests/requests';
 import { TutorclassmenuPage } from '../pages/tutorclassmenu/tutorclassmenu';
 import { DrawPage } from '../pages/draw/draw';
+import { TutorschedulePage } from '../pages/tutorschedule/tutorschedule';
+import { TutorsubjectsPage } from '../pages/tutorsubjects/tutorsubjects';
 
 import { LessonPage } from '../pages/lesson/lesson';
 import { ClassroomPage } from '../pages/classroom/classroom';
@@ -61,10 +63,12 @@ import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw';
 import { HttpModule } from '@angular/http';
 
 import { NativeAudio } from '@ionic-native/native-audio';
-import {WebRTCConfig} from './common/webrtc.config';
-import {WebRTCService} from './common/webrtc.service';
+import { WebRTCConfig } from './common/webrtc.config';
+import { WebRTCService } from './common/webrtc.service';
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 import { TolocalPipe } from '../pipes/tolocal/tolocal';
+
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 export const environment = {
   production: false, 
@@ -111,7 +115,9 @@ export const environment = {
     CanvasDrawComponent,
     DrawPage,
     VideocallPage,
-    TolocalPipe
+    TutorschedulePage,
+    TolocalPipe,
+    TutorsubjectsPage
   ],
   imports: [
     HttpModule,
@@ -151,7 +157,9 @@ export const environment = {
     ClassroomPage,
     MessagesPage,
     DrawPage,
-    VideocallPage
+    VideocallPage,
+    TutorschedulePage,
+    TutorsubjectsPage
   ],
   providers: [
     StatusBar,
@@ -173,6 +181,7 @@ export const environment = {
     WebRTCService,
     AndroidPermissions,
     Firebase,
+    SocialSharing,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -49,7 +49,15 @@
       <ion-row>
         <ion-item>
           <ion-label stacked>Cellphone Number</ion-label>
-          <ion-input type="number" [(ngModel)]="cell"></ion-input>
+          <ion-input type="tel" [(ngModel)]="cell"></ion-input>
+        </ion-item>
+      </ion-row>
+
+      <!------------ Guardian Cell number---------->
+      <ion-row>
+        <ion-item>
+          <ion-label stacked>Guardian Cellphone Number</ion-label>
+          <ion-input type="tel" [(ngModel)]="gcell"></ion-input>
         </ion-item>
       </ion-row>
     </ion-grid>
@@ -78,9 +86,24 @@
       </ion-row>
       <!------------School---------->
       <ion-row>
-        <ion-item>
+        <!--<ion-item>
             <ion-label stacked>School</ion-label>
-            <ion-input type="text" [(ngModel)]="sch"></ion-input>
+            <ion-input (change)="getItems($event)" type="text" [(ngModel)]="sch"></ion-input>
+        </ion-item>-->
+        <ion-item>
+          <ion-searchbar
+            [(ngModel)]="sch"
+            (ionFocus)="addFocus()"
+            (ionInput)="getItems($event)"
+            (ionBlur)="removeFocus()"
+            debounce=500 no-padding
+            placeholder="School">
+          </ion-searchbar>
+          <ion-list [hidden]="schfocused != true" no-padding>
+            <ion-item  no-padding *ngFor="let school of schools" (click)="selectSchool(school)">
+              {{school.school}}
+            </ion-item>
+          </ion-list>
         </ion-item>
       </ion-row>
       <!------------Email---------->

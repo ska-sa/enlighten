@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Events } from 'ionic-angular';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
@@ -46,11 +46,14 @@ export class MessagesPage {
                           userId: 'def'
                       }
                       ]
- 
+  private rate = 100;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public events: Events, 
-    private af: AngularFireDatabase, private toastCtrl: ToastController) {
+    public events: Events, private af: AngularFireDatabase, 
+    private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     this.user = navParams.get('user');
+    if(this.user.rate) {
+      this.rate = 100;
+    }
     this.recipientId = navParams.get('id');
     let env = this;
 
@@ -79,6 +82,11 @@ export class MessagesPage {
     this.events.publish('globals:update', this.user, 'learner');
   }
 
+  private loader = this.loadingCtrl.create({
+      content: "Booking lesson...",
+      duration: 5000
+  });
+
   getIndex() {
     return this.sessions.findIndex(e => e.key == this.sessionid);
   }
@@ -105,20 +113,26 @@ export class MessagesPage {
   }
 
   toast() {
-    let tempmsg = 'The lesson has successfully been booked! Lesson starts ' + moment(this.session.start).fromNow() + ' time';
-          
-          let toast = this.toastCtrl.create({
-            message: tempmsg,
-            duration: 10000,
-            position: 'top',
-          });
-          toast.present();
-          this.navCtrl.pop();
+    let tempmsg = 'Lesson request has been sent to the tutor!';
+    
+    if(this.rate < 50) {
+      tempmsg = 'The lesson has successfully been booked! Lesson starts ' + moment(this.session.start).fromNow() + ' time';
+    }  
+
+    let toast = this.toastCtrl.create({
+      message: tempmsg,
+      duration: 10000,
+      position: 'top',
+    });
+    toast.present();
+    this.navCtrl.pop();
   }
 
-  book() {
-    this.session = this.sessions[this.getIndex()].data;
-    alert(JSON.stringify(this.session));
+  book(session, id) {
+    this.session = session;
+    this.sessionid = id;
+    this.loader.present()
+    //alert(JSON.stringify(this.session));
     if(this.session != null && this.session != undefined) {
       let sessionId = this.sessionid;
       let start = this.session.start;
@@ -135,13 +149,18 @@ export class MessagesPage {
           type: 'single',
           tutorid: this.recipientId,
           price: duration*100/60
+      }).catch(err => {
+        this.loader.dismiss()
       })
+
+      let rate = this.user1.rate || 100
       firebase.database().ref(`/lessons_pending_tutors/${this.recipientId}/${sessionId}`).update({
           title: 'Physics',
           start: start,
           subtitle: 'Newtonian Mechanics',
           duration: duration,
           learnername: this.user1.name + ' ' + this.user1.lastname,
+          rate: rate,
           imageurl: this.user1.imageurl,
           school: this.user1.school,
           type: 'single',
@@ -150,6 +169,9 @@ export class MessagesPage {
           price: duration*100/60
       }).then(res => {
         this.toast();
+        this.loader.dismiss()
+      }).catch(err => {
+        this.loader.dismiss()
       })
       firebase.database().ref(`/lessons_pending_tutors_learners/${this.recipientId}/${this.user.uid}/${sessionId}`).set(true);
       //this means we can only book one at a time
@@ -157,6 +179,8 @@ export class MessagesPage {
           booked: true
       })
       firebase.database().ref(`/calendar_tutors_unbooked/${this.recipientId}/${sessionId}`).remove();
+    } else {
+      this.loader.dismiss()
     }
     
     }

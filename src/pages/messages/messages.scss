@@ -2,6 +2,18 @@ page-messages {
     .scroll {
   padding: 10px 0 50px !important;
 }
+
+button.book {
+  width: 100% !important;
+  box-shadow: none !important;
+}
+
+ion-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .messages {
   display: -webkit-box !important;
   display: -moz-box !important;
@@ -13,7 +25,7 @@ page-messages {
   align-content: center !important;
   -webkit-box-align: center !important;
   -moz-box-align: center !important;
-  -webkit-align-items: center !important;
+  -webkit-align-items: center!important;
   -ms-flex-align: center !important;
   align-items: center !important;
   margin-bottom: 2px !important;
