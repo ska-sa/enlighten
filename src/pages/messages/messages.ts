@@ -122,9 +122,7 @@ export class MessagesPage {
     this.session = session
   }
 
-  toast () {
-    let tempmsg = 'Lesson request has been sent to the tutor!'
-    
+  toast (tempmsg = 'Lesson request has been sent to the tutor!') {
     if(this.rate < 50) {
       tempmsg = 'The lesson has successfully been booked! Lesson starts ' + moment(this.session.start).fromNow() + ' time'
     }  
@@ -143,17 +141,21 @@ export class MessagesPage {
     this.session = session
     this.sessionid = id
     this.loader.present()
-    //alert(JSON.stringify(this.session))
     if (this.session !== null && this.session !== undefined) {
 
-      let rate = this.user1.rate || 100
-
-      this.createLessonRequest(this.sessionid, this.session.start, this.session.duration, rate)
-        .then(() => {
-          if (rate < 40) {
-            this.acceptLesson(this.sessionid, this.user.uid, this.recipientId)
-          }
-        })
+      let rate = this.user1.priority || 100
+      if (session.start !== null && session.duration !== null) {
+        this.createLessonRequest(this.sessionid, this.session.start, this.session.duration, rate)
+          .then(() => {
+            if (rate < 40) {
+              this.acceptLesson(this.sessionid, this.user.uid, this.recipientId)
+            }
+          })
+      } else {
+        this.loader.dismiss()
+        this.toast('Please wait until the tutor completes the lesson')
+      }
+      
     } else {
       this.loader.dismiss()
     }
@@ -183,7 +185,7 @@ export class MessagesPage {
         title: 'Physics',
         start: start,
         grade: this.user1.grade,
-        subtitle: 'Newtonian Mechanics',
+        subtitle: '...',
         duration: duration,
         tutorname: this.user2.name + ' ' + this.user2.lastname,
         imageurl: this.user2.imageurl,
@@ -200,7 +202,7 @@ export class MessagesPage {
       firebase.database().ref(`/lessons_pending_tutors/${this.recipientId}/${sessionId}`).update({
         title: 'Physics',
         start: start,
-        subtitle: 'Newtonian Mechanics',
+        subtitle: '...',
         duration: duration,
         learnername: this.user1.name + ' ' + this.user1.lastname,
         rate: rate,

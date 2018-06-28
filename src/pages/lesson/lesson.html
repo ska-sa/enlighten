@@ -10,7 +10,6 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding style="background-color:#333333">
   <p text-center class="pad">YOUR LESSON IS ABOUT TO BEGIN</p>
   <ion-avatar text-center>
@@ -42,14 +41,15 @@
     </ion-item>
   </ion-list>
 
-   <button *ngIf="type == 'tutor'" class="btn" ion-button color="primary" (click)="openPage(drawPage,'')">
-    ENTER CLASSROOM
+  <button *ngIf="type === 'tutor'" class="btn" ion-button color="primary" (click)="openPage(drawPage)">
+    ENTER LESSON
   </button>
-  <h3 *ngIf="(currentBoard | async)?.length <1 && type=='learner'" style="text-align:center"> Please wait for your tutor to create a board... </h3>
-  <div *ngIf="(currentBoard | async)?.length >0"> <!-- We can also check the length of board id for a safe-->
+  <h3 *ngIf="(currentBoard | async)?.length < 1 && type ==='learner'" style="text-align:center"> Please wait for your tutor to create a board... </h3>
+  <div *ngIf="(currentBoard | async)?.length > 0 && type === 'learner'" > <!-- We can also check the length of board id for a safe-->
     <button *ngFor="let board of currentBoard | async" class="btn" ion-button color="primary" (click)="openPage(drawPage)">
-      ENTER CLASSROOM
+      ENTER LESSON
     </button>
+    <!-- <p style="color: white"> {{ boardid }} </p> -->
   </div>
 
 </ion-content>

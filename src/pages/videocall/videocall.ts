@@ -88,11 +88,8 @@ export class VideocallPage implements OnInit {
     
     console.log('initializing...');
     this.webRTCService.createPeer(this.user.uid);
-    setTimeout(()=> {
-      this.myId = this.webRTCService.myCallId();
-      alert(this.myId);
-    }, 4000)
-
+    this.myId = this.user.uid;
+    
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
             console.log('I\'m calling');
     });

@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe } from '@angular/core'
 import * as moment from 'moment'
 
 /**
@@ -10,11 +10,11 @@ import * as moment from 'moment'
 @Pipe({
   name: 'tolocal',
 })
-export class TolocalPipe implements PipeTransform {
+export class TolocalPipe {
   /**
    * Takes a value and makes it lowercase.
    */
   transform(value: string, ...args) {
-    return moment(value).format('MMM Do hh:mm');
+    return moment(value).format('MMM Do hh:mm')
   }
 }

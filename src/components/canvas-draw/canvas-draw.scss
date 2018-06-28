@@ -2,17 +2,22 @@ canvas-draw {
     height: 100%;
     width: 100%;
     display: block;
+    
     .selected {
         color: #fff;
         border: 1px solid white;
         border-radius: 2px;
     }
+
     .unsel {
         color: #ccc;
     }
+
     #top-toolbar{
         position: absolute;
         top: 0;
+        left: 0;
+        width: 100%;
         border: 0px solid white;
         border-radius: 0px;
     }
@@ -27,14 +32,9 @@ canvas-draw {
         margin-left: 2%;
     }
 
-
     .content {
         margin-top: 56px;
         height: calc(100vh - 112px);
-    }
-
-    ion-fab {
-        margin-top: 60px;
     }
 
     ion-fab button {

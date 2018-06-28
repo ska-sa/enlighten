@@ -13,7 +13,7 @@
   </ion-navbar>
   <ion-toolbar no-border-top color="primary" class="respect">
     <ion-segment [(ngModel)]="my">
-      <ion-segment-button value="booked" style="color: white">
+      <ion-segment-button value="scheduled" style="color: white">
         Booked
       </ion-segment-button>
       <ion-segment-button value="pending" style="color: white">
@@ -29,32 +29,29 @@
 <ion-content class="grey">
   <div [ngSwitch]="my" >
     <!-- --------THIS IS THE SAME AS APPOINTMENTS---------- -->
-    <ion-list *ngSwitchCase="'booked'"> 
-      <ion-item class="grey">
+    <ion-list *ngSwitchCase="'scheduled'" no-lines>
+      <ion-item class="grey" *ngFor="let lesson of lessons_upcoming | async" no-lines>
         <ion-card>
             <ion-card-content>
-              <ion-card-title text-center class="il left">
-                Mathematics
+              <ion-card-title text-center>
+                {{lesson.title}}
               </ion-card-title>
-              <ion-item item-end class="il">
-                <ion-icon name="contact" color="primary"></ion-icon>
-              </ion-item>
-              <p text-center> Jun 25, 2017 13:00 </p>
+              <p text-center> {{lesson.start | date:'MMM dd, yyyy HH:mm'}} </p>
               <ion-item item-start class="il left">
-                <p> Algebra & Calculus </p>
-                <p> 25 minutes </p>
+                <p> {{lesson.subtitle}}</p>
+                <p> {{lesson.duration}} minutes </p>
               </ion-item>
               
               <ion-item text-wrap>
                 <ion-avatar item-left>
-                  <img src="assets/img/avatar-han.png">
+                  <img [src]="lesson.imageurl">
                 </ion-avatar>
-                <strong>Han Solo</strong>
-                <p>University of Cape Town</p>  
+                <strong>{{lesson.tutorname}}</strong>
+                <p>{{lesson.institution}}</p>  
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
               <div padding text-center>
-                <button text-center class="request-btn" ion-button bottom (click)="openPage(classroomPage)" medium>
+                <button text-center class="request-btn" ion-button bottom (click)="openPage(drawPage, lesson, lesson.start)" medium>
                   Enter classroom
                 </button>
               </div>
@@ -62,6 +59,7 @@
           </ion-card>
       </ion-item>
     </ion-list>
+
     <!-- --------THESE ARE LESSONS REQUESTED BY THE LEARNER TO TUTORS---------- -->
     <ion-list *ngSwitchCase="'pending'">
       <ion-item class="grey">
@@ -90,11 +88,11 @@
     </ion-list>
 
     <ion-list *ngSwitchCase="'history'">
-      <ion-item class="grey">
+      <ion-item class="grey" *ngFor="let lesson of lessons_history | async" no-lines>
         <ion-thumbnail item-start>
-          <img src="assets/img/thumbnail-duckling-1.jpg">
+          <img [src]="lesson.imageurl">
         </ion-thumbnail>
-        <h2>Daffy's Past Class</h2>
+        <h2>{{lesson.title}}</h2>
       </ion-item>
     </ion-list>
   </div>

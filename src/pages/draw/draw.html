@@ -2,23 +2,44 @@
   Generated template for the DrawPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
- <ion-header>
+  Ionic pages and navigation.-->
+
+<ion-header>
   <ion-navbar color="primary">
-    <ion-title>Draw</ion-title>
+    <ion-title [hidden]="!showVideo">Draw</ion-title>
+    <ion-buttons right [hidden]="showVideo">
+        <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
+            <ion-icon [style.color]="colour" name="brush"></ion-icon>
+        </button>
+        <button ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
+            <ion-icon style="color: #fff;" name="egg"></ion-icon>
+        </button>
+        <!-- <button color="light" ion-button icon-only (click)="clearCanvas()"><ion-icon name="trash"></ion-icon></button> -->
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content>
-  <canvas-draw [hidden]="showVideo == true" (videoToggle)="showVid($event)" *ngIf="showBoard==true" [myId]="user.uid" [targetId]="target" [boardId]="boardid"></canvas-draw>
-  <div class="videos" [hidden]="showVideo != true">
-    <ion-fab right bottom>
-      <button ion-fab color="primary" (click)="showVid(false)"><ion-icon name="color-palette"></ion-icon></button>
+
+<ion-content no-padding>
+  <canvas-draw
+    (videoToggle)="showVid($event, 'toggle')" 
+    *ngIf="showBoard && !showVideo" 
+    [myId]="user.uid" 
+    [targetId]="target" 
+    [boardId]="boardid"
+    [currentColour]="color"
+    ></canvas-draw>
+  <div class="videos" [hidden]="!showVideo">
+    <ion-fab padding center bottom>
+      <button ion-fab color="primary" (click)="showVid(false)"><ion-icon name="albums"></ion-icon></button>
     </ion-fab>
-    <div [hidden]="hideMyVideo == false" > <!-- CHANGE BACK TO TRUE -->
-      <video  autoplay muted class="vid ilb mine" #myvideo></video>
+    <ion-fab padding bottom left *ngIf="!showBoard">
+      <button ion-fab color="primary" [disabled]="!canCall" (click)="call()"><ion-icon name="videocam"></ion-icon> </button>
+    </ion-fab>
+    <p *ngIf="!canCall" class="waiting"> Waiting for user to enter session </p>
+    <div no-padding [hidden]="!hideMyVideo" > <!-- CHANGE BACK TO TRUE -->
+      <video autoplay muted class="vid ilb mine" #myvideo></video>
     </div>
-    <div class="vid ilb" #remotevideo>
+    <div class="vid ilb">
       <video #remotevideo autoplay></video>
     </div>
   </div>

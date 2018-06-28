@@ -18,7 +18,7 @@
                 on-swipe-right="hideTime = true">
     
 
-    <ion-grid>
+    <ion-grid *ngIf="(calendar_tutors_unbooked | async)?.length > 0">
       <ion-row>
         <h2> Book a session </h2>
       </ion-row>
@@ -32,6 +32,9 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+    <div text-center *ngIf="(calendar_tutors_unbooked | async)?.length < 1">
+      <p> No available sessions </p>
+    </div>
     <!--<ion-item>
       <ion-label stacked>Choose a session</ion-label>
       <ion-select [(ngModel)]="sessionid">

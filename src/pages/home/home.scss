@@ -46,11 +46,18 @@ page-home {
         background-color: red;
     }
 
- 
+    em{
+        color: #f8d64e;
+    }
 
     ion-slide h2 {
         font-size: 1.8em;
         font-weight: normal;
+
+        em{
+            font-weight: bold;
+            color: black;
+        }
     }
 
     ion-slide img {
@@ -82,9 +89,5 @@ page-home {
     }
     .item-md.item-block .item-inner {
         border-bottom: none;
-    }
-
-    em{
-        color: #f8d64e;
     }
 }

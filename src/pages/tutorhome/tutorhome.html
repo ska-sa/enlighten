@@ -49,7 +49,7 @@
       </ion-item>
 
       <div *ngIf="(lessons_upcoming_now | async)?.length > 0" class="pending" color="notsodark"> 
-        <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async" (click)="changePage(lessonPage,lesson, lesson.start)" (swipe)="changePage(lessonPage,lesson, lesson.start)">
+        <ion-item round color="notsodark" text-wrap *ngFor="let lesson of lessons_upcoming_now | async" (click)="changePage(lessonPage, lesson, lesson.start)">
           <ion-avatar item-left class="avatar">
             <ion-icon style="font-size: 2.5em" name="alarm"> </ion-icon>
           </ion-avatar>
@@ -62,6 +62,14 @@
 
 </ion-content>
 
+<ion-footer *ngIf="(lessons_pending | async)?.length > 0">
+  <ion-item padding text-center *ngFor="let lesson of lessons_pending | async" (click)="changePage(tutorclassesPage)">
+    <p> New lesson request </p>
+    <h3> {{ lesson.learnername }} </h3>
+    <p> {{lesson.start | date:'Do dd/MM HH:mm'}} </p>
+  </ion-item>
+</ion-footer>
+
 <ion-fab right bottom>
-  <button ion-fab color="primary" (click)="changePage(createclassPage)"><ion-icon name="add"></ion-icon></button>
+  <button ion-fab color="primary" (click)="changePage(tutorschedulePage)"><ion-icon name="add"></ion-icon></button>
 </ion-fab>

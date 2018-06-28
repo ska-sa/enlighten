@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ClassroomPage } from '../classroom/classroom'
+import { DrawPage } from '../draw/draw'
 
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
@@ -22,12 +22,14 @@ export class MyclassesPage {
   private lessons_pending: FirebaseListObservable<any>;
   private lessons_upcoming: FirebaseListObservable<any>;
   private lessons_history: FirebaseListObservable<any>;
-  
-  private classroomPage;
+  private drawPage;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private af: AngularFireDatabase) {
     this.user = navParams.get('user');
-    this.classroomPage = ClassroomPage;
+    this.drawPage = DrawPage;
+    this.lessons_upcoming = af.list(`/lessons_upcoming_learners/${this.user.uid}`)
+    this.lessons_history = af.list(`/lessons_history_learners/${this.user.uid}`)
     this.lessons_pending = af.list(`/lessons_pending_learners/${this.user.uid}`)
   }
 
@@ -35,8 +37,8 @@ export class MyclassesPage {
     console.log('ionViewDidLoad MyclassesPage');
   }
 
-  openPage(p) {
-    this.navCtrl.push(p);
+  openPage(p, lesson, start) {
+    this.navCtrl.push(p, {user: this.user, target: lesson.tutorid, start: start, type:'learner', object: lesson});
   }
 
 }

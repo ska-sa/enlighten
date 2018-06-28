@@ -23,7 +23,7 @@ export class SignupPage {
     console.log('ionViewDidLoad SignupPage');
   }
   regPg(){
-    this.navCtrl.push(UserselectionPage);
+    this.navCtrl.push(RegisterPage);
     //setTimeout(this.back(), 4000);
   }
   next(){

@@ -1,29 +1,63 @@
 <!--
-  Generated template for the LoginPage page.
+  Generated template for the LogoutPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+
+<ion-header no-border>
   <ion-navbar color="primary">
-    <ion-title>Login</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
 
+<ion-content padding color="primary" class="bg" text-center>
+  <!-- <div class="display">
+    <!--<button ion-button icon-only menuToggle top left>
+      <ion-icon name="menu"></ion-icon> 
+    </button>-s->
+    <img src="assets/img/enlighten.png" class="img-logout"/>
 
-<ion-content padding>
-  <p text-center> Please click the button below to login to your account </p>
-  <button class="reduce" ion-button icon-left color="gg" (click)="gg()">
-    <ion-icon name="logo-google"></ion-icon>
-    Google
-  </button>
-  <!--<p class="text">Or Login using Firebase</p>
-  <button (click)="login()" *ngIf="!(user | async)?.uid">Anonymous Login</button>
-  <button (click)="logout()" *ngIf="(user | async)?.uid">Logout</button>
+    <button class="reduce btn" ion-button icon-left color="cWhite" (click)="gg()">
+      <ion-icon name="logo-google"></ion-icon>
+      Google
+    </button>
+  </div>
+  <p class="text"> Log in using your Google account </p> -->
+  <div class="display" padding>
+    <img src="assets/img/enlighten-red.png" class="img-logout"/>
 
-  <input type="text" id="message" *ngIf="(user | async)?.uid" placeholder="What is it that you do?" (keyup.enter)="Send($event.target.value)" [(ngModel)]="msgVal" />
-  <div id="details-container">
-      <p *ngFor="let item of items | async"><img src="../assets/images/pin.svg">{{item.message}}</p>
-  </div>-->
+    <ion-item no-padding padding-horizontal>
+      <ion-input type="text" [(ngModel)]="email" placeholder="Email address"></ion-input>
+    </ion-item>
 
+    <ion-item no-padding padding-horizontal>
+      <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+    </ion-item>
+
+    <button padding class="sign" ion-button color="accent3" outline no-border (click)="signin()">
+        Log in
+    </button>
+
+    <p class="terms" (click)="reset()"> Forgot your password? <a> Reset password </a> </p>
+
+    <ion-grid no-padding>
+      <ion-row no-padding> <p class="text">or sign in with</p> </ion-row>
+      <ion-row no-padding>
+        <ion-col text-center>
+          <button class="btn" ion-button icon-left color="gg" (click)="gg()">
+            <ion-icon name="logo-google"></ion-icon>
+            Google
+          </button>
+        </ion-col>
+          
+        <ion-col text-center>
+          <button class="btn" ion-button icon-left color="fb" (click)="fb()">
+            <ion-icon name="logo-facebook"></ion-icon>
+            Facebook
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>

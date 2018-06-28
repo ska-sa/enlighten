@@ -4,6 +4,10 @@
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,
+  "config": {
+    "ionic_source_map_type": "source-map",
+    "ionic_generate_source_map": true
+  },
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -23,6 +27,7 @@
     "@ionic-native/android-permissions": "^4.3.2",
     "@ionic-native/calendar": "^4.1.0",
     "@ionic-native/core": "3.12.1",
+    "@ionic-native/facebook": "^4.7.0",
     "@ionic-native/firebase": "^4.3.2",
     "@ionic-native/google-plus": "^4.3.0",
     "@ionic-native/native-audio": "^4.3.0",
@@ -35,7 +40,8 @@
     "android-camera-permission": "^1.0.0",
     "angularfire2": "^4.0.0-rc.1",
     "com.telerik.plugins.nativepagetransitions": "^0.6.5",
-    "cordova-android": "6.4.0",
+    "cordova-android": "6.3.0",
+    "cordova-android-support-gradle-release": "^1.4.4",
     "cordova-custom-config": "^4.0.2",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-audioinput": "^0.3.0",
@@ -43,7 +49,9 @@
     "cordova-plugin-calendar": "^4.6.0",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-console": "^1.0.5",
+    "cordova-plugin-crosswalk-webview": "^2.4.0",
     "cordova-plugin-device": "^1.1.4",
+    "cordova-plugin-facebook4": "^2.1.0",
     "cordova-plugin-file": "^4.0.0",
     "cordova-plugin-firebase": "^0.1.24",
     "cordova-plugin-googleplus": "^5.1.1",
@@ -52,7 +60,6 @@
     "cordova-plugin-nativeaudio": "^3.0.9",
     "cordova-plugin-splashscreen": "^4.0.3",
     "cordova-plugin-statusbar": "^2.2.2",
-    "cordova-plugin-webrtc": "^0.1.1",
     "cordova-plugin-whitelist": "^1.3.1",
     "cordova-plugin-x-socialsharing": "^5.3.2",
     "cordova.plugins.diagnostic": "^3.7.1",
@@ -67,7 +74,9 @@
     "moment": "^2.18.1",
     "peer": "^0.2.8",
     "promise-polyfill": "6.0.2",
+    "raven-js": "^3.26.3",
     "rxjs": "5.4.0",
+    "sentry-cordova": "^0.10.2",
     "simple-peer": "^8.1.1",
     "socket.io": "^2.0.4",
     "sw-toolbox": "3.6.0",
@@ -77,8 +86,8 @@
     "@ionic/app-scripts": "2.0.2",
     "@ionic/cli-plugin-cordova": "1.4.1",
     "@ionic/cli-plugin-ionic-angular": "1.3.2",
-    "ionic": "3.14.0",
-    "typescript": "2.3.4"
+    "ionic": "3.20.0",
+    "typescript": "^3.0.0-dev.20180623"
   },
   "description": "An Ionic project",
   "cordova": {
@@ -90,13 +99,9 @@
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-googleplus": {
-        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.745996686081-modil5qum4720gdi6ma9p2gl6b1vflaf"
-      },
       "cordova-plugin-calendar": {},
       "cordova-plugin-nativeaudio": {},
       "cordova-custom-config": {},
-      "cordova-plugin-webrtc": {},
       "cordova-plugin-media": {},
       "android-camera-permission": {},
       "cordova-plugin-android-permissions": {},
@@ -105,7 +110,26 @@
       "cordova.plugins.diagnostic": {},
       "cordova-plugin-firebase": {},
       "cordova-plugin-compat": {},
-      "cordova-plugin-x-socialsharing": {}
+      "cordova-plugin-x-socialsharing": {},
+      "cordova-plugin-crosswalk-webview": {
+        "XWALK_VERSION": "23+",
+        "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+        "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+        "XWALK_MODE": "embedded",
+        "XWALK_MULTIPLEAPK": "true"
+      },
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "com.googleusercontent.apps.745996686081-modil5qum4720gdi6ma9p2gl6b1vflaf"
+      },
+      "cordova-plugin-facebook4": {
+        "APP_ID": "838198133052097",
+        "APP_NAME": "Enlighten",
+        "ANDROID_SDK_VERSION": "4.+"
+      },
+      "sentry-cordova": {},
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      }
     },
     "platforms": [
       "android"

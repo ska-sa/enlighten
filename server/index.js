@@ -4,7 +4,15 @@ var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 var _ = require('lodash');
+var ExpressPeerServer = require('peer').ExpressPeerServer;
 
+var options = {
+    debug: true
+}
+
+var peerServer = require('http').createServer(app);
+app.use('/peerjs', ExpressPeerServer(server, options));
+peerServer.listen(9000);
 
 server.listen(3000);
 app.use(express.static(__dirname + '/public'))
@@ -12,6 +20,7 @@ console.log("Server running on 127.0.0.1:3000");
 var boards = ['same_board']
 var line_history = [];
 var userids = [];
+
 io.on('connection', socket => {
   socket.on('adduser', user => {
     if(boards.indexOf(user.boardid) == -1) {

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MenuController,NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { SignupPage } from '../signup/signup';
 import { Events } from 'ionic-angular';
+import { UserselectionPage } from '../userselection/userselection';
 
 /**
  * Generated class for the LogoutPage page.
@@ -26,14 +26,13 @@ export class LogoutPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LogoutPage');
   }
-  loginPg(){
+  loginPg() {
     this.navCtrl.push(LoginPage);
-    
   }
-  regPg(){
-    this.navCtrl.push(SignupPage);
-    
+  regPg() {
+    this.navCtrl.push(UserselectionPage);   
   }
+
   onPageWillLeave() {
     
   }

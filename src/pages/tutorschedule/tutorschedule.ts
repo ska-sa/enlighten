@@ -68,4 +68,9 @@ export class TutorschedulePage {
     this.fcalendar.push({start: moment().format(), duration:'', recurring: false, location: 'Enlighten App', notes: 'Calendar slot', title: 'Enlighten Tutoring Session'})
   }
 
+  delete (key) {
+    firebase.database().ref(`/calendar_tutors/${this.user.uid}/${key}`).remove()
+    firebase.database().ref(`/calendar_tutors_unbooked/${this.user.uid}/${key}`).remove()
+  }
+
 }

@@ -21,13 +21,13 @@ import { Observable } from 'rxjs/Observable';
 export class HomePage {
   loader: Loading;
   todos: Todo[];
-  tutors: TutorAccess[];
   private ftutors: FirebaseListObservable<any>;
   private lessons_upcoming_now: FirebaseListObservable<any>;
   private lessonPage;
   private messagesPage;
   private user: any = {uid:'', displayName: '', photoURL: ''};
   private first: boolean = false;
+  
   constructor(
     public navCtrl: NavController,
     private todoService: TodoService,
@@ -40,14 +40,13 @@ export class HomePage {
     private af: AngularFireDatabase, private nativeStorage: NativeStorage) {
       this.user = navParams.get('user');
       this.nativeStorage.setItem('user-info', {user: this.user, type: 'learner'});
-      this.tutors = this.tutorAccess.getTutors();
       this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
       this.ftutors = af.list(`/users_tutors`);
-      this.menuController.enable(true, 'myMenu');
 
-      firebase.database().ref(`users_global/${this.user.uid}`).once('value').then(res => {
+      /* firebase.database().ref(`users_global/${this.user.uid}`).once('value').then(res => {
         this.first = res.val().first;
-      })
+      }) */
+
       this.lessonPage = LessonPage;
       this.messagesPage = MessagesPage;
       //setTimeout(this.lessonReady,2000);
@@ -57,7 +56,7 @@ export class HomePage {
     //this.initLoader();
     //this.loadTodos();
   }
-  changePage(page,object,start) {
+  changePage(page, object, start) {
     this.navCtrl.push(page, {user: this.user, target: object.tutorid, start: start, type:'learner', object: object});
   }
   ionViewDidLoad() {

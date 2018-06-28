@@ -6,7 +6,7 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 
-declare namespace PeerJs{
+declare namespace PeerJs {
     interface PeerJSOption{
         key?: string;
         host?: string;

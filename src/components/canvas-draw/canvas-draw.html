@@ -1,45 +1,21 @@
-<!-- Generated template for the CanvasDrawComponent component -->
-<ion-toolbar id="top-toolbar">
-    <ion-buttons left>
-        <!--<button ion-button (click)="pop()">
-          <ion-icon name="arrow-back" color="light" class="back"></ion-icon>
-        </button>-->
-        <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
-            <ion-icon [style.color]="colour" name="brush"></ion-icon>
-        </button>
-    </ion-buttons>
-    <ion-buttons right>
-        
-        <button ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
-            <ion-icon style="color: #fff;" name="egg"></ion-icon>
-        </button>
-        <button color="light" ion-button icon-only (click)="clearCanvas()"><ion-icon name="trash"></ion-icon></button>
-    </ion-buttons>
-</ion-toolbar>
-
-
-<!--<ion-content class="content">-->
 <ion-fab right top>
     <button ion-fab color="primary" (click)="zoomIn()"><ion-icon name="add"></ion-icon></button>
 </ion-fab>
 <ion-fab left top>
     <button ion-fab color="primary" (click)="zoomOut()"><ion-icon name="remove"></ion-icon></button>
 </ion-fab>
+<ion-fab center top>
+    <button ion-fab color="primary" (click)="showVideo()"><ion-icon name="videocam"></ion-icon></button>
+</ion-fab>
 <canvas #myCanvas (mousedown)="handleStart($event)" (mousemove)="handleMove($event)" (mouseup)="disabledown()" (touchstart)="handleStart($event)" (touchmove)="handleMove($event)" class="canvas">
 </canvas>
 
-
-
-<ion-toolbar id="bottom-toolbar">
-    <ion-buttons left>
-        <button color="light" ion-button icon-only (click)="showVideo()"><ion-icon name="videocam"></ion-icon></button>
-      </ion-buttons>
-
+<ion-footer id="bottom-toolbar">
     <ion-buttons right>
-        <button color="light" ion-button icon-only (click)="changeSize(2)"><ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(16)"><ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(32)"><ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(64)"><ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon></button>
-        <button color="light" ion-button icon-only (click)="changeSize(128)"><ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon></button>
+        <button color="primary" clear ion-button icon-only (click)="changeSize(2)"><ion-icon style="font-size: 0.25em;" name="radio-button-on"></ion-icon></button>
+        <button color="primary" clear ion-button icon-only (click)="changeSize(8)"><ion-icon style="font-size: 0.5em;" name="radio-button-on"></ion-icon></button>
+        <button color="primary" clear ion-button icon-only (click)="changeSize(16)"><ion-icon style="font-size: 1em;" name="radio-button-on"></ion-icon></button>
+        <button color="primary" clear ion-button icon-only (click)="changeSize(48)"><ion-icon style="font-size: 2em;" name="radio-button-on"></ion-icon></button>
+        <button color="primary" clear ion-button icon-only (click)="changeSize(128)"><ion-icon style="font-size: 3em;" name="radio-button-on"></ion-icon></button>
     </ion-buttons>
-</ion-toolbar>
+</ion-footer>

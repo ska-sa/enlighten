@@ -3,11 +3,6 @@ page-draw {
         overflow: hidden !important;
     }
 
-    .draw .scroll-content {
-      margin-top: 0 !important;
-      height: 100vh !important;
-    }
-
     .videos {
         height: calc(100vh - 56px);
         position: fixed;
@@ -29,6 +24,7 @@ page-draw {
       background: #222;
       text-align: center;
     }
+
     video {
       width: 100%;
       height: calc(100vh - 56px);
@@ -39,8 +35,12 @@ page-draw {
       height: 128px;
       margin-left: 24.5% !important;
       position: absolute;
-      top: 0;
+      bottom: 0;
       right: 0;
+    }
+
+    .waiting {
+      color: white;
     }
 
     .vid.ilb.mine video {

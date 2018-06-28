@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core'
 import { Events } from 'ionic-angular'
-import { Platform, MenuController, Nav, ToastController } from 'ionic-angular'
+import { Platform, MenuController, Nav, ToastController, AlertController } from 'ionic-angular'
 import { ScreenOrientation } from 'ionic-native'
 
 import { HomePage } from '../pages/home/home'
 import { ProfilePage } from '../pages/profile/profile'
+import { RegisterPage } from '../pages/register/register'
+import { TutorregisterPage } from '../pages/tutorregister/tutorregister'
 import { TutorsPage } from '../pages/tutors/tutors'
-import { ClassmenuPage } from '../pages/classmenu/classmenu'
+import { MyclassesPage } from '../pages/myclasses/myclasses'
 import { LogoutPage } from '../pages/logout/logout'
 import { AppointmentsPage } from '../pages/appointments/appointments'
 import { WalletPage } from '../pages/wallet/wallet'
@@ -30,8 +32,8 @@ import { AngularFireAuth } from 'angularfire2/auth'
 import { GooglePlus } from '@ionic-native/google-plus'
 
 import { NativeStorage } from '@ionic-native/native-storage'
-import {WebRTCConfig} from './common/webrtc.config'
-import {WebRTCService} from './common/webrtc.service'
+import { WebRTCConfig } from './common/webrtc.config'
+import { WebRTCService } from './common/webrtc.service'
 import * as firebase from 'firebase/app'
 
 @Component({
@@ -39,12 +41,12 @@ import * as firebase from 'firebase/app'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav
-  //rootPage = HomePage
+  // rootPage = DrawPage
   rootPage = LogoutPage
   tutorsPage                             
   profilePage
   appointmentsPage
-  classmenuPage
+  myclassesPage
   walletPage
   settingsPage
   logoutPage
@@ -59,6 +61,8 @@ export class MyApp {
   videocallPage
   tutorsubjectsPage
   tutorschedulePage
+  registerPage = RegisterPage;
+  tutorregisterPage = TutorregisterPage;
 
   private displayName: string
   private type: string
@@ -75,7 +79,7 @@ export class MyApp {
     public webRTC: WebRTCService,
     private toastCtrl: ToastController,
     private fireAuth: AngularFireAuth,
-    private googlePlus: GooglePlus
+    private googlePlus: GooglePlus, public alertCtrl: AlertController
   ) {
     this.initializeApp()
     this.userselectionPage = UserselectionPage
@@ -98,13 +102,13 @@ export class MyApp {
       this.splashScreen.hide()
       this.tutorsPage = TutorsPage
       this.profilePage = ProfilePage
-      this.classmenuPage = ClassmenuPage
+      this.myclassesPage = MyclassesPage
       this.logoutPage = LogoutPage
       this.appointmentsPage = AppointmentsPage
       this.walletPage = WalletPage
       this.settingsPage = SettingsPage
       this.drawPage = DrawPage
-      this.statusBar.styleDefault()
+      this.statusBar.backgroundColorByHexString('#993333')
       this.videocallPage = VideocallPage
       this.tutorsettingsPage = TutorsettingsPage
       this.tutorprofilePage = TutorprofilePage
@@ -136,17 +140,70 @@ export class MyApp {
         }  
       })
 
-      //this.initfireBase() 
+      this.platform.registerBackButtonAction(() => {
+        // Default action with the exception here
+        let alert = this.alertCtrl.create({
+          title: 'Exit app?',
+          subTitle: 'Are you sure you\'d like to exit the app?',
+          buttons: [
+            {
+              text: 'Yes',
+              handler: () => {
+                this.platform.exitApp()
+              }
+            },
+            {
+              text: 'No'
+            }
+          ]
+        })
+
+        if (!this.nav.canGoBack()) {
+          alert.present()
+        } 
+      },);
+
+      this.initfireBase() 
     })
   }
 
   initfireBase () {
-    if(this.platform.is('cordova')){
+    if(this.platform.is('cordova')) {
       this.fireAuth.authState.subscribe(user => {
-        if (user){
+        if (user) {
           this.user = user
           firebase.database().ref(`users_global/${user.uid}`).once('value').then(res => {
             this.type = res.val().type
+
+            let tempmsg = 'Welcome ' + this.user.displayName ? this.user.displayName : ''
+          
+            let toast = this.toastCtrl.create({
+              message: tempmsg,
+              duration: 2000,
+              position: 'top',
+            })
+
+            toast.present()
+            
+            if(this.type == 'learner' && !(this.nav.last().instance instanceof RegisterPage)) {
+              this.nav.setRoot(HomePage, {user:user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
+                this.nav.popToRoot()
+              })
+            } else if(!(this.nav.last().instance instanceof TutorregisterPage)) {
+              this.nav.setRoot(TutorhomePage, {
+                user: this.user, 
+                guser: this.user, 
+                data: {}
+              }, 
+              {
+                animate: true, 
+                direction: 'forward', 
+                animation: 'md-transition', 
+                duration: 500
+              }).then(() => {
+                this.nav.popToRoot()
+              })
+            }
           })
           /*firebase.database().ref(`users/${user.uid}`).update({
             photoUrl: user.photoURL != null? user.photoURL: 'http://rydwith.com/images/avatar.png',
@@ -156,27 +213,7 @@ export class MyApp {
             cellphoneNumber: '+27'
           })*/
 
-          let tempmsg = 'Welcome ' + this.user.displayName
           
-          let toast = this.toastCtrl.create({
-            message: tempmsg,
-            duration: 2000,
-            position: 'top',
-          })
-          toast.present()
-
-          toast.onDidDismiss(() => {
-            if(this.type =='learner') {
-              this.nav.setRoot(HomePage, {user:user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
-                this.nav.popToRoot()
-              })
-            } else {
-              this.nav.setRoot(TutorhomePage,{
-      user: this.user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
-                this.nav.popToRoot()
-              })
-            } 
-          })
         } else {
           this.nav.setRoot(LogoutPage)
         }
@@ -184,13 +221,16 @@ export class MyApp {
 
       //this.silentLogin()
     } else {
-      this.nav.setRoot(HomePage, {user: this.user, guser: this.user})
+      // this.nav.setRoot(HomePage, {user: this.user, guser: this.user})
     }
   }
 
   logout () {
     this.menu.close()
     this.nav.push(this.logoutPage)
+    this.fireAuth.auth.signOut()
+    this.googlePlus.logout()
+    this.nativeStorage.clear()
   }
 
   returnState () {

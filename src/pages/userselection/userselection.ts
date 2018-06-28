@@ -5,7 +5,7 @@ import { TutorregisterPage } from '../tutorregister/tutorregister';
 import { ParentregisterPage } from '../parentregister/parentregister';
 import { MyApp } from '../../app/app.component';
 import { Events } from 'ionic-angular';
-
+import { SignupPage } from '../signup/signup';
 import { NativeStorage } from '@ionic-native/native-storage';
 /**
  * Generated class for the UserselectionPage page.
@@ -37,7 +37,7 @@ export class UserselectionPage {
     this.events.publish('globals:update', type, this.displayName);
     switch (type) {
       case "student":
-        this.navCtrl.push(RegisterPage, {type: type});
+        this.navCtrl.push(SignupPage, {type: type});
       break;
       case "tutor":
         this.navCtrl.push(TutorregisterPage, {type: type});

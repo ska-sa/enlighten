@@ -16,7 +16,7 @@
       <ion-segment-button value="pending" style="color: white">
         Pending
       </ion-segment-button>
-      <ion-segment-button value="upcoming" style="color: white">
+      <ion-segment-button value="scheduled" style="color: white">
         Upcoming
       </ion-segment-button>
       <ion-segment-button value="history" style="color: white">
@@ -87,7 +87,7 @@
                 <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
               </ion-item>
               <div padding text-center>
-                <button text-center class="request-btn" ion-button bottom (click)="openPage(classroomPage)" medium>
+                <button text-center class="request-btn" ion-button bottom (click)="openPage(drawPage, lesson, lesson.start)" medium>
                   Enter classroom
                 </button>
               </div>
