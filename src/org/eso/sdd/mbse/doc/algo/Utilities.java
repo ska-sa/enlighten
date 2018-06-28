@@ -55,6 +55,7 @@ public class Utilities {
 	private Stereotype theBlockStereotype = null;
 	private Stereotype thePartStereotype = null;
 	private Stereotype thePrefaceStereotype = null;
+	
 	private Stereotype theBibliographyStereotype = null;
 	private Stereotype theBiblioEntryStereotype = null;
 	private Stereotype theTableStereotype = null;
@@ -70,6 +71,7 @@ public class Utilities {
 	//Gerhard le Roux customisation
 	private Stereotype theSmartPackageStereotype = null;
 	private Stereotype theGenericQueryStereotype = null;
+	private Stereotype theTMReqStereotyope = null;
 	
 	// from MD
 	private Stereotype theMDDiagramTableStereotype = null;
@@ -78,6 +80,9 @@ public class Utilities {
 	private Profile docCustomProfile = null;
 	private Profile SysMLProfile = null;
 	private Profile UMLStandardProfile = null;
+	
+	//gerhard le Roux TM requirements Profile
+	private Profile TMProfile = null;
 	
 	private List<Stereotype> theStereoCollection = null;
 
@@ -103,7 +108,9 @@ public class Utilities {
 		UMLStandardProfile = StereotypesHelper.getProfile(Application.getInstance()
 				.getProject(), "MagicDraw Profile");
 		docCustomProfile =StereotypesHelper.getProfile(Application.getInstance().getProject(),"docCustomProfile");
-
+		
+		TMProfile = StereotypesHelper.getProfile(Application.getInstance().getProject(),"TM Profile");
+		
 		theStereoCollection = new ArrayList<Stereotype>();
 
 		// DOCBOOK
@@ -187,6 +194,17 @@ public class Utilities {
 		//GLR adding Smartpackages as stereotypes
 		theSmartPackageStereotype = StereotypesHelper.getStereotype (Application
 				.getInstance().getProject(), "SmartPackage", UMLStandardProfile);
+		
+		//GLR add Tm requirements as stereotypes
+		if (TMProfile == null) {
+			// LOG ERROR
+			System.err.println("MBSE: TM profile not found.");
+			
+		} else {
+	
+		theTMReqStereotyope = StereotypesHelper.getStereotype (Application
+				.getInstance().getProject(), "TM Req", TMProfile);
+		}
 
 		// SYSML 
 		if (SysMLProfile == null) {
@@ -298,6 +316,10 @@ public class Utilities {
 
 	public Stereotype getTheFigureDiagramStereotype() {
 		return theFigureDiagramStereotype;
+	}
+	//Gerhard le Roux customisation
+	public Stereotype getTheTMReqStereo() {
+		return theTMReqStereotyope;
 	}
 
 	public Stereotype getThePrefaceStereotype() {
@@ -414,6 +436,10 @@ public class Utilities {
 
 	public static boolean isConstraintBlock(Element ne) {
 		return StereotypesHelper.hasStereotypeOrDerived(ne, "ConstraintBlock");
+	}
+	
+	public static boolean isTMReq(Element ne) {
+		return StereotypesHelper.hasStereotypeOrDerived(ne,"skaRequirement");
 	}
 
 	public static boolean isBibliography(Element ne) {

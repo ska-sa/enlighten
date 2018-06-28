@@ -81,6 +81,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.ExpandVetoException;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import org.eso.sdd.mbse.doc.algo.DocBookNode;
@@ -356,7 +357,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 			private void doCollapsed(DefaultMutableTreeNode node,
 					TreePath path) {
 
-				Enumeration<DefaultMutableTreeNode> li = node.children();
+				Enumeration<TreeNode> li = node.children();
 				while (li.hasMoreElements()) {
 					DocBookNode e = (DocBookNode) li.nextElement();
 					TreePath newPath = null;
@@ -429,7 +430,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 				int startIndex = contains(
 						((DocBookNode) node).getRep(), rows, columns);
 
-				Enumeration<DefaultMutableTreeNode> li = node.children();
+				Enumeration<TreeNode> li = node.children();
 				while (li.hasMoreElements()) {
 					DocBookNode e = (DocBookNode) li.nextElement();
 					
@@ -791,9 +792,9 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 
 		// construct table model
 		tabModel = new DefaultTableModel();
-		tabModel.setDataVector(rows, columns);
+		tabModel.setDataVector((Vector<? extends Vector>) rows, columns);
 
-		final Vector<Object> mall = tabModel.getDataVector();
+		final Vector<Vector> mall = tabModel.getDataVector();
 
 		table = new JTable(tabModel) {
 
@@ -1053,7 +1054,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 				.getModel().getRoot();
 		DocBookNode db = (DocBookNode) rt;
 		((DefaultTableModel) table.getModel()).addRow(db.getRep());
-		Enumeration<DefaultMutableTreeNode> li = rt.children();
+		Enumeration<TreeNode> li = rt.children();
 		while (li.hasMoreElements()) {
 			db = (DocBookNode) li.nextElement();
 			((DefaultTableModel) table.getModel()).addRow(db.getRep());
@@ -1274,10 +1275,10 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 			term = term.replaceAll(">", "&gt;");
 		}
 
-		Enumeration<DefaultMutableTreeNode> li = root.children();
+		Enumeration<TreeNode> li = root.children();
 		while (li.hasMoreElements()) {
 
-			DefaultMutableTreeNode db = li.nextElement();
+			DefaultMutableTreeNode db = (DefaultMutableTreeNode) li.nextElement();
 			DocBookVector comp = ((DocBookNode) db).getRep();
 			String cont = comp.toString();
 			cont = cont.replaceAll("\\<.*?>", "").trim();
@@ -1858,7 +1859,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 
 	private static void getDiagramTableCount(DefaultMutableTreeNode root) {
 
-		Enumeration<DefaultMutableTreeNode> li = root.children();
+		Enumeration<TreeNode> li = root.children();
 		while (li.hasMoreElements()) {
 			DocBookNode db = (DocBookNode) li.nextElement();
 			if (Utilities.isDiagramTable(db.getElement())) {
@@ -1873,7 +1874,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 
 	public static int getChildCount(DefaultMutableTreeNode nodeToupdate,
 			String type) {
-		Enumeration<DefaultMutableTreeNode> li = null;
+		Enumeration<TreeNode> li = null;
 		int count = 0;
 		if(nodeToupdate == null ) { 
 			return count;
@@ -1897,7 +1898,7 @@ public class MBSEShowEditPanelAction extends DefaultBrowserAction {
 			return root;
 		}
 
-		Enumeration<DefaultMutableTreeNode> li = root.children();
+		Enumeration<TreeNode> li = root.children();
 		DefaultMutableTreeNode retNode = null;
 		while (li.hasMoreElements()) {
 			DocBookNode db = (DocBookNode) li.nextElement();

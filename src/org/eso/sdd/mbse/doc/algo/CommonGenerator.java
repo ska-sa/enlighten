@@ -95,6 +95,7 @@ public class CommonGenerator implements RunnableWithProgress {
 			+ lE
 			+ "<book xmlns=\"http://docbook.org/ns/docbook\" version=\"5.0\">"
 			+ lE;
+	private static String reqFilter = "";
 	private static String epilogue = "";
 	private static int sectionDepth = 1;
 	private static int biblioCounter = 1;
@@ -192,7 +193,11 @@ public class CommonGenerator implements RunnableWithProgress {
 			return;
 		}
 		DocDown = new StringBuffer();
-
+		Stereotype theBookStereo   = theUtilities.getTheBookStereotype();
+		reqFilter = (String) StereotypesHelper.getStereotypePropertyFirst(theStartElement,theBookStereo,"ReqFilter");
+		if (reqFilter == null) {
+			reqFilter = "";
+		}
 		// DocDown.append(preamble);
 		sectionDepth = 1;
 		recursionDepth = -1;
@@ -1207,25 +1212,49 @@ public class CommonGenerator implements RunnableWithProgress {
 			}
 		}
 		//Gerhard le Roux customisation to filter elements based on setting in stereotype
+		Stereotype theTMReqStereo   = theUtilities.getTheTMReqStereo();
 		String Filter = (String) StereotypesHelper.getStereotypePropertyFirst(el,theDocBookTDStereo,"Filter");
 		String FilterOnProperty = (String) StereotypesHelper.getStereotypePropertyFirst(el,theDocBookTDStereo,"FilterOnProperty");
 		boolean FilterTable = false;
+		boolean filterRequirements = false;
+		if (reqFilter != "") {
+			filterRequirements = true;
+		}
 		if (Filter != null & FilterOnProperty != null){
 			FilterTable = true;
 		}
 		List<Element> RowElements = new ArrayList<Element>(GenericTableManager.getRowElements(theDiagram));
 		for (Element RowElement : RowElements){
 			if (FilterTable) {
+				String ReqStatus = "notARequirement";
 				Collection<String> PropertyValueList = (Collection<String>) RowElement.refGetValue(FilterOnProperty);
+				if (Utilities.isTMReq(RowElement)) {	
+					ReqStatus = (String) ((EnumerationLiteral)StereotypesHelper.getStereotypePropertyFirst(RowElement,theTMReqStereo,"status")).getName();
+				}
 				//because the list is a singleton we can always work on the first element in list
 				if (PropertyValueList.iterator().hasNext()) {
 					String PropertyValue = PropertyValueList.iterator().next();
 					//if (PropertyValue.contains(Filter)){
 					if (PropertyValue.matches(Filter)){
-						rowElementsId.add(RowElement.getID());
+						if ((filterRequirements) & (ReqStatus != "notARequirement")) {
+							if (ReqStatus.matches(reqFilter)) {
+								rowElementsId.add(RowElement.getID());
+							}
+						} else {
+							rowElementsId.add(RowElement.getID());
+						}
 					}
+				} 
+			} else if (filterRequirements) {
+				String ReqStatus = "notARequirement";
+				if (Utilities.isTMReq(RowElement)) {
+					ReqStatus = (String) ((EnumerationLiteral)StereotypesHelper.getStereotypePropertyFirst(RowElement,theTMReqStereo,"status")).getName();
 				}
-			} else {
+				if ((ReqStatus.matches(reqFilter)) | ( ReqStatus == "notARequirement")){
+					rowElementsId.add(RowElement.getID());
+				}
+			}
+			else {
 				rowElementsId.add(RowElement.getID());
 			}
 		}
@@ -1369,11 +1398,19 @@ public class CommonGenerator implements RunnableWithProgress {
 						elementInfo = entryList;
 						
 					} else if(theProp instanceof com.nomagic.magicdraw.properties.ElementProperty ) {
+						logDebugIndent(el,"cell is an element");
 						if(theProp.getName().equals("Type")) { 
-							TypedElement te = (TypedElement)elementByID;
-							elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
+							if (elementByID instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association) {
+								 com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association Ae = (com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association)elementByID;
+								elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
+									Utilities.convertHTML2DocBook(Ae.getName(), false) 
+										+ "</entry>" +lE;
+							} else {
+								TypedElement te = (TypedElement)elementByID;
+								elementInfo = "<entry align=\"left\" annotations=\"ElementProperty (Type)\" >"	+ 
 									Utilities.convertHTML2DocBook(te.getType().getName(), false) 
 										+ "</entry>" +lE;
+							}
 						} 
 						else {
 							String val = theProp.getValueStringRepresentation();
