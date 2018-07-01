@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule, ErrorHandler } from '@angular/core'
+import { NgModule, ErrorHandler, Injectable, Injector } from '@angular/core'
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular'
 import { StatusBar } from '@ionic-native/status-bar'
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { ScreenOrientation } from 'ionic-native'
+import { Pro } from '@ionic/pro';
 
 import { MyApp } from './app.component'
 import { HomePage } from '../pages/home/home'
@@ -71,29 +72,6 @@ import { TolocalPipe } from '../pipes/tolocal/tolocal'
 
 import { SocialSharing } from '@ionic-native/social-sharing'
 
-import Raven from 'raven-js';
-
-Raven  
-    .config('https://fb2419c969a748628e31b57e66a39b0b@sentry.io/1231747', { 
-      release: '1.0.0', 
-      dataCallback: data => {
-
-          if (data.culprit) {
-              data.culprit = data.culprit.substring(data.culprit.lastIndexOf('/'));
-          }
-
-          var stacktrace = data.stacktrace || 
-                            data.exception && 
-                            data.exception.values[0].stacktrace;
-
-          if (stacktrace) {
-              stacktrace.frames.forEach(function (frame) {
-                  frame.filename = frame.filename.substring(frame.filename.lastIndexOf('/'));
-              });
-          }
-      } 
-    })
-    .install()
 
 export const environment = {
   production: false, 
@@ -107,14 +85,28 @@ export const environment = {
   }
 }
 
-export class SentryIonicErrorHandler extends IonicErrorHandler {
-  handleError(error) {
-    super.handleError(error);
+Pro.init('24006E0D', {
+  appVersion: '1.0'
+})
+
+@Injectable()
+export class MyErrorHandler implements ErrorHandler {
+  ionicErrorHandler: IonicErrorHandler;
+
+  constructor(injector: Injector) {
     try {
-      Raven.captureException(error.originalError || error);
-    } catch (e) {
-      console.error(e);
+      this.ionicErrorHandler = injector.get(IonicErrorHandler);
+    } catch(e) {
+      // Unable to get the IonicErrorHandler provider, ensure
+      // IonicErrorHandler has been added to the providers list below
     }
+  }
+
+  handleError(err: any): void {
+    Pro.monitoring.handleNewError(err);
+    // Remove this if you want to disable Ionic's auto exception handling
+    // in development mode.
+    this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
   }
 }
 
@@ -219,7 +211,7 @@ export class SentryIonicErrorHandler extends IonicErrorHandler {
     AndroidPermissions,
     Firebase,
     SocialSharing,
-    {provide: ErrorHandler, useClass: SentryIonicErrorHandler}
+    {provide: ErrorHandler, useClass: MyErrorHandler }
   ]
 })
 
