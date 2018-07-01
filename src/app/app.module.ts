@@ -50,7 +50,6 @@ import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { AngularFireAuthModule } from 'angularfire2/auth'
 import { Firebase } from '@ionic-native/firebase'
 
-import { TodoService, TodoLocalStorageService } from "./services/todo/todo"
 import { TutorAccess } from './services/tutor-data/tutor.data'
 import { userAccess } from './services/users/users'
 import { allUsers } from './services/users/allusers'
@@ -192,8 +191,6 @@ export class MyErrorHandler implements ErrorHandler {
   providers: [
     StatusBar,
     SplashScreen,
-    TodoService,
-    TodoLocalStorageService,
     TutorAccess,
     userAccess,
     allUsers,
