@@ -1,13 +1,9 @@
 {
   "name": "enlighten-app-za",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "version": "1.1",
+  "author": "Jalapeno Digital",
+  "homepage": "http://enlightentutoring.co.za/",
   "private": true,
-  "config": {
-    "ionic_source_map_type": "source-map",
-    "ionic_generate_source_map": true
-  },
   "scripts": {
     "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -77,7 +73,6 @@
     "promise-polyfill": "6.0.2",
     "raven-js": "^3.26.3",
     "rxjs": "5.4.0",
-    "sentry-cordova": "^0.10.2",
     "simple-peer": "^8.1.1",
     "socket.io": "^2.0.4",
     "sw-toolbox": "3.6.0",
@@ -127,7 +122,6 @@
         "APP_NAME": "Enlighten",
         "ANDROID_SDK_VERSION": "4.+"
       },
-      "sentry-cordova": {},
       "cordova-android-support-gradle-release": {
         "ANDROID_SUPPORT_VERSION": "27.+"
       }

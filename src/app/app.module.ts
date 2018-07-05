@@ -71,21 +71,8 @@ import { TolocalPipe } from '../pipes/tolocal/tolocal'
 
 import { SocialSharing } from '@ionic-native/social-sharing'
 
-
-export const environment = {
-  production: false, 
-  firebase: {
-    apiKey: "AIzaSyD2no81K7g1u8W9_X4GQP3SRt24ScH_St0",
-    authDomain: "enlighten-175514.firebaseapp.com",
-    databaseURL: "https://enlighten-175514.firebaseio.com",
-    projectId: "enlighten-175514",
-    storageBucket: "enlighten-175514.appspot.com",
-    messagingSenderId: "745996686081"
-  }
-}
-
-Pro.init('24006E0D', {
-  appVersion: '1.0'
+Pro.init('24006e0d', {
+  appVersion: '1.1.0'
 })
 
 @Injectable()
@@ -106,6 +93,18 @@ export class MyErrorHandler implements ErrorHandler {
     // Remove this if you want to disable Ionic's auto exception handling
     // in development mode.
     this.ionicErrorHandler && this.ionicErrorHandler.handleError(err);
+  }
+}
+
+export const environment = {
+  production: false, 
+  firebase: {
+    apiKey: "AIzaSyD2no81K7g1u8W9_X4GQP3SRt24ScH_St0",
+    authDomain: "enlighten-175514.firebaseapp.com",
+    databaseURL: "https://enlighten-175514.firebaseio.com",
+    projectId: "enlighten-175514",
+    storageBucket: "enlighten-175514.appspot.com",
+    messagingSenderId: "745996686081"
   }
 }
 
@@ -208,8 +207,8 @@ export class MyErrorHandler implements ErrorHandler {
     AndroidPermissions,
     Firebase,
     SocialSharing,
+    IonicErrorHandler,
     {provide: ErrorHandler, useClass: MyErrorHandler }
   ]
 })
-
 export class AppModule {}
