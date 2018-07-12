@@ -61,8 +61,6 @@ import { Calendar } from '@ionic-native/calendar'
 import { CalendarComponent } from '../components/calendar/calendar'
 import { CanvasDrawComponent } from '../components/canvas-draw/canvas-draw'
 
-import { HttpModule } from '@angular/http'
-
 import { NativeAudio } from '@ionic-native/native-audio'
 import { WebRTCConfig } from './common/webrtc.config'
 import { WebRTCService } from './common/webrtc.service'
@@ -146,7 +144,6 @@ export const environment = {
     TutorsubjectsPage
   ],
   imports: [
-    HttpModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(environment.firebase),

@@ -6,8 +6,6 @@ import { SubjectsAccess } from '../../app/services/subjects/subjects'
 import { userAccess } from '../../app/services/users/users'
 import { TutorhomePage } from '../tutorhome/tutorhome'
 
-
-import { Http, Headers } from '@angular/http'
 import 'rxjs/Rx'
 
 import { Events } from 'ionic-angular'

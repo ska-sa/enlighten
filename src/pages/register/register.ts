@@ -8,7 +8,6 @@ import { SubjectsAccess } from '../../app/services/subjects/subjects'
 
 import { userAccess } from '../../app/services/users/users'
 import { Events } from 'ionic-angular'
-import { Http, Headers } from '@angular/http'
 import 'rxjs/Rx'
 
 import { NativeStorage } from '@ionic-native/native-storage'
@@ -180,7 +179,7 @@ export class RegisterPage {
           this.gglogged(success)
         })
         .catch((err) => {
-          alert('Login failed!' + err)
+          alert('We could not log you in at this tiem.' + err)
           this.ggfail()
         })
     } else {

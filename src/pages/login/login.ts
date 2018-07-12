@@ -13,7 +13,6 @@ import { HomePage } from '../home/home'
 import { TutorhomePage } from '../tutorhome/tutorhome'
 import { userAccess } from '../../app/services/users/users'
 import { Events } from 'ionic-angular'
-import { Http, Headers } from '@angular/http'
 
 
 import 'rxjs/Rx'
@@ -44,8 +43,7 @@ export class LoginPage {
   private users
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl: AlertController, 
-    private http: Http,
+    public alertCtrl: AlertController,
     private googlePlus: GooglePlus,
     public afAuth: AngularFireAuth, 
     private af: AngularFireDatabase,

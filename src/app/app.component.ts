@@ -99,6 +99,7 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      console.log('Platform ready')
       this.splashScreen.hide()
       this.tutorsPage = TutorsPage
       this.profilePage = ProfilePage
@@ -118,7 +119,7 @@ export class MyApp {
       this.lessonPage = LessonPage
       this.tutorschedulePage = TutorschedulePage
       this.tutorsubjectsPage = TutorsubjectsPage
-      
+      console.log('Everything initialized')
       this.nativeStorage.getItem('user-info').then(data => {
         this.type = data.type
         this.user = data.user     
@@ -161,7 +162,9 @@ export class MyApp {
         if (!this.nav.canGoBack()) {
           alert.present()
         } 
-      },);
+      },)
+
+      console.log('All subscriptions done. Initializing firebase')
 
       this.initfireBase() 
     })
