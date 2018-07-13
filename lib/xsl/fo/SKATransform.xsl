@@ -600,7 +600,7 @@
     <xsl:if test="$document.element/d:info/d:productnumber/d:ska-field[@type='docsw']">
         <fo:block padding-bottom="1cm" />
         <fo:block font-size="14pt" font-weight="bold" text-align="center" padding-after="2pt">DOCUMENT SOFTWARE</fo:block>
-        <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid">
+        <fo:table table-layout="fixed" border-width="0.6mm" border-style="solid" break-after="page">
         <fo:table-column column-number="1" column-width="20%"/>
         <fo:table-column column-number="2" column-width="20%"/>
         <fo:table-column column-number="3" column-width="20%"/>
