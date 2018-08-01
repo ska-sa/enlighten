@@ -185,6 +185,7 @@ export class MyApp {
           firebase.database().ref(`users_global/${user.uid}`).once('value').then(res => {
             this.type = res.val().type
             this.events.publish('globals:update', user, this.type)
+            this.lessons = this.lessonsProvider.getUpcomingLessons(this.user, this.type)
 
             let tempmsg = 'Welcome ' + this.user.displayName ? this.user.displayName : ''
           
@@ -216,8 +217,7 @@ export class MyApp {
               })
             }
           })
-
-          this.lessons = this.lessonsProvider.getUpcomingLessons(this.user)
+ 
           /*firebase.database().ref(`users/${user.uid}`).update({
             photoUrl: user.photoURL != null? user.photoURL: 'http://rydwith.com/images/avatar.png',
             email: user.email,
@@ -225,7 +225,6 @@ export class MyApp {
             displayName: user.displayName != null? user.displayName: 'Awesome Person',
             cellphoneNumber: '+27'
           })*/
-
           
         } else {
           this.nav.setRoot(LogoutPage)

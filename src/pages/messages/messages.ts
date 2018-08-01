@@ -78,7 +78,7 @@ export class MessagesPage {
         })
       })    
 
-    this.lessons_pending = this.lessonsProvier.getPendingLessons(this.user)
+    this.lessons_pending = this.lessonsProvier.getPendingLessons(this.user, 'learner')
     this.upcoming_now_lessons = this.lessonsProvier.getUpcomingNowLessons(this.recipientId, 'tutor')
 
     firebase.database().ref(`/users_learners/${this.user.uid}`).once('value').then(res => {

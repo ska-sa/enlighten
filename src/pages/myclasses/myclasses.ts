@@ -30,9 +30,10 @@ export class MyclassesPage {
     private af: AngularFireDatabase, private lessonsProvider: LessonsProvider) {
     this.user = navParams.get('user');
     this.drawPage = DrawPage;
-    this.lessons_upcoming = lessonsProvider.getUpcomingLessons(this.user)
-    this.lessons_history = lessonsProvider.getLessonHistory(this.user)
-    this.lessons_pending = lessonsProvider.getPendingLessons(this.user)
+    const type = 'learner'
+    this.lessons_upcoming = lessonsProvider.getUpcomingLessons(this.user, type)
+    this.lessons_history = lessonsProvider.getLessonHistory(this.user, type)
+    this.lessons_pending = lessonsProvider.getPendingLessons(this.user, type)
   }
 
   ionViewDidLoad() {

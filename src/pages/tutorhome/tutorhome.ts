@@ -8,6 +8,7 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { AngularFireAuth } from 'angularfire2/auth'
 import { Observable } from 'rxjs/Observable'
 import * as firebase from 'firebase'
+import { LessonsProvider } from '../../providers/lessons/lessons'
 
 /**
  * Generated class for the TutorhomePage page.
@@ -30,20 +31,16 @@ export class TutorhomePage {
   private user
   constructor(public navCtrl: NavController, 
     private af: AngularFireDatabase, public navParams: NavParams, public menuController: MenuController,
-    public events: Events, public alertCtrl: AlertController) {
+    public events: Events, public alertCtrl: AlertController, private lessonsProvider: LessonsProvider) {
     this.tutorschedulePage = TutorschedulePage
     this.menuController.enable(true, 'myMenu')
     this.lessonPage = LessonPage
     this.tutorclassesPage = TutorclassesPage
     this.user = navParams.get('user')
-    this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`)
-    this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_tutors/${this.user.uid}`, {query: {limitToFirst: 1}})
-    this.lessons_pending = af.list(`/lessons_pending_tutors/${this.user.uid}`, {
-      query: {
-        orderByChild: 'rate',
-        limitToFirst: 1
-      }
-    })
+    const type = 'tutor'
+    this.lessons_pending = lessonsProvider.getPendingLessons(this.user, type)
+    this.lessons_upcoming = lessonsProvider.getUpcomingLessons(this.user, type)
+    this.lessons_upcoming_now = lessonsProvider.getUpcomingNowLessons(this.user.uid, type, {query: {limitToFirst: 1}})
     //keep in mind, through node - we can make the calendar rewrite itself or delete itself weekly
     //UPDATE CALENDAR TO FIT THIS WEEK!
   }

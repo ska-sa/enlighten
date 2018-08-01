@@ -13,40 +13,31 @@ import { Events } from 'ionic-angular'
 */
 @Injectable()
 export class LessonsProvider {
-  private type
 
   constructor(public auth: AuthProvider, private af: AngularFireDatabase, events: Events) {
-    this.type = auth.getType()
-    
-    events.subscribe('globals:update', (user, type) => {
-      this.type = type
-    })
+
   }
 
-  setType(type) {
-    this.type = type
+  getUpcomingLessons (user, type): FirebaseListObservable<any> {
+    return this.af.list(`/lessons_upcoming_${type}s/${user.uid}`)
   }
 
-  getUpcomingLessons (user): FirebaseListObservable<any> {
-    return this.af.list(`/lessons_upcoming_${this.type}s/${user.uid}`)
+  getUpcomingNowLessons (uid, type, query = {}): FirebaseListObservable<any> {
+    return this.af.list(`/lessons_upcoming_now_${type}s/${uid}/`, query)
   }
 
-  getUpcomingNowLessons (uid, type): FirebaseListObservable<any> {
-    return this.af.list(`/lessons_upcoming_now_${type}s/${uid}/`)
-  }
-
-  getPendingLessons (user): FirebaseListObservable<any> {
-    let query = this.type === 'tutor' ? {
+  getPendingLessons (user, type): FirebaseListObservable<any> {
+    let query = type === 'tutor' ? {
       query: {
         orderByChild: 'rate'
       }
     } : {}
 
-    return this.af.list(`/lessons_pending_${this.type}s/${user.uid}`, query)
+    return this.af.list(`/lessons_pending_${type}s/${user.uid}`, query)
   }
 
-  getLessonHistory (user): FirebaseListObservable<any> {
-    return this.af.list(`/lessons_history_${this.type}s/${user.uid}`)
+  getLessonHistory (user, type): FirebaseListObservable<any> {
+    return this.af.list(`/lessons_history_${type}s/${user.uid}`)
   }
 
   acceptLesson (lessonid, learnerid, user) {
