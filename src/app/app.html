@@ -8,8 +8,7 @@
         </ion-avatar>
         <h2 style="font-size: 1.4em">{{user.displayName}}</h2>
         <h3 style="font-size: 0.8em" > ----- SUMMARY -----</h3>
-        <p style="font-size: 0.8em" *ngIf="type == 'student'"> AVAIL BAL: R132.00</p>
-        <p style="font-size: 0.8em" *ngIf="type == 'tutor'"> NO. LESSONS: 19</p>
+        <p style="font-size: 0.8em"> {{ (lessons | async )?.length }} upcoming lessons </p>
       </ion-item>
     </ion-list>
   </ion-header>

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core'
-import { NavController, NavParams, AlertController, LoadingController, ToastController, Platform } from 'ionic-angular'
+import { NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular'
 import { HomePage } from '../home/home'
 import { LogoutPage } from '../logout/logout'
 
@@ -12,9 +12,6 @@ import 'rxjs/Rx'
 
 import { NativeStorage } from '@ionic-native/native-storage'
 
-import { GooglePlus } from '@ionic-native/google-plus'
-import { Facebook } from '@ionic-native/facebook'
-
 import * as firebase from 'firebase/app'
 import 'firebase/messaging'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
@@ -22,6 +19,8 @@ import { AngularFireAuth } from 'angularfire2/auth'
 import { FirebaseApp } from 'angularfire2'
 import { Firebase } from '@ionic-native/firebase'
 import { Observable } from 'rxjs/Observable'
+
+import { AuthProvider } from '../../providers/auth/auth'
 /**
  * Generated class for the RegisterPage page.
  *
@@ -55,19 +54,30 @@ export class RegisterPage {
 
   private schfocused: boolean = false
   private rate = 100
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams, 
-    public alertCtrl: AlertController,
-    private institutionsAccess: InstitutionsAccess,
-    private subjectsAccess: SubjectsAccess,
-    public events: Events, 
-    public loadingCtrl: LoadingController,
-    private googlePlus: GooglePlus,
-    public afAuth: AngularFireAuth, 
-    private af: AngularFireDatabase,
-    private nativeStorage: NativeStorage, private fcm: Firebase,
-    private toastCtrl: ToastController, private platform: Platform, private facebook: Facebook) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    public alertCtrl: AlertController, private institutionsAccess: InstitutionsAccess,
+    private subjectsAccess: SubjectsAccess, public events: Events, 
+    public loadingCtrl: LoadingController, private af: AngularFireDatabase,
+    private nativeStorage: NativeStorage, private fcm: Firebase, private authProvider: AuthProvider) {
       this.getSchools()
+  }
+
+  ionViewDidLoad() {
+    this.subscribeToAuthState()
+    console.log('ionViewDidLoad RegisterPage')
+  }
+
+  subscribeToAuthState () {
+    this.events.subscribe('globals:update', (user, type) => {
+      this.user = user
+      this.gUser = user
+
+      if(this.email.length < 1) {
+        this.email = user.email
+      }
+
+      this.reg()
+    })
   }
 
   addFocus() {
@@ -82,17 +92,6 @@ export class RegisterPage {
     }, 100)
   }
 
-  toast(msg) {    
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 4000,
-      position: 'top',
-    });
-    toast.present();
-    this.password = '';
-    this.password2 = '';
-  }
-
   selectSchool(s) {
     this.sch = s.school
 
@@ -100,30 +99,31 @@ export class RegisterPage {
     this.removeFocus()
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage')
-  }
-
   getSchools() {
     this.af.list(`/schools`, {preserveSnapshot: true})
-        .subscribe(snapshots => {
-          this.schools = []
-          snapshots.forEach(snapshot => {
-            this.schools.push(snapshot.val())
-          })
-          console.log(this.schools)
+      .subscribe(snapshots => {
+        this.schools = []
+
+        snapshots.forEach(snapshot => {
+          this.schools.push(snapshot.val())
         })
+
+        console.log(this.schools)
+      })
   }
 
   getItems(ev:any) {
     let val = ev.target.value
     this.addFocus()
+
     if(val.length > 3) {
       this.getSchools() 
+
       if(val && val.trim() != '') {
         this.schools = this.schools.filter((school)=>{  
           return (school.school.toLowerCase().indexOf(val.toLowerCase()) > -1)
         })
+
         console.log(this.schools)
       }
     }
@@ -168,120 +168,6 @@ export class RegisterPage {
     return valid
   }
 
-  gg () {
-    if (this.verifyPage3()) {
-      this.loader.present()
-      this.googlePlus.login({
-        //'webClientId': '559242294803-iel70p87sa56tv4leg3hosnbu46lrtfc.apps.googleusercontent.com',
-        'webClientId': '745996686081-modil5qum4720gdi6ma9p2gl6b1vflaf.apps.googleusercontent.com',
-        'offline': true})
-        .then((success) =>{
-          this.gglogged(success)
-        })
-        .catch((err) => {
-          alert('We could not log you in at this tiem.' + err)
-          this.ggfail()
-        })
-    } else {
-      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
-    }
-  }
-
-  ggfail () {
-    this.loader.dismiss()
-    setTimeout(()=>{this.showDeny()}, 200)
-  }
-
-  gglogged (result) {
-    this.loader.dismiss()
-    this.fireAuth(result)
-  }
-
-  fb(): Promise<any> {
-    if(this.platform.is('cordova')){
-      this.loader.present()
-      return this.facebook.login(['email'])
-        .then( response => {
-          const facebookCredential = firebase.auth.FacebookAuthProvider
-            .credential(response.authResponse.accessToken)
-
-          this.fireAuth(facebookCredential, 'fb')
-
-        }).catch((error) => { console.log(error) })
-    }
-    else {
-      this.showAlert()
-    }
-  }
-  
-  fireAuth(successuser, type = 'gg') {
-    this.gUser = successuser
-    let credential
-
-    if(type === 'gg') {
-      credential = firebase.auth.GoogleAuthProvider.credential(
-              successuser.idToken)
-    } else {
-      credential = successuser
-    }
-
-    let env = this
-    firebase.auth().signInWithCredential(credential).then((result) => {
-      var user = result
-      env.user = result
-      env.completing.present()
-      env.authState = env.afAuth.authState
-      env.authState.subscribe(user => {
-        if (user) {
-          env.fcm.getToken().then(token => {
-              firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
-          })
-
-          env.fcm.onTokenRefresh()
-            .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) )
-            
-          env.events.publish('globals:update', user, 'learner')
-
-          if (env.email.length < 1) {
-            env.email = user.email
-          }
-
-          env.reg()
-        } else {
-          alert('Please check your internet connection and try again')
-        }
-      })
-    }).catch(err => {
-      alert('Authentication error')
-    })
-  }
-
-  register () {
-    this.loader.present()
-    this.email = this.email.split(' ').join('')
-    let env = this;
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .then( user => {
-        env.user = user
-
-        env.fcm.getToken().then(token => {
-          firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
-        })
-
-        env.fcm.onTokenRefresh()
-          .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) );
-        
-        env.events.publish('globals:update', user, 'learner');
-        this.loader.dismiss();
-        env.reg();      
-      }).catch(err => {
-        this.loader.dismiss();
-        this.toast(err.message);
-      });;
-  }
-
   next (s) {
     if (s === 'details') {
       if (this.verifyPage1()) {
@@ -295,6 +181,31 @@ export class RegisterPage {
       } else {
         this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
       }
+    }
+  }
+
+  gg () {
+    if (this.verifyPage3()) {
+      this.authProvider.googleLogin()
+    } else {
+      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
+    }
+    
+  }
+
+  fb () {
+    if (this.verifyPage3()) {
+      this.authProvider.facebookLogin()
+    } else {
+      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
+    }
+  }
+
+  register () {
+    if (this.verifyPage3()) {
+      this.authProvider.emailRegister(this.email, this.password, 'learner')
+    } else {
+      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
     }
   }
   

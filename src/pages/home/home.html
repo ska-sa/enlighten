@@ -52,16 +52,6 @@
     <ion-list-header no-lines text-center>
       Recommended for you
     </ion-list-header>
-    <!--<ion-item *ngFor="let tutor of tutors" text-wrap (click)="viewTutor(0)">
-      <ion-avatar item-left class="avatar">
-        <img [src]="tutor.image">
-        <div [class]="'status ' + tutor.status"> </div>
-      </ion-avatar>
-      <strong>{{tutor.name}}</strong>
-      <p>{{tutor.institution}}</p>
-      <p>{{tutor.subjects.join(', ')}}</p>      
-      <ion-icon color="primary" item-right name="thumbs-up"></ion-icon> <p item-right> {{tutor.likes}}</p>
-    </ion-item>-->
     <ion-item *ngFor="let tutor of ftutors | async" text-wrap (click)="viewTutor(tutor.$key)">
       <ion-avatar item-left class="avatar">
         <img [src]="tutor.imageurl">
@@ -69,9 +59,7 @@
       </ion-avatar>
       <strong>{{tutor.name}} {{tutor.lastname}}</strong>
       <p>{{tutor.institution}}</p>
-      <p>Subjects</p>      
-      <!-- <button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
-      <!-- <ion-icon color="primary" item-right name="thumbs-up"></ion-icon> <p item-right> {{tutor.likes}}</p> -->
+      <p>Subjects</p>
     </ion-item>
   </ion-list>
 
@@ -83,7 +71,6 @@
       <strong>LESSON COMING UP</strong>
       <p>{{lesson.start | date:'HH:mm'}} Today</p>
       <p><em>with</em> {{lesson.tutorname}}</p>      
-      <!--<button ion-button clear item-right (click)="goToDetails(dino)">View</button>-->
     </ion-item>
   </div>
 </ion-content>

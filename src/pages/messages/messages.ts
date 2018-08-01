@@ -6,6 +6,8 @@ import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/databa
 import { Observable } from 'rxjs/Observable'
 import { DrawPage } from '../draw/draw'
 import * as moment from 'moment'
+import { LessonsProvider } from '../../providers/lessons/lessons'
+
 /**
  * Generated class for the MessagesPage page.
  *
@@ -53,7 +55,7 @@ export class MessagesPage {
   private rate = 100
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public events: Events, private af: AngularFireDatabase, 
+    public events: Events, private af: AngularFireDatabase, private lessonsProvier: LessonsProvider,
     private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     this.user = navParams.get('user')
 
@@ -76,8 +78,8 @@ export class MessagesPage {
         })
       })    
 
-    this.lessons_pending = af.list(`/lessons_pending_learners/${this.user.uid}`)
-    this.upcoming_now_lessons = af.list(`/lessons_upcoming_now_tutors/${this.recipientId}/`)
+    this.lessons_pending = this.lessonsProvier.getPendingLessons(this.user)
+    this.upcoming_now_lessons = this.lessonsProvier.getUpcomingNowLessons(this.recipientId, 'tutor')
 
     firebase.database().ref(`/users_learners/${this.user.uid}`).once('value').then(res => {
       env.user1 = res.val()
@@ -162,19 +164,7 @@ export class MessagesPage {
   }
 
   acceptLesson (lessonid, learnerid, tutorid) {
-    firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).once('value').then(res => {
-      firebase.database().ref(`/lessons_upcoming_learners/${learnerid}/${lessonid}`).update(res.val())
-      firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).remove()
-
-      firebase.database().ref(`/lessons_pending_tutors/${tutorid}/${lessonid}`).once('value').then(res2 => {
-        var data = res2.val()
-        data.tutorname = res.val().tutorname
-        firebase.database().ref(`/lessons_upcoming_tutors/${tutorid}/${lessonid}`).update(data)
-        firebase.database().ref(`/lessons_pending_tutors/${tutorid}/${lessonid}`).remove()
-      })
-    })
-
-    firebase.database().ref(`/lessons_pending_tutors_learners/${this.user.uid}/${learnerid}/${lessonid}`).remove()
+    this.lessonsProvier.autoAcceptLesson(lessonid, learnerid, tutorid)
   }
 
   createLessonRequest (sessionId, start, duration, rate) {

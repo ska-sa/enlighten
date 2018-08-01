@@ -18,11 +18,11 @@
       <button class="delete" ion-fab color="danger" (click)="delete(slot.$key)"><ion-icon name="remove"></ion-icon></button>
       <ion-item padding-horizontal>
             <ion-label stacked>Time</ion-label>
-            <ion-datetime displayFormat="DD MMM h:mm A" pickerFormat="DD MMM h:mm A" (ionChange)="updateDtStart(k, $event, slot.$key, slot.start)" [(ngModel)]="slot.start"></ion-datetime>
+            <ion-datetime [disabled]="slot.static" displayFormat="DD MMM h:mm A" pickerFormat="DD MMM h:mm A" (ionChange)="updateDtStart(k, $event, slot.$key, slot)" [(ngModel)]="slot.start"></ion-datetime>
       </ion-item>
       <ion-item padding-horizontal class="il">
         <ion-label stacked>Duration</ion-label>
-        <ion-select (ionChange)="updateDur(k, $event, slot.$key, slot.duration)" [(ngModel)]="slot.duration">
+        <ion-select [disabled]="slot.static" (ionChange)="updateDur(k, $event, slot.$key, slot.duration)" [(ngModel)]="slot.duration">
           <ion-option value="15">15 minutes</ion-option>
           <ion-option value="30">30 minutes</ion-option>
           <ion-option value="45">45 minutes</ion-option>

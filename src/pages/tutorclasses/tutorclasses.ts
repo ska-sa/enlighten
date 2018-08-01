@@ -5,6 +5,8 @@ import { DrawPage } from '../draw/draw'
 import * as firebase from 'firebase/app'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
 import { Observable } from 'rxjs/Observable'
+import { LessonsProvider } from '../../providers/lessons/lessons'
+
 /**
  * Generated class for the TutorclassesPage page.
  *
@@ -24,18 +26,13 @@ export class TutorclassesPage {
   private lessons_history: FirebaseListObservable<any>
   private drawPage
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private af: AngularFireDatabase) {
+    private af: AngularFireDatabase, private lessonsProvider: LessonsProvider) {
     this.drawPage = DrawPage
     this.user = navParams.get('user')
 
-    this.lessons_pending = af.list(`/lessons_pending_tutors/${this.user.uid}`, {
-      query: {
-        orderByChild: 'rate'
-      }
-    })
-    
-    this.lessons_upcoming = af.list(`/lessons_upcoming_tutors/${this.user.uid}`)
-    this.lessons_history = af.list(`/lessons_history_tutors/${this.user.uid}`)
+    this.lessons_pending = lessonsProvider.getPendingLessons(this.user)
+    this.lessons_upcoming = lessonsProvider.getUpcomingLessons(this.user)
+    this.lessons_history = lessonsProvider.getLessonHistory(this.user)
   }
 
   ionViewDidLoad () {
@@ -54,23 +51,8 @@ export class TutorclassesPage {
     }
   }
 
-  // I think we can do this better by having lesson handling as microservices
   acceptLesson (lessonid, learnerid) {
-    let env = this
-
-    firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).once('value').then(res => {
-      firebase.database().ref(`/lessons_upcoming_learners/${learnerid}/${lessonid}`).update(res.val())
-      firebase.database().ref(`/lessons_pending_learners/${learnerid}/${lessonid}`).remove()
-
-      firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).once('value').then(res2 => {
-        var data = res2.val()
-        data.tutorname = res.val().tutorname
-        firebase.database().ref(`/lessons_upcoming_tutors/${env.user.uid}/${lessonid}`).update(data)
-        firebase.database().ref(`/lessons_pending_tutors/${env.user.uid}/${lessonid}`).remove()
-      })
-    })
-
-    firebase.database().ref(`/lessons_pending_tutors_learners/${this.user.uid}/${learnerid}/${lessonid}`).remove()
+    this.lessonsProvider.acceptLesson(lessonid, learnerid, this.user)
     this.my = 'upcoming'
   }
 }

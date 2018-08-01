@@ -33,7 +33,7 @@
       <button ion-fab color="primary" (click)="showVid(false)"><ion-icon name="albums"></ion-icon></button>
     </ion-fab>
     <ion-fab padding bottom left *ngIf="!showBoard">
-      <button ion-fab color="primary" [disabled]="!canCall" (click)="call()"><ion-icon name="videocam"></ion-icon> </button>
+      <button ion-fab color="primary" [disabled]="!canCall" [ngClass]="{ 'disabled': !canCall }" (click)="call()"><ion-icon name="videocam"></ion-icon> </button>
     </ion-fab>
     <p *ngIf="!canCall" class="waiting"> Waiting for user to enter session </p>
     <div no-padding [hidden]="!hideMyVideo" > <!-- CHANGE BACK TO TRUE -->

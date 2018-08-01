@@ -35,7 +35,8 @@ import { NativeStorage } from '@ionic-native/native-storage'
 import { WebRTCConfig } from './common/webrtc.config'
 import { WebRTCService } from './common/webrtc.service'
 import * as firebase from 'firebase/app'
-
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
+import { LessonsProvider } from '../providers/lessons/lessons'
 @Component({
   templateUrl: 'app.html'
 })
@@ -65,10 +66,16 @@ export class MyApp {
   tutorregisterPage = TutorregisterPage;
 
   private displayName: string
+  private lessons: FirebaseListObservable<any>
   private type: string
   private profPic: string
   private page: string
-  private user: any = {photoURL: '', displayName: '',uid: ''}
+
+  private user: any = {
+    photoURL: '', 
+    displayName: '',
+    uid: ''
+  }
 
   constructor (
     public platform: Platform,
@@ -78,14 +85,14 @@ export class MyApp {
     public events: Events, public nativeStorage: NativeStorage,
     public webRTC: WebRTCService,
     private toastCtrl: ToastController,
-    private fireAuth: AngularFireAuth,
+    private fireAuth: AngularFireAuth, private lessonsProvider: LessonsProvider,
     private googlePlus: GooglePlus, public alertCtrl: AlertController
   ) {
     this.initializeApp()
     this.userselectionPage = UserselectionPage
 
     events.subscribe('globals:update', (user, type) => {
-        this.setGlobals(user, type)
+      this.setGlobals(user, type)
     })
   }
 
@@ -177,6 +184,7 @@ export class MyApp {
           this.user = user
           firebase.database().ref(`users_global/${user.uid}`).once('value').then(res => {
             this.type = res.val().type
+            this.events.publish('globals:update', user, this.type)
 
             let tempmsg = 'Welcome ' + this.user.displayName ? this.user.displayName : ''
           
@@ -208,6 +216,8 @@ export class MyApp {
               })
             }
           })
+
+          this.lessons = this.lessonsProvider.getUpcomingLessons(this.user)
           /*firebase.database().ref(`users/${user.uid}`).update({
             photoUrl: user.photoURL != null? user.photoURL: 'http://rydwith.com/images/avatar.png',
             email: user.email,
@@ -252,13 +262,13 @@ export class MyApp {
     // close the menu when clicking a link from the menu
     this.menu.close()
 
-    if (page == this.logoutPage) {
-      this.fireAuth.auth.signOut()
-      this.googlePlus.logout()
-    }
-    
     // navigate to the new page if it is not the current page
-    this.nav.push(page,{user: this.user, type: this.type})
+    this.nav.push(page, {user: this.user, type: this.type}).then(() => {
+      if (page == this.logoutPage) {
+        this.fireAuth.auth.signOut()
+        this.googlePlus.logout()
+      }
+    })
   }
 
 

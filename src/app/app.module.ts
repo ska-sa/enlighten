@@ -68,6 +68,9 @@ import { AndroidPermissions } from '@ionic-native/android-permissions'
 import { TolocalPipe } from '../pipes/tolocal/tolocal'
 
 import { SocialSharing } from '@ionic-native/social-sharing'
+import { LessonsProvider } from '../providers/lessons/lessons';
+import { SchedulingProvider } from '../providers/scheduling/scheduling';
+import { AuthProvider } from '../providers/auth/auth';
 
 Pro.init('24006e0d', {
   appVersion: '1.1.0'
@@ -205,7 +208,10 @@ export const environment = {
     Firebase,
     SocialSharing,
     IonicErrorHandler,
-    {provide: ErrorHandler, useClass: MyErrorHandler }
+    {provide: ErrorHandler, useClass: MyErrorHandler },
+    LessonsProvider,
+    SchedulingProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}

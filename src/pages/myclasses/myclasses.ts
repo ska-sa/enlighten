@@ -5,6 +5,8 @@ import { DrawPage } from '../draw/draw'
 import * as firebase from 'firebase/app';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
+import { LessonsProvider } from '../../providers/lessons/lessons'
+
 /**
  * Generated class for the MyclassesPage page.
  *
@@ -17,7 +19,7 @@ import { Observable } from 'rxjs/Observable';
   templateUrl: 'myclasses.html',
 })
 export class MyclassesPage {
-  my: string = "booked";
+  my: string = "scheduled";
   private user;
   private lessons_pending: FirebaseListObservable<any>;
   private lessons_upcoming: FirebaseListObservable<any>;
@@ -25,12 +27,12 @@ export class MyclassesPage {
   private drawPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private af: AngularFireDatabase) {
+    private af: AngularFireDatabase, private lessonsProvider: LessonsProvider) {
     this.user = navParams.get('user');
     this.drawPage = DrawPage;
-    this.lessons_upcoming = af.list(`/lessons_upcoming_learners/${this.user.uid}`)
-    this.lessons_history = af.list(`/lessons_history_learners/${this.user.uid}`)
-    this.lessons_pending = af.list(`/lessons_pending_learners/${this.user.uid}`)
+    this.lessons_upcoming = lessonsProvider.getUpcomingLessons(this.user)
+    this.lessons_history = lessonsProvider.getLessonHistory(this.user)
+    this.lessons_pending = lessonsProvider.getPendingLessons(this.user)
   }
 
   ionViewDidLoad() {

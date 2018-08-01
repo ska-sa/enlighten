@@ -3,6 +3,10 @@ page-draw {
         overflow: hidden !important;
     }
 
+    button.disabled {
+      background: #777 !important;
+    }
+
     .videos {
         height: calc(100vh - 56px);
         position: fixed;

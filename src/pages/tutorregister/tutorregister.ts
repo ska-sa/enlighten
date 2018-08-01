@@ -22,6 +22,8 @@ import { AngularFireAuth } from 'angularfire2/auth'
 import { Observable } from 'rxjs/Observable'
 import { FirebaseApp } from 'angularfire2'
 import { Firebase } from '@ionic-native/firebase'
+
+import { AuthProvider } from '../../providers/auth/auth'
 /**
  * Generated class for the TutorregisterPage page.
  *
@@ -71,7 +73,7 @@ export class TutorregisterPage {
     private googlePlus: GooglePlus,
     public afAuth: AngularFireAuth, 
     private af: AngularFireDatabase,
-    private nativeStorage: NativeStorage, private fcm: Firebase,
+    private nativeStorage: NativeStorage, private authProvider: AuthProvider,
     private toastCtrl: ToastController, private platform: Platform, private facebook: Facebook) {
       this.institutions = this.institutionsAccess.getUniversities()
       this.subjects = this.subjectsAccess.getSubjects()
@@ -79,7 +81,21 @@ export class TutorregisterPage {
   }
 
   ionViewDidLoad() {
+    this.subscribeToAuthState()
     console.log('ionViewDidLoad TutorregisterPage')
+  }
+
+  subscribeToAuthState () {
+    this.events.subscribe('globals:update', (user, type) => {
+      this.user = user
+      this.gUser = user
+
+      if(this.email.length < 1) {
+        this.email = user.email
+      }
+
+      this.reg()
+    })
   }
 
   toast(msg) {    
@@ -154,119 +170,29 @@ export class TutorregisterPage {
 
   gg () {
     if (this.verifyPage3()) {
-      this.loader.present()
-      this.googlePlus.login({
-        //'webClientId': '559242294803-iel70p87sa56tv4leg3hosnbu46lrtfc.apps.googleusercontent.com',
-        'webClientId': '745996686081-modil5qum4720gdi6ma9p2gl6b1vflaf.apps.googleusercontent.com',
-        'offline': true})
-        .then((success) =>{
-          this.gglogged(success)
-        })
-        .catch((err) => {
-          alert('Login failed!' + err)
-          this.ggfail()
-        })
+      this.authProvider.googleLogin()
     } else {
       this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
     }
     
   }
 
-  ggfail () {
-    this.loader.dismiss()
-    setTimeout(()=>{this.showDeny()}, 200)
-  }
-
-  gglogged (result) {
-    this.loader.dismiss()
-    this.fireAuth(result)
-  }
-
-  fb(): Promise<any> {
-    if(this.platform.is('cordova')){
-      this.loader.present()
-      return this.facebook.login(['email'])
-        .then( response => {
-          const facebookCredential = firebase.auth.FacebookAuthProvider
-            .credential(response.authResponse.accessToken)
-
-          this.fireAuth(facebookCredential, 'fb')
-
-        }).catch((error) => { console.log(error) })
-    }
-    else {
-      this.showAlert()
-    }
-  }
-
-  fireAuth (successuser, type = 'gg') {
-    this.gUser = successuser
-    let credential
-
-    if(type === 'gg') {
-      credential = firebase.auth.GoogleAuthProvider.credential(
-              successuser.idToken)
+  fb () {
+    if (this.verifyPage3()) {
+      this.authProvider.facebookLogin()
     } else {
-      credential = successuser
+      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
     }
-
-    let env = this
-    firebase.auth().signInWithCredential(credential).then((result) => {
-      var user = result
-      env.user = result
-      env.completing.present()
-      env.authState = env.afAuth.authState
-      env.authState.subscribe(user => {
-        if (user) {
-          env.fcm.getToken().then(token => {
-              firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
-          })
-
-          env.fcm.onTokenRefresh()
-            .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) )   
-          
-          env.events.publish('globals:update', user, 'tutor')
-          if(env.email.length < 1) {
-            env.email = user.email
-          } 
-          env.reg()
-        } else {
-          alert('Please check your internet connection and try again')
-        }
-      })
-    }).catch(err => {
-      alert('Authentication error')
-    })
   }
 
-  register() {
-    this.loader.present()
-    this.email = this.email.split(' ').join('')
-    let env = this
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.email, this.password)
-      .then( user => {
-        env.user = user
-        env.completing.present()
-
-        env.fcm.getToken().then(token => {
-          firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   
-        })
-
-        env.fcm.onTokenRefresh()
-          .subscribe((token: string) =>  firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true}) )
-        
-        env.events.publish('globals:update', user, 'tutor')
-        env.reg()
-        this.loader.dismiss()
-      }).catch(err => {
-        this.loader.dismiss()
-        this.toast(err.message)
-      })
+  register () {
+    if (this.verifyPage3()) {
+      this.authProvider.emailRegister(this.email, this.password, 'tutor')
+    } else {
+      this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
+    }
   }
 
-  
   reg () {
     let env = this
     this.completing.present()
@@ -323,19 +249,8 @@ export class TutorregisterPage {
     this.completing.dismiss()
     this.navCtrl.setRoot(TutorhomePage, {user: this.user})
     this.nativeStorage.setItem('user-info', {user: this.user, type: 'tutor'})
-    /*let alert = this.alertCtrl.create({
-      title: 'Registered!',
-      subTitle: 'Welcome to Enlighten!',
-      buttons: [
-        {
-          text: 'OK',
-          handler: () => {
-            
-          }
-        }]
-    })
-    alert.present()*/
   }
+
   showDeny(title = 'Already Registered!', msg = 'This account is already used, please go to the Login Page!') {
     let alert = this.alertCtrl.create({
       title: title,
@@ -343,13 +258,11 @@ export class TutorregisterPage {
       buttons: [
         {
           text: 'OK',
-          handler: () => {
-            /* this.navCtrl.remove(2,1) // This will remove the 'ResultPage' from stack.
-            this.navCtrl.pop() */
-          }
-        }]
+          handler: () => {}
+        }
+      ]
     })
-    alert.present()
-  }
 
+    alert.present();
+  }
 }

@@ -39,23 +39,18 @@ export class HomePage {
       this.nativeStorage.setItem('user-info', {user: this.user, type: 'learner'});
       this.lessons_upcoming_now = af.list(`/lessons_upcoming_now_learners/${this.user.uid}`, {query: {limitToFirst: 1}});
       this.ftutors = af.list(`/users_tutors`);
-
-      /* firebase.database().ref(`users_global/${this.user.uid}`).once('value').then(res => {
-        this.first = res.val().first;
-      }) */
-
       this.lessonPage = LessonPage;
       this.messagesPage = MessagesPage;
-      //setTimeout(this.lessonReady,2000);
   }
   
   ngOnInit() {
-    //this.initLoader();
-    //this.loadTodos();
+
   }
+
   changePage(page, object, start) {
     this.navCtrl.push(page, {user: this.user, target: object.tutorid, start: start, type:'learner', object: object});
   }
+  
   ionViewDidLoad() {
     this.menuController.enable(true, 'myMenu');
     console.log('ionViewDidLoad ProfilePage');
@@ -69,16 +64,6 @@ export class HomePage {
   }
 
   viewTutor(id) {
-    /*let alert = this.alertCtrl.create({
-      title: 'New Conversation',
-      subTitle: 'You are about to request a tutor and begin a conversation. You will be charged a request fee. Proceed?',
-      buttons: [{text:'OK',
-                handler: () => {
-                  this.openPage(this.messagesPage)
-                } }, {text: 'Cancel'}]
-    });
-    alert.present();*/
-
     this.navCtrl.push(this.messagesPage, {user: this.user,id: id});
   }
 

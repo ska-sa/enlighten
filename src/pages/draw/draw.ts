@@ -46,34 +46,25 @@ export class DrawPage implements OnInit {
   private hideMyVideo: boolean = true
   private canCall: boolean = true;
   private color: string = '#000'
-  private availableColours: Array<string>
-  //TWILIO VARIABLES
-  private htmlToAdd = '<video #remotevideo autoplay></video>'
-  private myVideoHtml = '<video #myvideo autoplay muted></video>'
-  private at: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2MwYzUyN2IwMWFhZDI1YTg3YjkzMjI5ZmNjNzM5YjlhLTE1MTI2MTAwODIiLCJpc3MiOiJTS2MwYzUyN2IwMWFhZDI1YTg3YjkzMjI5ZmNjNzM5YjlhIiwic3ViIjoiQUNjYmIwODYyOTA2NzU1MzdiYTUwODUwZTdlOTk4ZGU3NSIsImV4cCI6MTUxMjYxMzY4MiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiWXV4aSIsInZpZGVvIjp7InJvb20iOiJteS1uZXctcm9vbSJ9fX0.zwCoa_gOJ59Whl2WgL7FLxjNin6lAn1h7BPJv86sEUs'
-  private at2: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2MwYzUyN2IwMWFhZDI1YTg3YjkzMjI5ZmNjNzM5YjlhLTE1MTI2MTAxMTYiLCJpc3MiOiJTS2MwYzUyN2IwMWFhZDI1YTg3YjkzMjI5ZmNjNzM5YjlhIiwic3ViIjoiQUNjYmIwODYyOTA2NzU1MzdiYTUwODUwZTdlOTk4ZGU3NSIsImV4cCI6MTUxMjYxMzcxNiwiZ3JhbnRzIjp7ImlkZW50aXR5IjoiV2lzYW5pIiwidmlkZW8iOnsicm9vbSI6Im15LW5ldy1yb29tIn19fQ.RvQQXASOYdRKKqXlj86nn4R4cmuGztbhJaP_VpaXQas'
-  private inCall = false
+  private availableColours: Array<string> = [
+    '#000',
+    '#1abc9c',
+    '#3498db',
+    '#9b59b6',
+    '#e67e22',
+    '#e74c3c'
+  ]
 
   constructor (public navCtrl: NavController,private nativeAudio: NativeAudio, 
-    private navParams: NavParams, public webRTCService: WebRTCService, public menu: MenuController,
-    private nativeStorage: NativeStorage, private af: AngularFireDatabase,public alertCtrl: AlertController,
-    private renderer: Renderer2, public platform: Platform) {
-    this.availableColours = [
-      '#000',
-      '#1abc9c',
-      '#3498db',
-      '#9b59b6',
-      '#e67e22',
-      '#e74c3c'
-    ]
-
+  private navParams: NavParams, public webRTCService: WebRTCService, public menu: MenuController,
+  private nativeStorage: NativeStorage, private af: AngularFireDatabase,public alertCtrl: AlertController,
+  private renderer: Renderer2, public platform: Platform) {
     if (navParams.get('user') !== undefined && navParams.get('user') !== null) {
       this.user = navParams.get('user')
       this.target = navParams.get('target')
       this.object = navParams.get('object')
       this.type = navParams.get('type')
       let env = this
-      // this.menu.enable(false, 'myMenu')
       this.webRTCService.createPeer(this.user.uid)
 
       if (this.type === 'tutor') {
@@ -83,8 +74,6 @@ export class DrawPage implements OnInit {
           if (res.val()) {
             keys = Object.keys(res.val())
           }
-
-          console.log('This is what you got: ', keys)
 
           this.boards = []
 
@@ -100,12 +89,7 @@ export class DrawPage implements OnInit {
         this.boardid = this.navParams.get('boardid')
         this.showBoard = true
       }
-      
-      /* this.nativeAudio.preloadComplex('uniqueI1', 'assets/tone.mp3', 1, 1, 0).then((succ)=>{
-        console.log("suu",succ)
-      }, (err)=>{
-        console.log("err",err)
-      }) */
+
     } else {
       console.log('Bypassing')
     }
@@ -182,17 +166,7 @@ export class DrawPage implements OnInit {
 
 
   ionViewDidLoad() {
-    /* this.navBar.backButtonClick = (e:UIEvent) => {
-      e.preventDefault()
-      this.menu.enable(true, 'myMenu')
-      this.navCtrl.pop()
-    } */
-
-    if (this.type !== 'tutor') {
-      firebase.database().ref(`call_status/${this.user.uid}`).update({
-        ready: true
-      })
-    }
+    
   }
 
   showVid(ev, toggle = null) {
@@ -201,6 +175,11 @@ export class DrawPage implements OnInit {
     }
     
     this.showVideo = ev
+
+    if (!ev) {
+      this.webRTCService.endCall()
+      this.unreadyUser()
+    }
   }
 
   changeColour (x) {
@@ -213,35 +192,37 @@ export class DrawPage implements OnInit {
 
     this.webRTCService.init(this.myVideo, this.remoteVideo, () => {
       console.log('WebRTC Initializing from DrawPage')
+      this.readyUser()
     })
 
     var type = this.type
 
-    this.nativeStorage.getItem('user-info').then(res => {
-      if (res.type) {
-        type = res.type
-      } 
-    })
-
     firebase.database().ref(`call_status/${this.target}`).on('value', res => {
-      if (res.val() && type === 'tutor') {
-        if (res.val().ready) {
-          this.canCall = true
-        }
+      if (res.val().ready) {
+        this.canCall = true
       }
     })
   }
 
   ngOnDestroy () {
     this.webRTCService.endCall()
+    this.unreadyUser()
   }
 
   call () {
-    if (this.inCall) {
-      this.webRTCService.endCall()
-    } else {
-      this.webRTCService.call(this.target)
-    } 
+    this.webRTCService.call(this.target)
+  }
+
+  readyUser () {
+    firebase.database().ref(`call_status/${this.user.uid}`).update({
+      ready: true
+    })
+  }
+
+  unreadyUser () {
+    firebase.database().ref(`call_status/${this.user.uid}`).update({
+      ready: false
+    })
   }
 
 }
