@@ -65,7 +65,20 @@ export class AuthProvider {
     })
   }
 
+  updateDisconnect () {
+    firebase.database().ref(`users_${this.type}s/${this.user.uid}`)
+      .onDisconnect()
+      .update({status: 'offline'})
+  }
+
+  updateConnect (status) {
+    firebase.database().ref(`users_${this.type}s/${this.user.uid}`).update({
+      status
+    })
+  }
+
   logout() {
+    this.nativeStorage.remove('user-info')
     this.authSub.unsubcribe()
     this.afAuth.auth.signOut()
     this.googlePlus.logout()
@@ -141,7 +154,7 @@ export class AuthProvider {
   }
 
   // SIGN UP METHODS
-  emailRegister(email, password, type) {
+  emailRegister(email, password, displayName, type) {
     this.loader.present()
     const cleanEmail = email.split(' ').join('')
 
@@ -150,6 +163,13 @@ export class AuthProvider {
       .createUserWithEmailAndPassword(cleanEmail, password)
       .then( user => {
         this.user = user
+
+        firebase.auth().currentUser.updateProfile({
+          displayName,
+          photoURL: this.user.photoURL
+        }).then(() => {
+          firebase.auth().currentUser.sendEmailVerification()
+        })     
 
         this.fcm.getToken().then(token => {
           firebase.database().ref(`/users_tokens/${user.uid}`).update({[token]:true})   

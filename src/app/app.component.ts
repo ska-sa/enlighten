@@ -6,6 +6,7 @@ import { ScreenOrientation } from 'ionic-native'
 import { HomePage } from '../pages/home/home'
 import { ProfilePage } from '../pages/profile/profile'
 import { RegisterPage } from '../pages/register/register'
+import { LoginPage } from '../pages/login/login'
 import { TutorregisterPage } from '../pages/tutorregister/tutorregister'
 import { TutorsPage } from '../pages/tutors/tutors'
 import { MyclassesPage } from '../pages/myclasses/myclasses'
@@ -37,6 +38,8 @@ import { WebRTCService } from './common/webrtc.service'
 import * as firebase from 'firebase/app'
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database'
 import { LessonsProvider } from '../providers/lessons/lessons'
+import { AuthProvider } from '../providers/auth/auth'
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -86,7 +89,8 @@ export class MyApp {
     public webRTC: WebRTCService,
     private toastCtrl: ToastController,
     private fireAuth: AngularFireAuth, private lessonsProvider: LessonsProvider,
-    private googlePlus: GooglePlus, public alertCtrl: AlertController
+    private googlePlus: GooglePlus, public alertCtrl: AlertController,
+    private authProvider: AuthProvider
   ) {
     this.initializeApp()
     this.userselectionPage = UserselectionPage
@@ -126,7 +130,7 @@ export class MyApp {
       this.lessonPage = LessonPage
       this.tutorschedulePage = TutorschedulePage
       this.tutorsubjectsPage = TutorsubjectsPage
-      console.log('Everything initialized')
+
       this.nativeStorage.getItem('user-info').then(data => {
         this.type = data.type
         this.user = data.user     
@@ -134,18 +138,23 @@ export class MyApp {
 
       this.platform.pause.subscribe(() => {
         if (this.type == 'tutor') {
-          firebase.database().ref(`users_tutors/${this.user.uid}`).update({
-            status: 'away'
-          })
+          this.authProvider.updateConnect('away')
         }  
       })
 
       this.platform.resume.subscribe(() => {
         if (this.type == 'tutor') {
-          firebase.database().ref(`users_tutors/${this.user.uid}`).update({
-            status: 'online'
-          })
+          this.authProvider.updateConnect('online')
         }  
+      })
+
+      firebase.database().ref('.info/connected').on('value', snapshot => {
+        if (snapshot.val()) {
+          this.authProvider.updateConnect('online')
+          this.authProvider.updateDisconnect()
+        } else {
+          this.authProvider.updateConnect('offline')
+        }
       })
 
       this.platform.registerBackButtonAction(() => {
@@ -158,6 +167,7 @@ export class MyApp {
               text: 'Yes',
               handler: () => {
                 this.platform.exitApp()
+                this.authProvider.updateConnect('offline')
               }
             },
             {
@@ -173,7 +183,8 @@ export class MyApp {
 
       console.log('All subscriptions done. Initializing firebase')
 
-      this.initfireBase() 
+      this.authProvider.subscribeToAuthState()
+      this.initfireBase()
     })
   }
 
@@ -182,6 +193,7 @@ export class MyApp {
       this.fireAuth.authState.subscribe(user => {
         if (user) {
           this.user = user
+
           firebase.database().ref(`users_global/${user.uid}`).once('value').then(res => {
             this.type = res.val().type
             this.events.publish('globals:update', user, this.type)
@@ -189,33 +201,35 @@ export class MyApp {
 
             let tempmsg = 'Welcome ' + this.user.displayName ? this.user.displayName : ''
           
-            let toast = this.toastCtrl.create({
-              message: tempmsg,
-              duration: 2000,
-              position: 'top',
-            })
+            this.toastMessage(tempmsg)
 
-            toast.present()
-            
-            if(this.type == 'learner' && !(this.nav.last().instance instanceof RegisterPage)) {
-              this.nav.setRoot(HomePage, {user:user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
-                this.nav.popToRoot()
-              })
-            } else if(!(this.nav.last().instance instanceof TutorregisterPage)) {
-              this.nav.setRoot(TutorhomePage, {
-                user: this.user, 
-                guser: this.user, 
-                data: {}
-              }, 
-              {
-                animate: true, 
-                direction: 'forward', 
-                animation: 'md-transition', 
-                duration: 500
-              }).then(() => {
-                this.nav.popToRoot()
-              })
+            if (firebase.auth().currentUser.emailVerified) {
+              if (this.type == 'learner' && !(this.nav.last().instance instanceof RegisterPage)) {
+                this.nav.setRoot(HomePage, {user:user, guser: this.user, data: {}}, {animate: true, direction: 'forward', animation: 'md-transition', duration: 500}).then(()=>{
+                  this.nav.popToRoot()
+                })
+              } else if(!(this.nav.last().instance instanceof TutorregisterPage)) {
+                this.nav.setRoot(TutorhomePage, {
+                  user: this.user, 
+                  guser: this.user, 
+                  data: {}
+                }, 
+                {
+                  animate: true, 
+                  direction: 'forward', 
+                  animation: 'md-transition', 
+                  duration: 500
+                }).then(() => {
+                  this.nav.popToRoot()
+                })
+              }
+            } else {
+              this.toastMessage('Please accept the verification we\'ve sent to your email address')
+              this.nav.popToRoot()
+              this.nav.push(LoginPage)
             }
+            
+            
           })
  
           /*firebase.database().ref(`users/${user.uid}`).update({
@@ -235,6 +249,16 @@ export class MyApp {
     } else {
       // this.nav.setRoot(HomePage, {user: this.user, guser: this.user})
     }
+  }
+
+  toastMessage(message) {
+    let toast = this.toastCtrl.create({
+      message,
+      duration: 2000,
+      position: 'top',
+    })
+
+    toast.present()
   }
 
   logout () {

@@ -187,7 +187,7 @@ export class TutorregisterPage {
 
   register () {
     if (this.verifyPage3()) {
-      this.authProvider.emailRegister(this.email, this.password, 'tutor')
+      this.authProvider.emailRegister(this.email, this.password, this.fname, 'tutor')
     } else {
       this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
     }
@@ -242,13 +242,12 @@ export class TutorregisterPage {
     })
 
     this.showAlert()
-    
   }
 
   showAlert() {
-    this.completing.dismiss()
-    this.navCtrl.setRoot(TutorhomePage, {user: this.user})
-    this.nativeStorage.setItem('user-info', {user: this.user, type: 'tutor'})
+    this.completing.dismiss().then(() => {
+      this.nativeStorage.setItem('user-info', {user: this.user, type: 'tutor'})
+    }) 
   }
 
   showDeny(title = 'Already Registered!', msg = 'This account is already used, please go to the Login Page!') {

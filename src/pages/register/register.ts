@@ -203,7 +203,7 @@ export class RegisterPage {
 
   register () {
     if (this.verifyPage3()) {
-      this.authProvider.emailRegister(this.email, this.password, 'learner')
+      this.authProvider.emailRegister(this.email, this.password, this.fname, 'learner')
     } else {
       this.showDeny('Required fields', 'Please make sure all the required fields are appropriately filled')
     }
@@ -254,7 +254,6 @@ export class RegisterPage {
 
   showAlert() {
     this.completing.dismiss().then(() => {
-      this.navCtrl.setRoot(HomePage, {user: this.user})
       this.nativeStorage.setItem('user-info', {user: this.user, type: 'learner'})
     })
   }
