@@ -3,4 +3,6 @@ To setup on local environment
 git clone
 cd enlighten
 type docker-compose up -d
-type docker exec -it enlighten_dev bash
+(for development) type docker exec -it enlighten_dev bash
+to access machine GUI: http://localhost:6901/?password=vncpassword
+ 
