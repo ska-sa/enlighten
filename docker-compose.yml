@@ -1,0 +1,15 @@
+
+
+version: '2'
+services:
+  enlighten_dev:
+    image: gerhardlr/ionic_dev:1.2
+    container_name: enlighten_dev
+    volumes:
+      - .:/project/
+    ports:
+      - 8100:8100
+      - 6901:6901
+      - 5901:5901
+    entrypoint:
+      - /dockerstartup/vnc_startup.sh
