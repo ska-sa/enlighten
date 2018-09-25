@@ -1,8 +1,8 @@
 {
   "name": "enlighten-app-za",
-  "app_id": "24006e0d",
-  "type": "ionic-angular",
   "integrations": {
     "cordova": {}
-  }
+  },
+  "type": "ionic-angular",
+  "pro_id": "24006e0d"
 }
