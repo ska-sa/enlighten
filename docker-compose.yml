@@ -11,5 +11,6 @@ services:
       - 8100:8100
       - 6901:6901
       - 5901:5901
+      - 9876:9876
     entrypoint:
       - /dockerstartup/vnc_startup.sh
