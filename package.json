@@ -83,7 +83,7 @@
     "simple-peer": "^8.1.1",
     "socket.io": "^2.1.1",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.12"
+    "zone.js": "0.8.21"
   },
   "devDependencies": {
     "@ionic/app-scripts": "^3.1.10",
