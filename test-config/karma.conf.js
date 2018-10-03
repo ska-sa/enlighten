@@ -49,12 +49,14 @@ module.exports = function(config) {
       fixWebpackSourcePaths: true
     },
 
+
+
     reporters: config.coverage ? ['kjhtml', 'dots', 'coverage-istanbul'] : ['kjhtml', 'dots'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['FirefoxDeveloper'],
     singleRun: false
   };
 
