@@ -5,4 +5,3 @@
 <p>type docker-compose up -d </p>
 <p>(for development) type docker exec -it enlighten_dev bash </p>
 <p> to access machine GUI: http://localhost:6901/?password=vncpassword </p>
- 
