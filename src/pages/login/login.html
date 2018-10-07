@@ -10,11 +10,10 @@
     <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding color="primary" class="bg" text-center>
   <!-- <div class="display">
     <!--<button ion-button icon-only menuToggle top left>
-      <ion-icon name="menu"></ion-icon> 
+      <ion-icon name="menu"></ion-icon>
     </button>-s->
     <img src="assets/img/enlighten.png" class="img-logout"/>
 
@@ -26,16 +25,15 @@
   <p class="text"> Log in using your Google account </p> -->
   <div class="display" padding>
     <img src="assets/img/enlighten-red.png" class="img-logout"/>
-
     <ion-item no-padding padding-horizontal>
-      <ion-input type="text" [(ngModel)]="email" placeholder="Email address"></ion-input>
+      <ion-input id ="inputEmail" type="text" [(ngModel)]="email" placeholder="Email address"></ion-input>
     </ion-item>
 
     <ion-item no-padding padding-horizontal>
-      <ion-input type="password" [(ngModel)]="password" placeholder="Password"></ion-input>
+      <ion-input id="inputPassword" type="password" [(ngModel)]="password" placeholder="Password" (input) = "testInput()"></ion-input>
     </ion-item>
 
-    <button padding class="sign" ion-button color="accent3" outline no-border (click)="signin()">
+    <button id= "buttonPassword" padding class="sign" ion-button color="accent3" outline no-border (click)="signin()">
         Log in
     </button>
 
@@ -50,7 +48,7 @@
             Google
           </button>
         </ion-col>
-          
+
         <ion-col text-center>
           <button class="btn" ion-button icon-left color="fb" (click)="fb()">
             <ion-icon name="logo-facebook"></ion-icon>
