@@ -9,12 +9,6 @@ import {LoginPage} from './login.ts'
 import { AuthProvider } from '../../providers/auth/auth'//to be mocked by:
 //import {AuthProviderMock} from '../../../testing/provider-mocks.js'
 
-function newEvent(eventName: string, bubbles = false, cancelable = false) {
-  let evt = document.createEvent('CustomEvent');  // MUST be 'CustomEvent'
-  evt.initCustomEvent(eventName, bubbles, cancelable, null);
-  return evt;
-}
-
 
 describe('The login page shall', () => {
   let fixture;
