@@ -30,10 +30,12 @@ export class LoginPage {
   private currentUser
   private gUser
   private authState
-  private user 
+  private user
   private email: string = ''
   private password: string = ''
   private password2: string = ''
+  //todelete
+  private test: string = 'test'
 
   public cellNo: string
   public userData
@@ -42,12 +44,13 @@ export class LoginPage {
   private authSub: any;
 
   constructor(public navCtrl: NavController, private events: Events, private authProvider: AuthProvider) { //
-      
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage')
   }
+
 
   gg () {
     this.authProvider.googleLogin()
